@@ -1,20 +1,1611 @@
 {
-  "updatedAt": "2026-06-25T13:53:57.834Z",
+  "updatedAt": "2026-06-25T14:07:47.301Z",
   "profile": {
-    "displayName": "",
-    "url": "",
-    "image": ""
+    "displayName": "Enrico Toso",
+    "url": "https://open.spotify.com/user/31hw2lkqvzpj6ydjolecujt5xewy",
+    "image": "https://i.scdn.co/image/ab6775700000ee85e26885419e7217c35a063b84"
   },
-  "playlists": [],
+  "playlists": [
+    {
+      "id": "19ZKv9If2tTH8npsqPOiMp",
+      "name": "My top tracks playlist",
+      "description": "Playlist created by the tutorial on developer.spotify.com",
+      "image": "https://mosaic.scdn.co/640/ab67616d00001e0260012ae8e0987bf8f104cf00ab67616d00001e02851ad364597a1a39bffce2e5ab67616d00001e02b09dc928bd7b221b81425261ab67616d00001e02f6da146e4b29f6cb182c6a72",
+      "tracksTotal": 0,
+      "url": "https://open.spotify.com/playlist/19ZKv9If2tTH8npsqPOiMp"
+    },
+    {
+      "id": "3EwqOJ2wchIP3PPfd4EZbM",
+      "name": "Mariachi",
+      "description": "",
+      "image": "https://mosaic.scdn.co/640/ab67616d00001e02de88a62b44d6c0b2dda333a3ab67616d00001e02dfddf1cb31b85a6d28b7d91fab67616d00001e02e116d50f180552179bfdf4bcab67616d00001e02ef6655b813e1b2cd726e99d3",
+      "tracksTotal": 0,
+      "url": "https://open.spotify.com/playlist/3EwqOJ2wchIP3PPfd4EZbM"
+    },
+    {
+      "id": "7GbmzKMjRf68QJJTH39D7S",
+      "name": "Homecoming",
+      "description": "",
+      "image": "https://mosaic.scdn.co/640/ab67616d00001e0226f7f19c7f0381e56156c94aab67616d00001e0230a635de2bb0caa4e26f6abbab67616d00001e02bb1138165ad4ec2306f4e886ab67616d00001e02d9194aa18fa4c9362b47464f",
+      "tracksTotal": 0,
+      "url": "https://open.spotify.com/playlist/7GbmzKMjRf68QJJTH39D7S"
+    },
+    {
+      "id": "2deKtItNDcK3QxqHfKuPx2",
+      "name": "HOUSE 2026",
+      "description": "Best House and Groove 2026",
+      "image": "https://image-cdn-ak.spotifycdn.com/image/ab67706c0000da8424691e830e2f36cdad532e84",
+      "tracksTotal": 0,
+      "url": "https://open.spotify.com/playlist/2deKtItNDcK3QxqHfKuPx2"
+    },
+    {
+      "id": "0YyO1DFNHi2Ifpah1jacV1",
+      "name": "Halloween 2025",
+      "description": "",
+      "image": "https://mosaic.scdn.co/640/ab67616d00001e022c02abf45bf172958a419b62ab67616d00001e02a831cf396a0c63a0ac389ea0ab67616d00001e02f6eac474415d00b13b26654aab67616d00001e02f946a6653fa2b477922bc11a",
+      "tracksTotal": 0,
+      "url": "https://open.spotify.com/playlist/0YyO1DFNHi2Ifpah1jacV1"
+    },
+    {
+      "id": "6iVOBoWItyDbfJWpzkHiw6",
+      "name": "FIGHE LARGHE",
+      "description": "",
+      "image": "https://mosaic.scdn.co/640/ab67616d00001e022feb67a486bcf117e7fb15b0ab67616d00001e0253596a050e8369c51da11029ab67616d00001e027d1a6e9b763a9b3db59bb054ab67616d00001e02c0a5c14b34a02f242af03359",
+      "tracksTotal": 0,
+      "url": "https://open.spotify.com/playlist/6iVOBoWItyDbfJWpzkHiw6"
+    },
+    {
+      "id": "4JHuZyNbR91Wxvg5PkMLTp",
+      "name": "dddownload",
+      "description": "",
+      "image": "https://mosaic.scdn.co/640/ab67616d00001e021ae50a10ef6c8d9bc6dade31ab67616d00001e024ed674ab91bdc566534f9285ab67616d00001e0281c6874cebb4a60ab4295683ab67616d00001e02a447e5792ca5bbc4c92abf69",
+      "tracksTotal": 0,
+      "url": "https://open.spotify.com/playlist/4JHuZyNbR91Wxvg5PkMLTp"
+    },
+    {
+      "id": "4cPFaMON6snbzQgKvgOpyc",
+      "name": "La mia playlist n. 23",
+      "description": "",
+      "image": "",
+      "tracksTotal": 0,
+      "url": "https://open.spotify.com/playlist/4cPFaMON6snbzQgKvgOpyc"
+    },
+    {
+      "id": "36Ui8vJaKVUergTxmTxuds",
+      "name": "ITALIANE DA CANTARE",
+      "description": "",
+      "image": "https://mosaic.scdn.co/640/ab67616d00001e024d40ffa2c1ecf2f65316edd0ab67616d00001e025cdd0ca653e8d6dfea5fc615ab67616d00001e026d6b8a01a80f084d6e35ccbbab67616d00001e02d919d138f6e83aba728bd697",
+      "tracksTotal": 0,
+      "url": "https://open.spotify.com/playlist/36Ui8vJaKVUergTxmTxuds"
+    },
+    {
+      "id": "44TZ3Ip4nruYe9ylvIWeVN",
+      "name": "2010 ",
+      "description": "",
+      "image": "https://mosaic.scdn.co/640/ab67616d00001e021db908d5f66645cb158837caab67616d00001e022a6b364528b128a4a17d100dab67616d00001e024f0e115b99c8832ceabffdd3ab67616d00001e0251b4a23b47059a9aef703df6",
+      "tracksTotal": 0,
+      "url": "https://open.spotify.com/playlist/44TZ3Ip4nruYe9ylvIWeVN"
+    },
+    {
+      "id": "0m1kbFtDAsFyWiDXsBIRxT",
+      "name": "Disco Dance 80",
+      "description": "",
+      "image": "https://mosaic.scdn.co/640/ab67616d00001e026e7cb1429534f0d21133b714ab67616d00001e02aa22899360d8ba6704732decab67616d00001e02b543da62e4ba434db59813d7ab67616d00001e02c8e97cafeb2acb85b21a777e",
+      "tracksTotal": 0,
+      "url": "https://open.spotify.com/playlist/0m1kbFtDAsFyWiDXsBIRxT"
+    },
+    {
+      "id": "2zOFLK3msKyMguVvgxDMDF",
+      "name": "ZULAN - OFFICIAL SET 🎧❤️‍🔥 (2)",
+      "description": "",
+      "image": "https://mosaic.scdn.co/640/ab67616d00001e02324d214dd3170581d89f507dab67616d00001e025184c7b3d6f4b493670551d5ab67616d00001e0275a8297bf55d707e9905be6dab67616d00001e02a123b0691b660bfe112220c7",
+      "tracksTotal": 0,
+      "url": "https://open.spotify.com/playlist/2zOFLK3msKyMguVvgxDMDF"
+    },
+    {
+      "id": "6GA5KM0yPz8FH45k5UUxvB",
+      "name": "La mia playlist n. 18",
+      "description": "",
+      "image": "",
+      "tracksTotal": 0,
+      "url": "https://open.spotify.com/playlist/6GA5KM0yPz8FH45k5UUxvB"
+    },
+    {
+      "id": "74DMyGVHd0rrraKWqffJvi",
+      "name": "TOSH VENTIVENTICINQUE",
+      "description": "",
+      "image": "https://mosaic.scdn.co/640/ab67616d00001e0238f27a9b574b0bd8fef586c5ab67616d00001e026c3998731767363012496b0aab67616d00001e029041b9965925059507fb44afab67616d00001e02df3d31af639305aac005d230",
+      "tracksTotal": 0,
+      "url": "https://open.spotify.com/playlist/74DMyGVHd0rrraKWqffJvi"
+    },
+    {
+      "id": "6kf7CFsvWGsyNJ3YOrJinU",
+      "name": "download (2)",
+      "description": "",
+      "image": "https://i.scdn.co/image/ab67616d00001e02a7a64be797303ff304ca43b2",
+      "tracksTotal": 0,
+      "url": "https://open.spotify.com/playlist/6kf7CFsvWGsyNJ3YOrJinU"
+    },
+    {
+      "id": "4LVO9Ux9sNy0M4Jsv97zzp",
+      "name": "download trap",
+      "description": "",
+      "image": "https://mosaic.scdn.co/640/ab67616d00001e020b5557811b1eab235b1fade4ab67616d00001e02615419282f0fbc0ecd469ce1ab67616d00001e02ca518a2098eec302ec22584bab67616d00001e02e78ad82957b3fb3282f1276c",
+      "tracksTotal": 0,
+      "url": "https://open.spotify.com/playlist/4LVO9Ux9sNy0M4Jsv97zzp"
+    },
+    {
+      "id": "6wQ8OtlSrmOfEcuL9X8Ag7",
+      "name": "EL RAGGAETON 🍑",
+      "description": "",
+      "image": "https://mosaic.scdn.co/640/ab67616d00001e022479aa0668d6cc22b664a9e5ab67616d00001e0285fe5a081c7231d2b42a9805ab67616d00001e02972a2d69d03d3f67079f6367ab67616d00001e02bb4aa27a74bbde6e76f85be2",
+      "tracksTotal": 0,
+      "url": "https://open.spotify.com/playlist/6wQ8OtlSrmOfEcuL9X8Ag7"
+    },
+    {
+      "id": "3pRe8bPb13c0KzdtlYljym",
+      "name": "HELLO DEEJAY",
+      "description": "Hello Deejay is a simple playlist made of house music expressing feelings",
+      "image": "https://image-cdn-ak.spotifycdn.com/image/ab67706c0000da84ac45e7bbba31de35260ab5eb",
+      "tracksTotal": 0,
+      "url": "https://open.spotify.com/playlist/3pRe8bPb13c0KzdtlYljym"
+    },
+    {
+      "id": "6ylCJglCIAYgiGxdJhTIFL",
+      "name": "jim",
+      "description": "",
+      "image": "https://mosaic.scdn.co/640/ab67616d00001e02174e964b6fdf664e564b4f62ab67616d00001e025485ea186d6971e18fabcc2fab67616d00001e0287a9495fd25dfa23e68a9e66ab67616d00001e028eec56f71025673fcb82f6e4",
+      "tracksTotal": 0,
+      "url": "https://open.spotify.com/playlist/6ylCJglCIAYgiGxdJhTIFL"
+    },
+    {
+      "id": "56F07ntvV4E5hCB1gHOYHx",
+      "name": "cnv after party",
+      "description": "",
+      "image": "https://image-cdn-ak.spotifycdn.com/image/ab67706c0000da845e077e4b2f42545bbf351c2d",
+      "tracksTotal": 0,
+      "url": "https://open.spotify.com/playlist/56F07ntvV4E5hCB1gHOYHx"
+    },
+    {
+      "id": "37ubxnU0bQjCyOXnRlNMCd",
+      "name": "DRILLIN’ ur mom",
+      "description": "",
+      "image": "",
+      "tracksTotal": 0,
+      "url": "https://open.spotify.com/playlist/37ubxnU0bQjCyOXnRlNMCd"
+    },
+    {
+      "id": "3W00UDM1Mx9Qy7ZKYydxmY",
+      "name": "WORKIN’ progress",
+      "description": "",
+      "image": "",
+      "tracksTotal": 0,
+      "url": "https://open.spotify.com/playlist/3W00UDM1Mx9Qy7ZKYydxmY"
+    },
+    {
+      "id": "2Fhkm3UcWH5QeSFzWA8dAc",
+      "name": "POPPIN' on yours",
+      "description": "pop a perc",
+      "image": "https://image-cdn-ak.spotifycdn.com/image/ab67706c0000da841bad8cfa22d93fb82e31dd08",
+      "tracksTotal": 0,
+      "url": "https://open.spotify.com/playlist/2Fhkm3UcWH5QeSFzWA8dAc"
+    },
+    {
+      "id": "64gFxxzpE2OwsM1GRKdYcm",
+      "name": "TRIPPIN' on shrooms",
+      "description": "",
+      "image": "https://image-cdn-ak.spotifycdn.com/image/ab67706c0000da841a93e776960cfc5dc3d11aae",
+      "tracksTotal": 0,
+      "url": "https://open.spotify.com/playlist/64gFxxzpE2OwsM1GRKdYcm"
+    },
+    {
+      "id": "15IY68wEqxhAVtP6beoguI",
+      "name": "CHILLIN’ on clouds",
+      "description": "se vuoi chillare",
+      "image": "https://image-cdn-ak.spotifycdn.com/image/ab67706c0000da8400685e2d05f9d0ee46af8ce9",
+      "tracksTotal": 0,
+      "url": "https://open.spotify.com/playlist/15IY68wEqxhAVtP6beoguI"
+    }
+  ],
   "topArtists": {
-    "short_term": [],
-    "medium_term": [],
-    "long_term": []
+    "short_term": [
+      {
+        "id": "1dlyjeDlgXalzt5oqbgWDs",
+        "rank": 1,
+        "name": "G.Mineiro",
+        "genres": [],
+        "image": "https://i.scdn.co/image/ab6761610000e5eb08b50c44aeb023b4378cbfeb",
+        "popularity": 0,
+        "url": "https://open.spotify.com/artist/1dlyjeDlgXalzt5oqbgWDs"
+      },
+      {
+        "id": "0ys2OFYzWYB5hRDLCsBqxt",
+        "rank": 2,
+        "name": "Fuerza Regida",
+        "genres": [],
+        "image": "https://i.scdn.co/image/ab6761610000e5ebce436c411ab2436c7ab2c04d",
+        "popularity": 0,
+        "url": "https://open.spotify.com/artist/0ys2OFYzWYB5hRDLCsBqxt"
+      },
+      {
+        "id": "5PVCzkHVhVLRLadPdJUdXB",
+        "rank": 3,
+        "name": "18K",
+        "genres": [],
+        "image": "https://i.scdn.co/image/ab6761610000e5eb7a775acb19ea5d5a166cf2f9",
+        "popularity": 0,
+        "url": "https://open.spotify.com/artist/5PVCzkHVhVLRLadPdJUdXB"
+      },
+      {
+        "id": "4tZwfgrHOc3mvqYlEYSvVi",
+        "rank": 4,
+        "name": "Daft Punk",
+        "genres": [],
+        "image": "https://i.scdn.co/image/ab6761610000e5ebd3aa7cc0e419b6c459b08e8e",
+        "popularity": 0,
+        "url": "https://open.spotify.com/artist/4tZwfgrHOc3mvqYlEYSvVi"
+      },
+      {
+        "id": "2E6AK3UPEGCvjnzuygCh2h",
+        "rank": 5,
+        "name": "Night Skinny",
+        "genres": [],
+        "image": "https://i.scdn.co/image/ab6761610000e5eb12c0084a75a8e3be3eaa62f2",
+        "popularity": 0,
+        "url": "https://open.spotify.com/artist/2E6AK3UPEGCvjnzuygCh2h"
+      },
+      {
+        "id": "44DWomjW1oDuxIoBIRpmQ4",
+        "rank": 6,
+        "name": "Rhove",
+        "genres": [],
+        "image": "https://i.scdn.co/image/ab6761610000e5ebda69ab7819f6f201b73f4d0b",
+        "popularity": 0,
+        "url": "https://open.spotify.com/artist/44DWomjW1oDuxIoBIRpmQ4"
+      },
+      {
+        "id": "2mCfJF2n60STC46nVkhuq5",
+        "rank": 7,
+        "name": "prima stanza a destra",
+        "genres": [],
+        "image": "https://i.scdn.co/image/ab6761610000e5ebcf57c8f0872de555b57cc4a6",
+        "popularity": 0,
+        "url": "https://open.spotify.com/artist/2mCfJF2n60STC46nVkhuq5"
+      },
+      {
+        "id": "0EUR8jz8L936AEbV2Spkca",
+        "rank": 8,
+        "name": "Kid Yugi",
+        "genres": [],
+        "image": "https://i.scdn.co/image/ab6761610000e5eb900850c7826b981368ed66df",
+        "popularity": 0,
+        "url": "https://open.spotify.com/artist/0EUR8jz8L936AEbV2Spkca"
+      },
+      {
+        "id": "5QS9NAK4AgJPTcRe472pZA",
+        "rank": 9,
+        "name": "Bb trickz",
+        "genres": [],
+        "image": "https://i.scdn.co/image/ab6761610000e5eb0e317390afaa39aac015e560",
+        "popularity": 0,
+        "url": "https://open.spotify.com/artist/5QS9NAK4AgJPTcRe472pZA"
+      },
+      {
+        "id": "4SRpFyqwIrO0xMX39HJnaU",
+        "rank": 10,
+        "name": "Sadturs",
+        "genres": [],
+        "image": "https://i.scdn.co/image/ab6761610000e5eb2bb1e150d55c691fae4fd78c",
+        "popularity": 0,
+        "url": "https://open.spotify.com/artist/4SRpFyqwIrO0xMX39HJnaU"
+      },
+      {
+        "id": "1vgQksyJ0IVz8y9XerEOy3",
+        "rank": 11,
+        "name": "Madame",
+        "genres": [],
+        "image": "https://i.scdn.co/image/ab6761610000e5eb3daf506677f39b60ab13bde1",
+        "popularity": 0,
+        "url": "https://open.spotify.com/artist/1vgQksyJ0IVz8y9XerEOy3"
+      },
+      {
+        "id": "4AK6F7OLvEQ5QYCBNiQWHq",
+        "rank": 12,
+        "name": "One Direction",
+        "genres": [],
+        "image": "https://i.scdn.co/image/5bb443424a1ad71603c43d67f5af1a04da6bb3c8",
+        "popularity": 0,
+        "url": "https://open.spotify.com/artist/4AK6F7OLvEQ5QYCBNiQWHq"
+      },
+      {
+        "id": "6iE4D1r501drzd1fyM6z9N",
+        "rank": 13,
+        "name": "Low-Red",
+        "genres": [],
+        "image": "https://i.scdn.co/image/ab6761610000e5eb2987bd860af799a47f2107c5",
+        "popularity": 0,
+        "url": "https://open.spotify.com/artist/6iE4D1r501drzd1fyM6z9N"
+      },
+      {
+        "id": "3DzlFEEKyk4jj7FuYnJSZZ",
+        "rank": 14,
+        "name": "Macello",
+        "genres": [],
+        "image": "https://i.scdn.co/image/ab6761610000e5ebb48d72e17f30ad65e57a3ae4",
+        "popularity": 0,
+        "url": "https://open.spotify.com/artist/3DzlFEEKyk4jj7FuYnJSZZ"
+      },
+      {
+        "id": "57XSE1wSSI6Xnpx6LMWAKN",
+        "rank": 15,
+        "name": "Promessa",
+        "genres": [],
+        "image": "https://i.scdn.co/image/ab6761610000e5ebf216ae197ba6d2e7747351e0",
+        "popularity": 0,
+        "url": "https://open.spotify.com/artist/57XSE1wSSI6Xnpx6LMWAKN"
+      },
+      {
+        "id": "5SulO4l40qDuV9zUGLZx7n",
+        "rank": 16,
+        "name": "Capo Plaza",
+        "genres": [],
+        "image": "https://i.scdn.co/image/ab6761610000e5ebb3df18f1cf89650d6ddaa534",
+        "popularity": 0,
+        "url": "https://open.spotify.com/artist/5SulO4l40qDuV9zUGLZx7n"
+      },
+      {
+        "id": "6PsQc21YZU7WNfiODG69Qk",
+        "rank": 17,
+        "name": "Tony Boy",
+        "genres": [],
+        "image": "https://i.scdn.co/image/ab6761610000e5eb147df5c91103469675d30fea",
+        "popularity": 0,
+        "url": "https://open.spotify.com/artist/6PsQc21YZU7WNfiODG69Qk"
+      },
+      {
+        "id": "7gjqZ8coFZimZDtdk04WP1",
+        "rank": 18,
+        "name": "MACE",
+        "genres": [],
+        "image": "https://i.scdn.co/image/ab6761610000e5eb97d2d15a9ca8372aff2bab9b",
+        "popularity": 0,
+        "url": "https://open.spotify.com/artist/7gjqZ8coFZimZDtdk04WP1"
+      },
+      {
+        "id": "4Xsf5hhfIyhTgiVymlPLA7",
+        "rank": 19,
+        "name": "22simba",
+        "genres": [],
+        "image": "https://i.scdn.co/image/ab6761610000e5ebc128a1b73412311762dd1d64",
+        "popularity": 0,
+        "url": "https://open.spotify.com/artist/4Xsf5hhfIyhTgiVymlPLA7"
+      },
+      {
+        "id": "1MRiIeZbc0cRuxOafDUCtH",
+        "rank": 20,
+        "name": "BLANCO",
+        "genres": [],
+        "image": "https://i.scdn.co/image/ab6761610000e5eb0ada312688928b4beb6ce2dc",
+        "popularity": 0,
+        "url": "https://open.spotify.com/artist/1MRiIeZbc0cRuxOafDUCtH"
+      }
+    ],
+    "medium_term": [
+      {
+        "id": "5PVCzkHVhVLRLadPdJUdXB",
+        "rank": 1,
+        "name": "18K",
+        "genres": [],
+        "image": "https://i.scdn.co/image/ab6761610000e5eb7a775acb19ea5d5a166cf2f9",
+        "popularity": 0,
+        "url": "https://open.spotify.com/artist/5PVCzkHVhVLRLadPdJUdXB"
+      },
+      {
+        "id": "5K4W6rqBFWDnAN6FQUkS6x",
+        "rank": 2,
+        "name": "Kanye West",
+        "genres": [],
+        "image": "https://i.scdn.co/image/ab6761610000e5eb6e835a500e791bf9c27a422a",
+        "popularity": 0,
+        "url": "https://open.spotify.com/artist/5K4W6rqBFWDnAN6FQUkS6x"
+      },
+      {
+        "id": "3DzlFEEKyk4jj7FuYnJSZZ",
+        "rank": 3,
+        "name": "Macello",
+        "genres": [],
+        "image": "https://i.scdn.co/image/ab6761610000e5ebb48d72e17f30ad65e57a3ae4",
+        "popularity": 0,
+        "url": "https://open.spotify.com/artist/3DzlFEEKyk4jj7FuYnJSZZ"
+      },
+      {
+        "id": "7tmTvmqgTBcX88ZrSHByrD",
+        "rank": 4,
+        "name": "nayt",
+        "genres": [],
+        "image": "https://i.scdn.co/image/ab6761610000e5eb7565091e419db252fcbe85ae",
+        "popularity": 0,
+        "url": "https://open.spotify.com/artist/7tmTvmqgTBcX88ZrSHByrD"
+      },
+      {
+        "id": "1dlyjeDlgXalzt5oqbgWDs",
+        "rank": 5,
+        "name": "G.Mineiro",
+        "genres": [],
+        "image": "https://i.scdn.co/image/ab6761610000e5eb08b50c44aeb023b4378cbfeb",
+        "popularity": 0,
+        "url": "https://open.spotify.com/artist/1dlyjeDlgXalzt5oqbgWDs"
+      },
+      {
+        "id": "4tZwfgrHOc3mvqYlEYSvVi",
+        "rank": 6,
+        "name": "Daft Punk",
+        "genres": [],
+        "image": "https://i.scdn.co/image/ab6761610000e5ebd3aa7cc0e419b6c459b08e8e",
+        "popularity": 0,
+        "url": "https://open.spotify.com/artist/4tZwfgrHOc3mvqYlEYSvVi"
+      },
+      {
+        "id": "0NlNru2YcUz6RbnpYGQz26",
+        "rank": 7,
+        "name": "Clave Especial",
+        "genres": [],
+        "image": "https://i.scdn.co/image/ab6761610000e5ebc8f9f4334a8583d976aeff0d",
+        "popularity": 0,
+        "url": "https://open.spotify.com/artist/0NlNru2YcUz6RbnpYGQz26"
+      },
+      {
+        "id": "6iE4D1r501drzd1fyM6z9N",
+        "rank": 8,
+        "name": "Low-Red",
+        "genres": [],
+        "image": "https://i.scdn.co/image/ab6761610000e5eb2987bd860af799a47f2107c5",
+        "popularity": 0,
+        "url": "https://open.spotify.com/artist/6iE4D1r501drzd1fyM6z9N"
+      },
+      {
+        "id": "6PsQc21YZU7WNfiODG69Qk",
+        "rank": 9,
+        "name": "Tony Boy",
+        "genres": [],
+        "image": "https://i.scdn.co/image/ab6761610000e5eb147df5c91103469675d30fea",
+        "popularity": 0,
+        "url": "https://open.spotify.com/artist/6PsQc21YZU7WNfiODG69Qk"
+      },
+      {
+        "id": "1vgQksyJ0IVz8y9XerEOy3",
+        "rank": 10,
+        "name": "Madame",
+        "genres": [],
+        "image": "https://i.scdn.co/image/ab6761610000e5eb3daf506677f39b60ab13bde1",
+        "popularity": 0,
+        "url": "https://open.spotify.com/artist/1vgQksyJ0IVz8y9XerEOy3"
+      },
+      {
+        "id": "0ys2OFYzWYB5hRDLCsBqxt",
+        "rank": 11,
+        "name": "Fuerza Regida",
+        "genres": [],
+        "image": "https://i.scdn.co/image/ab6761610000e5ebce436c411ab2436c7ab2c04d",
+        "popularity": 0,
+        "url": "https://open.spotify.com/artist/0ys2OFYzWYB5hRDLCsBqxt"
+      },
+      {
+        "id": "0RENwV6Phsp2y8nnFJ54UC",
+        "rank": 12,
+        "name": "Tredici Pietro",
+        "genres": [],
+        "image": "https://i.scdn.co/image/ab6761610000e5ebe646664fed4261778c2d6ed4",
+        "popularity": 0,
+        "url": "https://open.spotify.com/artist/0RENwV6Phsp2y8nnFJ54UC"
+      },
+      {
+        "id": "5k9ftVfZWQvoQkIEqcnTwx",
+        "rank": 13,
+        "name": "Visino Bianco",
+        "genres": [],
+        "image": "https://i.scdn.co/image/ab6761610000e5ebb1c58fd254ae0115d4c24525",
+        "popularity": 0,
+        "url": "https://open.spotify.com/artist/5k9ftVfZWQvoQkIEqcnTwx"
+      },
+      {
+        "id": "5mjasIBQQPIqA9GV2Ys61h",
+        "rank": 14,
+        "name": "chiello",
+        "genres": [],
+        "image": "https://i.scdn.co/image/ab6761610000e5ebd1183bfc534163905c5b058f",
+        "popularity": 0,
+        "url": "https://open.spotify.com/artist/5mjasIBQQPIqA9GV2Ys61h"
+      },
+      {
+        "id": "2E6AK3UPEGCvjnzuygCh2h",
+        "rank": 15,
+        "name": "Night Skinny",
+        "genres": [],
+        "image": "https://i.scdn.co/image/ab6761610000e5eb12c0084a75a8e3be3eaa62f2",
+        "popularity": 0,
+        "url": "https://open.spotify.com/artist/2E6AK3UPEGCvjnzuygCh2h"
+      },
+      {
+        "id": "7LmO2BJsbObtMqCPcpjjhq",
+        "rank": 16,
+        "name": "EMMA",
+        "genres": [],
+        "image": "https://i.scdn.co/image/ab6761610000e5ebc63edd1cbb6b3beb8722d966",
+        "popularity": 0,
+        "url": "https://open.spotify.com/artist/7LmO2BJsbObtMqCPcpjjhq"
+      },
+      {
+        "id": "2mCfJF2n60STC46nVkhuq5",
+        "rank": 17,
+        "name": "prima stanza a destra",
+        "genres": [],
+        "image": "https://i.scdn.co/image/ab6761610000e5ebcf57c8f0872de555b57cc4a6",
+        "popularity": 0,
+        "url": "https://open.spotify.com/artist/2mCfJF2n60STC46nVkhuq5"
+      },
+      {
+        "id": "3yiEJ9SByXZMXTwaKdVFN4",
+        "rank": 18,
+        "name": "Luchè",
+        "genres": [],
+        "image": "https://i.scdn.co/image/ab6761610000e5eb7287531ea9d2798f1bc496bb",
+        "popularity": 0,
+        "url": "https://open.spotify.com/artist/3yiEJ9SByXZMXTwaKdVFN4"
+      },
+      {
+        "id": "3l9OOqBvHs4SM91bWqtaQb",
+        "rank": 19,
+        "name": "yungest Moonstar",
+        "genres": [],
+        "image": "https://i.scdn.co/image/ab6761610000e5ebbd4ca2f930c2d8e77c6aad71",
+        "popularity": 0,
+        "url": "https://open.spotify.com/artist/3l9OOqBvHs4SM91bWqtaQb"
+      },
+      {
+        "id": "4oEO6Ud3efrjTNSR9SMleI",
+        "rank": 20,
+        "name": "Silent Bob",
+        "genres": [],
+        "image": "https://i.scdn.co/image/ab6761610000e5eb3703fbb7a00a12ccd3a636c4",
+        "popularity": 0,
+        "url": "https://open.spotify.com/artist/4oEO6Ud3efrjTNSR9SMleI"
+      }
+    ],
+    "long_term": [
+      {
+        "id": "6PsQc21YZU7WNfiODG69Qk",
+        "rank": 1,
+        "name": "Tony Boy",
+        "genres": [],
+        "image": "https://i.scdn.co/image/ab6761610000e5eb147df5c91103469675d30fea",
+        "popularity": 0,
+        "url": "https://open.spotify.com/artist/6PsQc21YZU7WNfiODG69Qk"
+      },
+      {
+        "id": "7tmTvmqgTBcX88ZrSHByrD",
+        "rank": 2,
+        "name": "nayt",
+        "genres": [],
+        "image": "https://i.scdn.co/image/ab6761610000e5eb7565091e419db252fcbe85ae",
+        "popularity": 0,
+        "url": "https://open.spotify.com/artist/7tmTvmqgTBcX88ZrSHByrD"
+      },
+      {
+        "id": "6iE4D1r501drzd1fyM6z9N",
+        "rank": 3,
+        "name": "Low-Red",
+        "genres": [],
+        "image": "https://i.scdn.co/image/ab6761610000e5eb2987bd860af799a47f2107c5",
+        "popularity": 0,
+        "url": "https://open.spotify.com/artist/6iE4D1r501drzd1fyM6z9N"
+      },
+      {
+        "id": "0EUR8jz8L936AEbV2Spkca",
+        "rank": 4,
+        "name": "Kid Yugi",
+        "genres": [],
+        "image": "https://i.scdn.co/image/ab6761610000e5eb900850c7826b981368ed66df",
+        "popularity": 0,
+        "url": "https://open.spotify.com/artist/0EUR8jz8L936AEbV2Spkca"
+      },
+      {
+        "id": "5dPBeuSKtu5vLz1Et8YSVv",
+        "rank": 5,
+        "name": "Mostro",
+        "genres": [],
+        "image": "https://i.scdn.co/image/ab6761610000e5ebf312712e6e225df496aebb40",
+        "popularity": 0,
+        "url": "https://open.spotify.com/artist/5dPBeuSKtu5vLz1Et8YSVv"
+      },
+      {
+        "id": "2K5nCggbhSZ00YCYP5qkZS",
+        "rank": 6,
+        "name": "Shiva",
+        "genres": [],
+        "image": "https://i.scdn.co/image/ab6761610000e5ebaef53e971834894d112256a6",
+        "popularity": 0,
+        "url": "https://open.spotify.com/artist/2K5nCggbhSZ00YCYP5qkZS"
+      },
+      {
+        "id": "0vAALEhfbmllIOX1t7k5KU",
+        "rank": 7,
+        "name": "Papa V",
+        "genres": [],
+        "image": "https://i.scdn.co/image/ab6761610000e5eb2b0f79124f085551a984ecbe",
+        "popularity": 0,
+        "url": "https://open.spotify.com/artist/0vAALEhfbmllIOX1t7k5KU"
+      },
+      {
+        "id": "23TFHmajVfBtlRx5MXqgoz",
+        "rank": 8,
+        "name": "Sfera Ebbasta",
+        "genres": [],
+        "image": "https://i.scdn.co/image/ab6761610000e5eb21b75feae67bdf60ecf2eed2",
+        "popularity": 0,
+        "url": "https://open.spotify.com/artist/23TFHmajVfBtlRx5MXqgoz"
+      },
+      {
+        "id": "5PVCzkHVhVLRLadPdJUdXB",
+        "rank": 9,
+        "name": "18K",
+        "genres": [],
+        "image": "https://i.scdn.co/image/ab6761610000e5eb7a775acb19ea5d5a166cf2f9",
+        "popularity": 0,
+        "url": "https://open.spotify.com/artist/5PVCzkHVhVLRLadPdJUdXB"
+      },
+      {
+        "id": "2E6AK3UPEGCvjnzuygCh2h",
+        "rank": 10,
+        "name": "Night Skinny",
+        "genres": [],
+        "image": "https://i.scdn.co/image/ab6761610000e5eb12c0084a75a8e3be3eaa62f2",
+        "popularity": 0,
+        "url": "https://open.spotify.com/artist/2E6AK3UPEGCvjnzuygCh2h"
+      },
+      {
+        "id": "5AZuEF0feCXMkUCwQiQlW7",
+        "rank": 11,
+        "name": "Marracash",
+        "genres": [],
+        "image": "https://i.scdn.co/image/ab6761610000e5eb8aa0ff279be0623fce3e6c9d",
+        "popularity": 0,
+        "url": "https://open.spotify.com/artist/5AZuEF0feCXMkUCwQiQlW7"
+      },
+      {
+        "id": "19i93sA0D7yS9dYoVNBqAA",
+        "rank": 12,
+        "name": "thasup",
+        "genres": [],
+        "image": "https://i.scdn.co/image/ab6761610000e5ebfe7c9cec92be2b63f9f71cab",
+        "popularity": 0,
+        "url": "https://open.spotify.com/artist/19i93sA0D7yS9dYoVNBqAA"
+      },
+      {
+        "id": "4UikIA2yhd0jVJSXD9IOJH",
+        "rank": 13,
+        "name": "FSK SATELLITE",
+        "genres": [],
+        "image": "https://i.scdn.co/image/ab6761610000e5eb6fb45bd139240ab56cc9cff4",
+        "popularity": 0,
+        "url": "https://open.spotify.com/artist/4UikIA2yhd0jVJSXD9IOJH"
+      },
+      {
+        "id": "4SRpFyqwIrO0xMX39HJnaU",
+        "rank": 14,
+        "name": "Sadturs",
+        "genres": [],
+        "image": "https://i.scdn.co/image/ab6761610000e5eb2bb1e150d55c691fae4fd78c",
+        "popularity": 0,
+        "url": "https://open.spotify.com/artist/4SRpFyqwIrO0xMX39HJnaU"
+      },
+      {
+        "id": "08ppjXEpROUgrG1X0DEquB",
+        "rank": 15,
+        "name": "Nerissima Serpe",
+        "genres": [],
+        "image": "https://i.scdn.co/image/ab6761610000e5eb85bfbdd590cbbc7e4642dcab",
+        "popularity": 0,
+        "url": "https://open.spotify.com/artist/08ppjXEpROUgrG1X0DEquB"
+      },
+      {
+        "id": "0fskdccy6fvnWMNMNPqEro",
+        "rank": 16,
+        "name": "PSICOLOGI",
+        "genres": [],
+        "image": "https://i.scdn.co/image/ab6761610000e5ebdcc378bc18a1e2833c17abf5",
+        "popularity": 0,
+        "url": "https://open.spotify.com/artist/0fskdccy6fvnWMNMNPqEro"
+      },
+      {
+        "id": "5DkmrXKeWgDS86KKEw45o6",
+        "rank": 17,
+        "name": "Rancore",
+        "genres": [],
+        "image": "https://i.scdn.co/image/ab6761610000e5eb5fda5df331194f137088887d",
+        "popularity": 0,
+        "url": "https://open.spotify.com/artist/5DkmrXKeWgDS86KKEw45o6"
+      },
+      {
+        "id": "0RENwV6Phsp2y8nnFJ54UC",
+        "rank": 18,
+        "name": "Tredici Pietro",
+        "genres": [],
+        "image": "https://i.scdn.co/image/ab6761610000e5ebe646664fed4261778c2d6ed4",
+        "popularity": 0,
+        "url": "https://open.spotify.com/artist/0RENwV6Phsp2y8nnFJ54UC"
+      },
+      {
+        "id": "12MCNZ3FEHpQtCYYHIRwNI",
+        "rank": 19,
+        "name": "DOBRO",
+        "genres": [],
+        "image": "https://i.scdn.co/image/ab6761610000e5ebdfd2c76262702a76517413f2",
+        "popularity": 0,
+        "url": "https://open.spotify.com/artist/12MCNZ3FEHpQtCYYHIRwNI"
+      },
+      {
+        "id": "3DzlFEEKyk4jj7FuYnJSZZ",
+        "rank": 20,
+        "name": "Macello",
+        "genres": [],
+        "image": "https://i.scdn.co/image/ab6761610000e5ebb48d72e17f30ad65e57a3ae4",
+        "popularity": 0,
+        "url": "https://open.spotify.com/artist/3DzlFEEKyk4jj7FuYnJSZZ"
+      }
+    ]
   },
   "topTracks": {
-    "short_term": [],
-    "medium_term": [],
-    "long_term": []
+    "short_term": [
+      {
+        "id": "6eLQXa6uk2EW8drsiKbABZ",
+        "rank": 1,
+        "name": "TU SANCHO",
+        "artist": "Fuerza Regida",
+        "artists": [
+          "Fuerza Regida"
+        ],
+        "album": "111XPANTIA",
+        "image": "https://i.scdn.co/image/ab67616d0000b273a2e90fbdec84b25e46573469",
+        "durationMs": 177994,
+        "url": "https://open.spotify.com/track/6eLQXa6uk2EW8drsiKbABZ"
+      },
+      {
+        "id": "7mzVhsCXQmjVUbH0rpTvF3",
+        "rank": 2,
+        "name": "a la mala",
+        "artist": "Bb trickz",
+        "artists": [
+          "Bb trickz"
+        ],
+        "album": "sugarhiii",
+        "image": "https://i.scdn.co/image/ab67616d0000b273ab8751f9ed4bd318a4a6c7b2",
+        "durationMs": 91280,
+        "url": "https://open.spotify.com/track/7mzVhsCXQmjVUbH0rpTvF3"
+      },
+      {
+        "id": "1XzHasEgB7QoXXtoD3sUKY",
+        "rank": 3,
+        "name": "E Allora",
+        "artist": "G.Mineiro",
+        "artists": [
+          "G.Mineiro",
+          "Flatpearl",
+          "Succo"
+        ],
+        "album": "È O G.",
+        "image": "https://i.scdn.co/image/ab67616d0000b27307bdc873725e7084d79d693f",
+        "durationMs": 111692,
+        "url": "https://open.spotify.com/track/1XzHasEgB7QoXXtoD3sUKY"
+      },
+      {
+        "id": "0y7D9JFF6APyFc18atzG9n",
+        "rank": 4,
+        "name": "Splinter Cell",
+        "artist": "G.Mineiro",
+        "artists": [
+          "G.Mineiro",
+          "Flatpearl",
+          "Jiz",
+          "Succo"
+        ],
+        "album": "È O G.",
+        "image": "https://i.scdn.co/image/ab67616d0000b27307bdc873725e7084d79d693f",
+        "durationMs": 117293,
+        "url": "https://open.spotify.com/track/0y7D9JFF6APyFc18atzG9n"
+      },
+      {
+        "id": "5HVFs7yWSDpUJoFHNdyEb3",
+        "rank": 5,
+        "name": "Scendo E Cerco Un’Altra",
+        "artist": "G.Mineiro",
+        "artists": [
+          "G.Mineiro",
+          "Flatpearl",
+          "Succo"
+        ],
+        "album": "È O G.",
+        "image": "https://i.scdn.co/image/ab67616d0000b27307bdc873725e7084d79d693f",
+        "durationMs": 129090,
+        "url": "https://open.spotify.com/track/5HVFs7yWSDpUJoFHNdyEb3"
+      },
+      {
+        "id": "6V5is95sXeIFYVwxSGzbfl",
+        "rank": 6,
+        "name": "Salta Salta",
+        "artist": "G.Mineiro",
+        "artists": [
+          "G.Mineiro",
+          "Succo"
+        ],
+        "album": "È O G.",
+        "image": "https://i.scdn.co/image/ab67616d0000b27307bdc873725e7084d79d693f",
+        "durationMs": 161945,
+        "url": "https://open.spotify.com/track/6V5is95sXeIFYVwxSGzbfl"
+      },
+      {
+        "id": "5eVWsjUs8OUajXFUWk9fXo",
+        "rank": 7,
+        "name": "Devo Andare Con Le Mie Winx (feat. Rhove)",
+        "artist": "G.Mineiro",
+        "artists": [
+          "G.Mineiro",
+          "Rhove",
+          "Flatpearl",
+          "Succo"
+        ],
+        "album": "È O G.",
+        "image": "https://i.scdn.co/image/ab67616d0000b27307bdc873725e7084d79d693f",
+        "durationMs": 133740,
+        "url": "https://open.spotify.com/track/5eVWsjUs8OUajXFUWk9fXo"
+      },
+      {
+        "id": "4LZxnlgJeHhfbCEE9chEyk",
+        "rank": 8,
+        "name": "HowToBasic (feat. Macello)",
+        "artist": "18K",
+        "artists": [
+          "18K",
+          "Macello",
+          "d/rose",
+          "4997"
+        ],
+        "album": "IO",
+        "image": "https://i.scdn.co/image/ab67616d0000b273eca93a542006a365cca4d46d",
+        "durationMs": 173706,
+        "url": "https://open.spotify.com/track/4LZxnlgJeHhfbCEE9chEyk"
+      },
+      {
+        "id": "2DYIzxD4Nob2oKlsuw1Hwf",
+        "rank": 9,
+        "name": "Loco In Discoteca (feat. Yuri Redicopa)",
+        "artist": "G.Mineiro",
+        "artists": [
+          "G.Mineiro",
+          "Flatpearl",
+          "Succo",
+          "Yuri Redicopa",
+          "Soy Ares"
+        ],
+        "album": "È O G.",
+        "image": "https://i.scdn.co/image/ab67616d0000b27307bdc873725e7084d79d693f",
+        "durationMs": 151110,
+        "url": "https://open.spotify.com/track/2DYIzxD4Nob2oKlsuw1Hwf"
+      },
+      {
+        "id": "77pDO4WZPIdkwFve0iHWnb",
+        "rank": 10,
+        "name": "Por Esos Ojos",
+        "artist": "Fuerza Regida",
+        "artists": [
+          "Fuerza Regida"
+        ],
+        "album": "111XPANTIA",
+        "image": "https://i.scdn.co/image/ab67616d0000b273a2e90fbdec84b25e46573469",
+        "durationMs": 188064,
+        "url": "https://open.spotify.com/track/77pDO4WZPIdkwFve0iHWnb"
+      },
+      {
+        "id": "5x7VBmlQSaQt8fEuc9EyiS",
+        "rank": 11,
+        "name": "PATROCINIO",
+        "artist": "G.Mineiro",
+        "artists": [
+          "G.Mineiro",
+          "Flatpearl",
+          "Succo"
+        ],
+        "album": "È O G.",
+        "image": "https://i.scdn.co/image/ab67616d0000b27307bdc873725e7084d79d693f",
+        "durationMs": 143122,
+        "url": "https://open.spotify.com/track/5x7VBmlQSaQt8fEuc9EyiS"
+      },
+      {
+        "id": "6PFcZkm5FHEItCbki9PNQ4",
+        "rank": 12,
+        "name": "Come Sempre",
+        "artist": "18K",
+        "artists": [
+          "18K",
+          "d/rose"
+        ],
+        "album": "IO",
+        "image": "https://i.scdn.co/image/ab67616d0000b273eca93a542006a365cca4d46d",
+        "durationMs": 183760,
+        "url": "https://open.spotify.com/track/6PFcZkm5FHEItCbki9PNQ4"
+      },
+      {
+        "id": "3hpm0fTeSqlhJbnqAgaLZs",
+        "rank": 13,
+        "name": "Marlboro Rojo",
+        "artist": "Fuerza Regida",
+        "artists": [
+          "Fuerza Regida"
+        ],
+        "album": "111XPANTIA",
+        "image": "https://i.scdn.co/image/ab67616d0000b273a2e90fbdec84b25e46573469",
+        "durationMs": 184173,
+        "url": "https://open.spotify.com/track/3hpm0fTeSqlhJbnqAgaLZs"
+      },
+      {
+        "id": "3qdeRGn9erK9sjs1kUtBys",
+        "rank": 14,
+        "name": "CHAVALITAS",
+        "artist": "Fuerza Regida",
+        "artists": [
+          "Fuerza Regida"
+        ],
+        "album": "111XPANTIA",
+        "image": "https://i.scdn.co/image/ab67616d0000b273a2e90fbdec84b25e46573469",
+        "durationMs": 164482,
+        "url": "https://open.spotify.com/track/3qdeRGn9erK9sjs1kUtBys"
+      },
+      {
+        "id": "6n5g6FiWp9NudnRnUwyoZN",
+        "rank": 15,
+        "name": "Malpensa",
+        "artist": "G.Mineiro",
+        "artists": [
+          "G.Mineiro",
+          "Flatpearl",
+          "Succo"
+        ],
+        "album": "È O G.",
+        "image": "https://i.scdn.co/image/ab67616d0000b27307bdc873725e7084d79d693f",
+        "durationMs": 120000,
+        "url": "https://open.spotify.com/track/6n5g6FiWp9NudnRnUwyoZN"
+      },
+      {
+        "id": "1xR2HmV7qovmslYoX4lYJv",
+        "rank": 16,
+        "name": "Doin' it Right (feat. Panda Bear)",
+        "artist": "Daft Punk",
+        "artists": [
+          "Daft Punk",
+          "Panda Bear"
+        ],
+        "album": "Random Access Memories",
+        "image": "https://i.scdn.co/image/ab67616d0000b2734d22198f946d9b32f25fc263",
+        "durationMs": 251317,
+        "url": "https://open.spotify.com/track/1xR2HmV7qovmslYoX4lYJv"
+      },
+      {
+        "id": "5mp6OBKCAjN4UYRvhOuUze",
+        "rank": 17,
+        "name": "Tu Boda",
+        "artist": "Oscar Maydon",
+        "artists": [
+          "Oscar Maydon",
+          "Fuerza Regida"
+        ],
+        "album": "Rico o Muerto, Vol. 1",
+        "image": "https://i.scdn.co/image/ab67616d0000b2730697c8807331635b1ca25e84",
+        "durationMs": 225880,
+        "url": "https://open.spotify.com/track/5mp6OBKCAjN4UYRvhOuUze"
+      },
+      {
+        "id": "4IAo6wBAenxPH7sanCkdWW",
+        "rank": 18,
+        "name": "Impunità (feat. Scaccia)",
+        "artist": "G.Mineiro",
+        "artists": [
+          "G.Mineiro",
+          "Scaccia",
+          "Flatpearl",
+          "Succo"
+        ],
+        "album": "È O G.",
+        "image": "https://i.scdn.co/image/ab67616d0000b27307bdc873725e7084d79d693f",
+        "durationMs": 173648,
+        "url": "https://open.spotify.com/track/4IAo6wBAenxPH7sanCkdWW"
+      },
+      {
+        "id": "7iF2cN4gElJy7ZErnzG26p",
+        "rank": 19,
+        "name": "Into'yam",
+        "artist": "Lizwi",
+        "artists": [
+          "Lizwi",
+          "MaxHuck",
+          "Micky Miller"
+        ],
+        "album": "Into'yam",
+        "image": "https://i.scdn.co/image/ab67616d0000b2731253713e729798025d0627c8",
+        "durationMs": 226132,
+        "url": "https://open.spotify.com/track/7iF2cN4gElJy7ZErnzG26p"
+      },
+      {
+        "id": "0OMRAvrtLWE2TvcXorRiB9",
+        "rank": 20,
+        "name": "La Gozadera (feat. Marc Anthony)",
+        "artist": "Gente De Zona",
+        "artists": [
+          "Gente De Zona",
+          "Marc Anthony"
+        ],
+        "album": "Visualízate",
+        "image": "https://i.scdn.co/image/ab67616d0000b2731e3b9d4d53e0ac334cd9eec4",
+        "durationMs": 203049,
+        "url": "https://open.spotify.com/track/0OMRAvrtLWE2TvcXorRiB9"
+      }
+    ],
+    "medium_term": [
+      {
+        "id": "1Jm7ogwJ4TuqBnkUXQOVL2",
+        "rank": 1,
+        "name": "DAVVERO",
+        "artist": "Macello",
+        "artists": [
+          "Macello",
+          "18K",
+          "4997"
+        ],
+        "album": "DAVVERO",
+        "image": "https://i.scdn.co/image/ab67616d0000b27360012ae8e0987bf8f104cf00",
+        "durationMs": 193846,
+        "url": "https://open.spotify.com/track/1Jm7ogwJ4TuqBnkUXQOVL2"
+      },
+      {
+        "id": "0pAsfHVIWHbTnQa1UxLa0z",
+        "rank": 2,
+        "name": "infinito",
+        "artist": "prima stanza a destra",
+        "artists": [
+          "prima stanza a destra"
+        ],
+        "album": "infinito",
+        "image": "https://i.scdn.co/image/ab67616d0000b273b9ed2c386776fa3a912f5ba8",
+        "durationMs": 138530,
+        "url": "https://open.spotify.com/track/0pAsfHVIWHbTnQa1UxLa0z"
+      },
+      {
+        "id": "6eLQXa6uk2EW8drsiKbABZ",
+        "rank": 3,
+        "name": "TU SANCHO",
+        "artist": "Fuerza Regida",
+        "artists": [
+          "Fuerza Regida"
+        ],
+        "album": "111XPANTIA",
+        "image": "https://i.scdn.co/image/ab67616d0000b273a2e90fbdec84b25e46573469",
+        "durationMs": 177994,
+        "url": "https://open.spotify.com/track/6eLQXa6uk2EW8drsiKbABZ"
+      },
+      {
+        "id": "0BeeP8VwfLIziYkdv0m6lQ",
+        "rank": 4,
+        "name": "Buttare, buttare (feat. Latrelle)",
+        "artist": "18K",
+        "artists": [
+          "18K",
+          "Latrelle"
+        ],
+        "album": "ANTI ANTI (Doom Edition)",
+        "image": "https://i.scdn.co/image/ab67616d0000b273851ad364597a1a39bffce2e5",
+        "durationMs": 164572,
+        "url": "https://open.spotify.com/track/0BeeP8VwfLIziYkdv0m6lQ"
+      },
+      {
+        "id": "40N9mmfRHFIy5GnVLuQVKB",
+        "rank": 5,
+        "name": "UCCIDERMI/DROGARMI",
+        "artist": "Macello",
+        "artists": [
+          "Macello"
+        ],
+        "album": "PENSIERI CATTIVI",
+        "image": "https://i.scdn.co/image/ab67616d0000b2732cc4994daf3011cb7a45e2ca",
+        "durationMs": 151461,
+        "url": "https://open.spotify.com/track/40N9mmfRHFIy5GnVLuQVKB"
+      },
+      {
+        "id": "2FU3zLtHc8pgWfom7D4td7",
+        "rank": 6,
+        "name": "Tutto ciò che odio (feat. 18K)",
+        "artist": "SCAR",
+        "artists": [
+          "SCAR",
+          "18K"
+        ],
+        "album": "Esordienti 1994",
+        "image": "https://i.scdn.co/image/ab67616d0000b2735b0bb44477a2703d8306ca55",
+        "durationMs": 193992,
+        "url": "https://open.spotify.com/track/2FU3zLtHc8pgWfom7D4td7"
+      },
+      {
+        "id": "7Ji1sx470UGJRw7gx2kr95",
+        "rank": 7,
+        "name": "LUZ VERDE",
+        "artist": "Clave Especial",
+        "artists": [
+          "Clave Especial"
+        ],
+        "album": "LUZ VERDE",
+        "image": "https://i.scdn.co/image/ab67616d0000b2736cd248ee92942d8f0c7a1a34",
+        "durationMs": 170420,
+        "url": "https://open.spotify.com/track/7Ji1sx470UGJRw7gx2kr95"
+      },
+      {
+        "id": "0r3nMF80NSIuPIxeod4aoG",
+        "rank": 8,
+        "name": "Beso (Fruta Fresca)",
+        "artist": "Wakyin",
+        "artists": [
+          "Wakyin",
+          "Carlos Vives"
+        ],
+        "album": "Beso (Fruta Fresca)",
+        "image": "https://i.scdn.co/image/ab67616d0000b2730c1faf936b87bdf93bee8d7e",
+        "durationMs": 197694,
+        "url": "https://open.spotify.com/track/0r3nMF80NSIuPIxeod4aoG"
+      },
+      {
+        "id": "7N1SQcqAkSvUgnlvrU0Et8",
+        "rank": 9,
+        "name": "Aida",
+        "artist": "Rino Gaetano",
+        "artists": [
+          "Rino Gaetano"
+        ],
+        "album": "Aida",
+        "image": "https://i.scdn.co/image/ab67616d0000b2738eed6c8c5170260de5990d64",
+        "durationMs": 264021,
+        "url": "https://open.spotify.com/track/7N1SQcqAkSvUgnlvrU0Et8"
+      },
+      {
+        "id": "7mzVhsCXQmjVUbH0rpTvF3",
+        "rank": 10,
+        "name": "a la mala",
+        "artist": "Bb trickz",
+        "artists": [
+          "Bb trickz"
+        ],
+        "album": "sugarhiii",
+        "image": "https://i.scdn.co/image/ab67616d0000b273ab8751f9ed4bd318a4a6c7b2",
+        "durationMs": 91280,
+        "url": "https://open.spotify.com/track/7mzVhsCXQmjVUbH0rpTvF3"
+      },
+      {
+        "id": "77pDO4WZPIdkwFve0iHWnb",
+        "rank": 11,
+        "name": "Por Esos Ojos",
+        "artist": "Fuerza Regida",
+        "artists": [
+          "Fuerza Regida"
+        ],
+        "album": "111XPANTIA",
+        "image": "https://i.scdn.co/image/ab67616d0000b273a2e90fbdec84b25e46573469",
+        "durationMs": 188064,
+        "url": "https://open.spotify.com/track/77pDO4WZPIdkwFve0iHWnb"
+      },
+      {
+        "id": "1XzHasEgB7QoXXtoD3sUKY",
+        "rank": 12,
+        "name": "E Allora",
+        "artist": "G.Mineiro",
+        "artists": [
+          "G.Mineiro",
+          "Flatpearl",
+          "Succo"
+        ],
+        "album": "È O G.",
+        "image": "https://i.scdn.co/image/ab67616d0000b27307bdc873725e7084d79d693f",
+        "durationMs": 111692,
+        "url": "https://open.spotify.com/track/1XzHasEgB7QoXXtoD3sUKY"
+      },
+      {
+        "id": "4ptqjgfRZSCTDgnZWp2TFa",
+        "rank": 13,
+        "name": "KALASHNIKOV",
+        "artist": "Clave Especial",
+        "artists": [
+          "Clave Especial"
+        ],
+        "album": "MIJA NO TE ASUSTES",
+        "image": "https://i.scdn.co/image/ab67616d0000b273c24261c63305b3209fde0fa9",
+        "durationMs": 129500,
+        "url": "https://open.spotify.com/track/4ptqjgfRZSCTDgnZWp2TFa"
+      },
+      {
+        "id": "40LYHoLTm9yzoM0T3hBKVp",
+        "rank": 14,
+        "name": "La Canzone Dei Vecchi Amanti",
+        "artist": "Franco Battiato",
+        "artists": [
+          "Franco Battiato"
+        ],
+        "album": "Fleurs",
+        "image": "https://i.scdn.co/image/ab67616d0000b27350d73c3af790971dc61ba9aa",
+        "durationMs": 205146,
+        "url": "https://open.spotify.com/track/40LYHoLTm9yzoM0T3hBKVp"
+      },
+      {
+        "id": "0sqNyE1IULjfZsjEaH15MK",
+        "rank": 15,
+        "name": "Camicia e Zanotti",
+        "artist": "Dagood YL",
+        "artists": [
+          "Dagood YL",
+          "twentyone21"
+        ],
+        "album": "#FREEDAG (album)",
+        "image": "https://i.scdn.co/image/ab67616d0000b273341ccc68b6784f1cadd80fab",
+        "durationMs": 227139,
+        "url": "https://open.spotify.com/track/0sqNyE1IULjfZsjEaH15MK"
+      },
+      {
+        "id": "1VfsXyM7HR9Un8531iLb8j",
+        "rank": 16,
+        "name": "COCAINE RMX",
+        "artist": "Macello",
+        "artists": [
+          "Macello",
+          "Jordan"
+        ],
+        "album": "PENSIERI CATTIVI",
+        "image": "https://i.scdn.co/image/ab67616d0000b2732cc4994daf3011cb7a45e2ca",
+        "durationMs": 131000,
+        "url": "https://open.spotify.com/track/1VfsXyM7HR9Un8531iLb8j"
+      },
+      {
+        "id": "5SfU6uuXDnVou2uSBs7Tit",
+        "rank": 17,
+        "name": "Arbre Magique - Live",
+        "artist": "Calcutta ",
+        "artists": [
+          "Calcutta "
+        ],
+        "album": "Mainstream +",
+        "image": "https://i.scdn.co/image/ab67616d0000b273c646c7e3234fec58ffe0d415",
+        "durationMs": 148493,
+        "url": "https://open.spotify.com/track/5SfU6uuXDnVou2uSBs7Tit"
+      },
+      {
+        "id": "1IhVRg36kRu39hPqnRpboy",
+        "rank": 18,
+        "name": "CASA MIA (feat. 22simba, prima stanza a destra)",
+        "artist": "Voga",
+        "artists": [
+          "Voga",
+          "22simba",
+          "prima stanza a destra"
+        ],
+        "album": "CHI AMA NON DIMENTICA",
+        "image": "https://i.scdn.co/image/ab67616d0000b2730dc0391c92e021bc3bb6db98",
+        "durationMs": 212571,
+        "url": "https://open.spotify.com/track/1IhVRg36kRu39hPqnRpboy"
+      },
+      {
+        "id": "6UB9mx6rC0xuFcbHhTq1UM",
+        "rank": 19,
+        "name": "Non sento niente",
+        "artist": "18K",
+        "artists": [
+          "18K",
+          "4997"
+        ],
+        "album": "ANTI ANTI (Doom Edition)",
+        "image": "https://i.scdn.co/image/ab67616d0000b273851ad364597a1a39bffce2e5",
+        "durationMs": 180458,
+        "url": "https://open.spotify.com/track/6UB9mx6rC0xuFcbHhTq1UM"
+      },
+      {
+        "id": "6x59lSlNU7TvsJZy7134uC",
+        "rank": 20,
+        "name": "ROSONES",
+        "artist": "Jorsshh",
+        "artists": [
+          "Jorsshh",
+          "Fuerza Regida"
+        ],
+        "album": "ROSONES",
+        "image": "https://i.scdn.co/image/ab67616d0000b2733ad59c0dc625065abeef8bed",
+        "durationMs": 178079,
+        "url": "https://open.spotify.com/track/6x59lSlNU7TvsJZy7134uC"
+      }
+    ],
+    "long_term": [
+      {
+        "id": "0BeeP8VwfLIziYkdv0m6lQ",
+        "rank": 1,
+        "name": "Buttare, buttare (feat. Latrelle)",
+        "artist": "18K",
+        "artists": [
+          "18K",
+          "Latrelle"
+        ],
+        "album": "ANTI ANTI (Doom Edition)",
+        "image": "https://i.scdn.co/image/ab67616d0000b273851ad364597a1a39bffce2e5",
+        "durationMs": 164572,
+        "url": "https://open.spotify.com/track/0BeeP8VwfLIziYkdv0m6lQ"
+      },
+      {
+        "id": "0EimIRiiRd76tqlo9LPLUJ",
+        "rank": 2,
+        "name": "iN uNa buBbLe",
+        "artist": "yungest Moonstar",
+        "artists": [
+          "yungest Moonstar",
+          "thasup"
+        ],
+        "album": "sFaCioLaTe miXTaPe",
+        "image": "https://i.scdn.co/image/ab67616d0000b273f6da146e4b29f6cb182c6a72",
+        "durationMs": 196363,
+        "url": "https://open.spotify.com/track/0EimIRiiRd76tqlo9LPLUJ"
+      },
+      {
+        "id": "0NUzLcrkkXeztSVlJYHOug",
+        "rank": 3,
+        "name": "gRaZie A Dio",
+        "artist": "yungest Moonstar",
+        "artists": [
+          "yungest Moonstar",
+          "thasup"
+        ],
+        "album": "sFaCioLaTe miXTaPe",
+        "image": "https://i.scdn.co/image/ab67616d0000b273f6da146e4b29f6cb182c6a72",
+        "durationMs": 129798,
+        "url": "https://open.spotify.com/track/0NUzLcrkkXeztSVlJYHOug"
+      },
+      {
+        "id": "1Jm7ogwJ4TuqBnkUXQOVL2",
+        "rank": 4,
+        "name": "DAVVERO",
+        "artist": "Macello",
+        "artists": [
+          "Macello",
+          "18K",
+          "4997"
+        ],
+        "album": "DAVVERO",
+        "image": "https://i.scdn.co/image/ab67616d0000b27360012ae8e0987bf8f104cf00",
+        "durationMs": 193846,
+        "url": "https://open.spotify.com/track/1Jm7ogwJ4TuqBnkUXQOVL2"
+      },
+      {
+        "id": "2zYzOaECWTf16Hdp4bc8Zu",
+        "rank": 5,
+        "name": "1234 POSSE (feat. Faneto, Artie 5ive, Astro, Niky Savage, Lito, Low-Red, Kid Yugi, RRARI DAL TACCO)",
+        "artist": "Sadturs",
+        "artists": [
+          "Sadturs",
+          "KIID",
+          "Faneto",
+          "Artie 5ive",
+          "Astro",
+          "Niky Savage",
+          "Lito",
+          "Low-Red",
+          "Kid Yugi",
+          "RRARI DAL TACCO"
+        ],
+        "album": "NO REGULAR MUSIC (Deluxe)",
+        "image": "https://i.scdn.co/image/ab67616d0000b273b09dc928bd7b221b81425261",
+        "durationMs": 278802,
+        "url": "https://open.spotify.com/track/2zYzOaECWTf16Hdp4bc8Zu"
+      },
+      {
+        "id": "7L8cIUKXToCr6PV9hFoX3Q",
+        "rank": 6,
+        "name": "Cosa mi manchi a fare",
+        "artist": "Calcutta ",
+        "artists": [
+          "Calcutta "
+        ],
+        "album": "Mainstream (Deluxe Edition)",
+        "image": "https://i.scdn.co/image/ab67616d0000b2738417b499a1b885a9300a91eb",
+        "durationMs": 169306,
+        "url": "https://open.spotify.com/track/7L8cIUKXToCr6PV9hFoX3Q"
+      },
+      {
+        "id": "3zWXAQuZ2cgRb2p0xqAORS",
+        "rank": 7,
+        "name": "se ne va",
+        "artist": "nayt",
+        "artists": [
+          "nayt",
+          "3D"
+        ],
+        "album": "HABITAT",
+        "image": "https://i.scdn.co/image/ab67616d0000b2739b37c1d6e9a9fa593545e7fa",
+        "durationMs": 163416,
+        "url": "https://open.spotify.com/track/3zWXAQuZ2cgRb2p0xqAORS"
+      },
+      {
+        "id": "3vN7oPCojoXNx16J1PGSGa",
+        "rank": 8,
+        "name": "Sorpresa",
+        "artist": "nayt",
+        "artists": [
+          "nayt",
+          "Orang3"
+        ],
+        "album": "DOOM",
+        "image": "https://i.scdn.co/image/ab67616d0000b2731179961da1f00ddadaf7ac74",
+        "durationMs": 146493,
+        "url": "https://open.spotify.com/track/3vN7oPCojoXNx16J1PGSGa"
+      },
+      {
+        "id": "2puGJHRifrmNO7gTAeWm0z",
+        "rank": 9,
+        "name": "Guerra E Pace",
+        "artist": "PSICOLOGI",
+        "artists": [
+          "PSICOLOGI"
+        ],
+        "album": "2001",
+        "image": "https://i.scdn.co/image/ab67616d0000b273f7bcc0622a73f546ee1a4084",
+        "durationMs": 165000,
+        "url": "https://open.spotify.com/track/2puGJHRifrmNO7gTAeWm0z"
+      },
+      {
+        "id": "70gVZxR7RpzCF3BvmOrNCW",
+        "rank": 10,
+        "name": "X La Famiglia Mia",
+        "artist": "Low-Red",
+        "artists": [
+          "Low-Red",
+          "Pherro"
+        ],
+        "album": "MARIO II",
+        "image": "https://i.scdn.co/image/ab67616d0000b273303f733ee3f0f5e48c19bc32",
+        "durationMs": 112945,
+        "url": "https://open.spotify.com/track/70gVZxR7RpzCF3BvmOrNCW"
+      },
+      {
+        "id": "3QRNjJSHxaKEFojEbSY0ow",
+        "rank": 11,
+        "name": "Sensibile",
+        "artist": "Low-Red",
+        "artists": [
+          "Low-Red",
+          "ilovethisbeat"
+        ],
+        "album": "Sensibile",
+        "image": "https://i.scdn.co/image/ab67616d0000b2732db8e561c65e04b2fe72418b",
+        "durationMs": 174000,
+        "url": "https://open.spotify.com/track/3QRNjJSHxaKEFojEbSY0ow"
+      },
+      {
+        "id": "1MGm3zOE0Ql0WWcU5ZvjOx",
+        "rank": 12,
+        "name": "La Diabla",
+        "artist": "Xavi",
+        "artists": [
+          "Xavi"
+        ],
+        "album": "NEXT",
+        "image": "https://i.scdn.co/image/ab67616d0000b273de88a62b44d6c0b2dda333a3",
+        "durationMs": 172264,
+        "url": "https://open.spotify.com/track/1MGm3zOE0Ql0WWcU5ZvjOx"
+      },
+      {
+        "id": "0pAsfHVIWHbTnQa1UxLa0z",
+        "rank": 13,
+        "name": "infinito",
+        "artist": "prima stanza a destra",
+        "artists": [
+          "prima stanza a destra"
+        ],
+        "album": "infinito",
+        "image": "https://i.scdn.co/image/ab67616d0000b273b9ed2c386776fa3a912f5ba8",
+        "durationMs": 138530,
+        "url": "https://open.spotify.com/track/0pAsfHVIWHbTnQa1UxLa0z"
+      },
+      {
+        "id": "3FLkS2oPHsvaQUBRCU7pFc",
+        "rank": 14,
+        "name": "Juno Love",
+        "artist": "Nico Morano",
+        "artists": [
+          "Nico Morano",
+          "Mewhy"
+        ],
+        "album": "Opposite Minds",
+        "image": "https://i.scdn.co/image/ab67616d0000b2736d4a7734c13c4e883e387353",
+        "durationMs": 446585,
+        "url": "https://open.spotify.com/track/3FLkS2oPHsvaQUBRCU7pFc"
+      },
+      {
+        "id": "6eLQXa6uk2EW8drsiKbABZ",
+        "rank": 15,
+        "name": "TU SANCHO",
+        "artist": "Fuerza Regida",
+        "artists": [
+          "Fuerza Regida"
+        ],
+        "album": "111XPANTIA",
+        "image": "https://i.scdn.co/image/ab67616d0000b273a2e90fbdec84b25e46573469",
+        "durationMs": 177994,
+        "url": "https://open.spotify.com/track/6eLQXa6uk2EW8drsiKbABZ"
+      },
+      {
+        "id": "5Ioxi1pWQQWjiOhMefdjRJ",
+        "rank": 16,
+        "name": "TZUNAMI",
+        "artist": "DrefGold",
+        "artists": [
+          "DrefGold"
+        ],
+        "album": "GOBLIN",
+        "image": "https://i.scdn.co/image/ab67616d0000b273523c36481fc2f40178251da0",
+        "durationMs": 169510,
+        "url": "https://open.spotify.com/track/5Ioxi1pWQQWjiOhMefdjRJ"
+      },
+      {
+        "id": "4uyBH6kDnTIlXSxCCIPh7Y",
+        "rank": 17,
+        "name": "verità",
+        "artist": "Tredici Pietro",
+        "artists": [
+          "Tredici Pietro"
+        ],
+        "album": "NON GUARDARE GIÙ",
+        "image": "https://i.scdn.co/image/ab67616d0000b27344cd0b1ddac60d79327f815e",
+        "durationMs": 175706,
+        "url": "https://open.spotify.com/track/4uyBH6kDnTIlXSxCCIPh7Y"
+      },
+      {
+        "id": "19P2sdYBJRyYMcAB527d00",
+        "rank": 18,
+        "name": "Il Debito",
+        "artist": "nayt",
+        "artists": [
+          "nayt"
+        ],
+        "album": "Lettera Q",
+        "image": "https://i.scdn.co/image/ab67616d0000b273a0c7ce4c5dff167542456733",
+        "durationMs": 217449,
+        "url": "https://open.spotify.com/track/19P2sdYBJRyYMcAB527d00"
+      },
+      {
+        "id": "2V5h4oenUhCeWXsJualNd7",
+        "rank": 19,
+        "name": "Bo Bom",
+        "artist": "Moeaike",
+        "artists": [
+          "Moeaike"
+        ],
+        "album": "Bo Bom",
+        "image": "https://i.scdn.co/image/ab67616d0000b2737f51079618825fbd2508121c",
+        "durationMs": 258000,
+        "url": "https://open.spotify.com/track/2V5h4oenUhCeWXsJualNd7"
+      },
+      {
+        "id": "2FU3zLtHc8pgWfom7D4td7",
+        "rank": 20,
+        "name": "Tutto ciò che odio (feat. 18K)",
+        "artist": "SCAR",
+        "artists": [
+          "SCAR",
+          "18K"
+        ],
+        "album": "Esordienti 1994",
+        "image": "https://i.scdn.co/image/ab67616d0000b2735b0bb44477a2703d8306ca55",
+        "durationMs": 193992,
+        "url": "https://open.spotify.com/track/2FU3zLtHc8pgWfom7D4td7"
+      }
+    ]
   },
-  "error": "Credenziali Spotify non configurate. I dati saranno generati durante il deploy."
+  "error": null
 }
