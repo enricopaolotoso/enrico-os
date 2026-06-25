@@ -1,0 +1,56 @@
+<article
+  class="mac-window spotify-window"
+  data-window="spotify"
+  data-app-title="Spotify"
+  style="--left: 14vw; --top: 8vh; --w: 1040px; --h: 680px;"
+  role="dialog"
+  aria-label="Spotify"
+  aria-modal="false"
+>
+  <div class="window-chrome spotify-chrome">
+    <div class="traffic">
+      <button type="button" data-close aria-label="Chiudi Spotify"></button>
+      <button type="button" data-minimize aria-label="Riduci Spotify"></button>
+      <button type="button" data-maximize aria-label="Ingrandisci Spotify"></button>
+    </div>
+    <strong>Spotify</strong>
+  </div>
+
+  <div class="spotify-layout">
+    <aside class="spotify-sidebar" aria-label="Sezioni Spotify">
+      <div class="spotify-brand"><span aria-hidden="true">●</span> Spotify</div>
+      <button type="button" class="is-active" data-spotify-section="playlists">Playlist</button>
+      <button type="button" data-spotify-section="artists">Top artisti</button>
+      <button type="button" data-spotify-section="tracks">Top tracce</button>
+    </aside>
+
+    <main class="spotify-main">
+      <header class="spotify-profile">
+        <div class="spotify-profile-avatar" data-spotify-profile-avatar aria-hidden="true">E</div>
+        <div>
+          <small>Profilo Spotify</small>
+          <h2 data-spotify-profile-name>Enrico Toso</h2>
+          <p>Ultimo aggiornamento: <time data-spotify-updated>—</time></p>
+        </div>
+        <a data-spotify-profile-link href="https://open.spotify.com/" target="_blank" rel="noreferrer">Apri su Spotify</a>
+      </header>
+
+      <nav class="spotify-ranges" aria-label="Intervallo temporale" hidden="hidden">
+        <button type="button" class="is-active" data-spotify-range="short_term">Ultime 4 settimane</button>
+        <button type="button" data-spotify-range="medium_term">Ultimi 6 mesi</button>
+        <button type="button" data-spotify-range="long_term">Lungo periodo</button>
+      </nav>
+
+      <section class="spotify-content" aria-live="polite">
+        <div class="spotify-loading" data-spotify-loading>
+          <span></span><span></span><span></span><span></span>
+        </div>
+        <div class="spotify-error" data-spotify-error hidden>
+          <strong>Dati Spotify non disponibili</strong>
+          <p>L’app tornerà disponibile dopo il prossimo aggiornamento dei dati.</p>
+        </div>
+        <div data-spotify-results hidden></div>
+      </section>
+    </main>
+  </div>
+</article>

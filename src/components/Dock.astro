@@ -32,8 +32,14 @@ const apps = [
   },
   {
     id: 'settings',
-    label: 'Impostazioni',
+    label: 'Informazioni',
     icon: 'settings.png',
+    fallback: 'S'
+  },
+  {
+    id: 'spotify',
+    label: 'Spotify',
+    icon: 'spotify.svg',
     fallback: 'S'
   },
   {
@@ -53,7 +59,7 @@ const apps = [
 
 <nav class="dock" aria-label="Dock">
   <div class="dock-inner">
-    {apps.slice(0, 6).map((app) => (
+    {apps.slice(0, 7).map((app) => (
       <button
         class="dock-item"
         data-open={app.id}
@@ -77,7 +83,7 @@ const apps = [
 
     <span class="dock-separator" aria-hidden="true"></span>
 
-    {apps.slice(6).map((app) => (
+    {apps.slice(7).map((app) => (
       <button
         class="dock-item dock-item-utility"
         data-open={app.id}

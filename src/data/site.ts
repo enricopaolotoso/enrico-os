@@ -1,20 +1,38 @@
 export const site = {
-  name: 'Enrico Paolo Toso',
+  name: 'Enrico Toso',
+  fullName: 'Enrico Paolo Toso',
+  alternateName: 'Enrico Paolo Toso',
   shortName: 'Enrico',
-  title: 'Enrico Paolo Toso | Digital Builder',
-  description: 'Portfolio personale di Enrico Paolo Toso, digital builder a Padova. Branding, web, e-commerce, contenuti, AI e progetti digitali.',
-  url: 'https://www.enricopaolotoso.it',
-  email: null as string | null,
+  title: 'Enrico Toso | Digital Builder a Padova',
+  description: 'Sito personale di Enrico Toso, digital builder di Padova. Branding, siti web, e-commerce, contenuti, AI e progetti digitali tra Netmarket, Raviez e nuove sperimentazioni.',
+  url: 'https://enricotoso.com',
+  email: 'enricopaolotoso@gmail.com' as string | null,
   location: 'Padova, Veneto',
   role: 'Digital Builder',
   socials: {
-    instagram: null,
-    tiktok: null,
-    linkedin: null,
-    youtube: null,
+    instagram: 'https://instagram.com/enricotosoo',
+    tiktok: 'https://tiktok.com/@enricotosoo',
+    linkedin: 'https://linkedin.com/in/enricopaolotoso',
+    youtube: 'https://youtube.com/@enricopaolotoso',
+    spotify: 'https://open.spotify.com/user/31hw2lkqvzpj6ydjolecujt5xewy?si=N2NqBLwXQC-NCCcnK7sc7Q',
     raviez: null,
     netmarket: null
   } as Record<string, string | null>,
+  affiliations: [
+    { name: 'Netmarket', url: 'https://www.netmarket.it' },
+    { name: 'Raviez', url: null }
+  ],
+  knowsAbout: [
+    'Branding',
+    'Web Design',
+    'E-commerce',
+    'Digital Marketing',
+    'Content Creation',
+    'Artificial Intelligence',
+    'WooCommerce',
+    'Social Media',
+    'Brand Strategy'
+  ],
   intro: {
     headline: 'Portfolio personale, reimmaginato come un desktop Mac.',
     text: 'Ogni app, cartella e file apre una parte diversa di ciò che costruisco: brand, siti web, contenuti, e-commerce, AI e progetti digitali.'
@@ -28,7 +46,16 @@ export const site = {
     { id: 'youtube', title: 'YouTube Archive', type: 'folder', app: 'finder', x: 1040, y: 85 },
     { id: 'branding', title: 'Branding.case', type: 'pdf', app: 'finder', x: 250, y: 360 },
     { id: 'ecommerce', title: 'E-commerce Builds', type: 'folder', app: 'finder', x: 720, y: 360 },
-    { id: 'ai', title: 'AI Workflows.note', type: 'note', app: 'notes', x: 1010, y: 350 }
+    { id: 'ai', title: 'AI Workflows.note', type: 'note', app: 'notes', x: 1010, y: 350 },
+    {
+      id: 'youtube-2016',
+      title: 'youtube 2016',
+      type: 'cover',
+      href: 'https://youtu.be/hTxmt7l1pao',
+      image: '/images/copertina-video.jpg',
+      x: 500,
+      y: 390
+    }
   ],
   projects: [
     {
@@ -65,7 +92,7 @@ export const site = {
       id: 'about',
       folder: 'Profilo',
       title: 'Chi è Enrico',
-      body: `Enrico Paolo Toso è un digital builder di Padova.\n\nCostruisce progetti digitali unendo branding, contenuti, sviluppo web, marketing e AI.\n\nNon lavora su una singola disciplina: il suo focus è progettare sistemi completi, dove identità, prodotto, comunicazione e distribuzione funzionano insieme.`
+      body: `Enrico Toso è un digital builder di Padova. Il suo nome completo è Enrico Paolo Toso.\n\nCostruisce brand, siti web, e-commerce, contenuti e progetti digitali combinando comunicazione, marketing, tecnologia e AI.\n\nQuesto portfolio raccoglie una parte del suo percorso tra Netmarket, Raviez e nuove sperimentazioni digitali, con un approccio che unisce identità, prodotto, comunicazione e distribuzione.`
     },
     {
       id: 'manifesto',

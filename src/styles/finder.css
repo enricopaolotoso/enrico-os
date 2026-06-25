@@ -233,7 +233,15 @@
   grid-template-columns: minmax(0, 1fr) 250px;
 }
 
+.finder-panels {
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
 .finder-grid {
+  width: 100%;
+  height: 100%;
   min-width: 0;
   min-height: 0;
   overflow: auto;
@@ -242,6 +250,10 @@
   align-content: start;
   gap: 22px 14px;
   padding: 24px;
+}
+
+.finder-grid[hidden] {
+  display: none;
 }
 
 .finder-file {
@@ -281,6 +293,39 @@
     0 8px 18px rgba(0, 0, 0, 0.10),
     inset 0 1px 0 rgba(255, 255, 255, 0.76);
 }
+
+.finder-file-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: inherit;
+}
+
+.finder-document-icon {
+  color: #fff;
+  font-size: 17px;
+  font-weight: 800;
+  background: linear-gradient(145deg, #ff5f57, #ff2d55);
+}
+
+.finder-app-icon {
+  padding: 0;
+  overflow: hidden;
+  background: transparent;
+}
+
+.finder-social-icon {
+  color: #fff;
+  font-size: 19px;
+  font-weight: 800;
+  border: 0;
+}
+
+.finder-social-icon.instagram { background: linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045); }
+.finder-social-icon.tiktok { color:#25f4ee;background:#090909;text-shadow:2px 1px #fe2c55; }
+.finder-social-icon.linkedin { background:#0a66c2; }
+.finder-social-icon.youtube { background:#ff0033; }
+.finder-social-icon.spotify { color:#080808;background:#1ed760; }
 
 .finder-file-name {
   max-width: 100%;
@@ -322,6 +367,32 @@
   grid-column: 1 / -1;
   margin: 30px auto;
   color: var(--muted);
+}
+
+.finder-placeholder {
+  grid-column: 1 / -1;
+  align-self: center;
+  justify-self: center;
+  max-width: 330px;
+  padding: 34px;
+  color: var(--muted);
+  text-align: center;
+}
+
+.finder-placeholder strong {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--text);
+  font-size: 17px;
+}
+
+.finder-placeholder p {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.finder-mobile-tabs {
+  display: none;
 }
 
 .finder-preview {
@@ -435,6 +506,35 @@
     min-height: 50px;
   }
 
+  .finder-mobile-tabs {
+    min-height: 42px;
+    display: flex;
+    gap: 4px;
+    padding: 6px 8px;
+    overflow-x: auto;
+    border-bottom: 1px solid var(--line);
+    background: rgba(248,248,250,.92);
+    scrollbar-width: none;
+  }
+
+  .finder-mobile-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .finder-mobile-tabs button {
+    flex: 0 0 auto;
+    padding: 6px 10px;
+    border-radius: 8px;
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 650;
+  }
+
+  .finder-mobile-tabs button.is-active {
+    color: #fff;
+    background: var(--blue-2);
+  }
+
   .finder-toolbar {
     grid-template-columns: auto minmax(0, 1fr);
   }
@@ -457,6 +557,10 @@
 
   .finder-content {
     grid-template-columns: 1fr;
+  }
+
+  .finder-panels {
+    height: 100%;
   }
 
   .finder-preview {

@@ -6,20 +6,62 @@ import Dock from '../components/Dock.astro';
 import FinderWindow from '../components/windows/FinderWindow.astro';
 import ProjectsWindow from '../components/windows/ProjectsWindow.astro';
 import PhotosWindow from '../components/windows/PhotosWindow.astro';
+import SpotifyWindow from '../components/windows/SpotifyWindow.astro';
 const apps = [
   { id: 'finder', label: 'Finder', icon: 'finder.png', fallback: '🗂️' },
   { id: 'mail', label: 'Mail', icon: 'mail.png', fallback: '✉️' },
   { id: 'notes', label: 'Note', icon: 'notes.png', fallback: '📝' },
   { id: 'photos', label: 'Foto', icon: 'photos.png', fallback: '🌈' },
   { id: 'terminal', label: 'Terminale', icon: 'terminal.png', fallback: '⌘' },
-  { id: 'settings', label: 'Impostazioni', icon: 'settings.png', fallback: '⚙️' },
+  { id: 'settings', label: 'Informazioni', icon: 'settings.png', fallback: '⚙️' },
+  { id: 'spotify', label: 'Spotify', icon: 'spotify.svg', fallback: 'S' },
   { id: 'launchpad', label: 'App', icon: 'launchpad.png', fallback: '✳︎' },
   { id: 'trash', label: 'Cestino', icon: 'trash.png', fallback: '🗑️' }
 ];
 ---
 <BaseLayout>
-  <main id="desktop" class="desktop-shell" data-active-app="Finder">
+  <main id="desktop" class="desktop-shell" data-active-app="Desktop">
+    <h1 class="sr-only">Enrico Toso — Digital Builder a Padova</h1>
+    <section class="seo-content sr-only" aria-label="Profilo di Enrico Toso">
+      <h2>Portfolio personale di Enrico Toso</h2>
+      <p>
+        Enrico Toso è un digital builder di Padova. Il suo nome completo è Enrico Paolo Toso.
+        Lavora su branding, siti web, e-commerce, contenuti, marketing digitale, intelligenza
+        artificiale e progetti digitali.
+      </p>
+      <p>
+        È collegato a Netmarket e Raviez e costruisce progetti che uniscono identità, prodotto,
+        comunicazione, tecnologia e distribuzione. Questo sito è il portfolio personale di
+        Enrico Toso.
+      </p>
+    </section>
     <div class="wallpaper" aria-hidden="true"></div>
+
+    <section
+      id="mobileLockScreen"
+      class="mobile-lock-screen"
+      role="button"
+      tabindex="0"
+      aria-label="Tocca per entrare nel portfolio"
+    >
+      <div class="mobile-lock-content">
+        <div class="mobile-lock-date" id="mobileLockDate">Oggi</div>
+        <time class="mobile-lock-time" id="mobileLockTime">--:--</time>
+
+        <article class="ios-notification" aria-label="Notifica di benvenuto da Enrico Toso">
+          <header>
+            <span class="ios-notification-avatar" aria-hidden="true">E</span>
+            <strong>Enrico Toso</strong>
+            <small>adesso</small>
+          </header>
+          <h2>Benvenuto 👋</h2>
+          <p>Questo è il mio spazio digitale. Tocca lo schermo ed esplora il desktop.</p>
+        </article>
+      </div>
+
+      <p class="mobile-lock-enter">tap to enter</p>
+    </section>
+
     <div id="loader" class="loader" role="status" aria-live="polite" aria-label="Caricamento portfolio">
       <div class="loader-card">
         <div class="loader-spinner"></div>
@@ -30,19 +72,46 @@ const apps = [
     <MenuBar />
 
     <section class="desktop-items" aria-label="Elementi desktop">
-      {site.desktopItems.map((item) => (
-        <button class={`desktop-item ${item.type}`} data-open={item.app} data-item={item.id} style={`--x:${item.x}px;--y:${item.y}px`}>
-          <span class="desktop-thumb" aria-hidden="true">
-            {item.type === 'folder' && <img src="/apple-icons/folder.png" alt="" onerror="this.style.display='none'" />}
-            {item.type === 'document' && <span class="doc-thumb">MD</span>}
-            {item.type === 'video' && <span class="video-thumb">▶</span>}
-            {item.type === 'pdf' && <span class="pdf-thumb">PDF</span>}
-            {item.type === 'note' && <span class="note-thumb">Nota</span>}
-            {item.type === 'appfile' && <span class="app-thumb">N</span>}
-          </span>
-          <span class="desktop-label">{item.title}</span>
-        </button>
-      ))}
+      {site.desktopItems.map((item) => {
+        const content = (
+          <>
+            <span class="desktop-thumb" aria-hidden="true">
+              {item.type === 'folder' && <img src="/apple-icons/folder.png" alt="" onerror="this.style.display='none'" />}
+              {item.type === 'document' && <span class="doc-thumb">MD</span>}
+              {item.type === 'video' && <span class="video-thumb">▶</span>}
+              {item.type === 'pdf' && <span class="pdf-thumb">PDF</span>}
+              {item.type === 'note' && <span class="note-thumb">Nota</span>}
+              {item.type === 'appfile' && <span class="app-thumb">N</span>}
+              {item.type === 'cover' && <img src={item.image} alt="" />}
+            </span>
+            <span class="desktop-label">{item.title}</span>
+          </>
+        );
+
+        return item.href ? (
+          <a
+            class={`desktop-item ${item.type}`}
+            href={item.href}
+            target="_blank"
+            rel="noreferrer"
+            data-item={item.id}
+            style={`--x:${item.x}px;--y:${item.y}px`}
+            aria-label={`Apri ${item.title} su YouTube`}
+          >
+            {content}
+          </a>
+        ) : (
+          <button
+            type="button"
+            class={`desktop-item ${item.type}`}
+            data-open={item.app}
+            data-item={item.id}
+            style={`--x:${item.x}px;--y:${item.y}px`}
+          >
+            {content}
+          </button>
+        );
+      })}
     </section>
 
     <section id="tour" class="tour" role="dialog" aria-modal="true" aria-labelledby="tourTitle" aria-describedby="tourText" aria-hidden="true">
@@ -81,28 +150,55 @@ const apps = [
       </article>
 
       <PhotosWindow />
+      <SpotifyWindow />
 
       <article class="mac-window mail-window" data-window="mail" data-app-title="Mail" style="--left: 17vw; --top: 17vh; --w: 920px; --h: 600px;" role="dialog" aria-label="Contatti" aria-modal="false">
         <div class="window-chrome"><div class="traffic"><button type="button" data-close aria-label="Chiudi Mail"></button><button type="button" data-minimize aria-label="Riduci Mail"></button><button type="button" data-maximize aria-label="Ingrandisci Mail"></button></div><strong>Mail</strong></div>
         <div class="mail-layout">
-          <aside><button type="button" class="active">📥 Opportunità</button><button type="button" disabled>⭐ Collaborazioni</button><button type="button" disabled>📤 In uscita</button></aside>
-          <article class="mail-compose">
-            <div><span>A:</span><strong>{site.name}</strong></div>
-            <div><span>Oggetto:</span><strong>Nuova opportunità / collaborazione</strong></div>
-            <p>Per progetti digitali, branding, siti web, e-commerce, contenuti, AI workflow o nuove opportunità imprenditoriali.</p>
-            {site.email ? (
-              <div class="mail-actions">
-                <a href={`mailto:${site.email}`}>Apri email</a>
-                <button type="button" data-copy={site.email}>Copia email</button>
-                {site.socials.linkedin && <a href={site.socials.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>}
-              </div>
-            ) : (
-              <div class="contact-pending" role="status">
-                <strong>Contatti in aggiornamento</strong>
-                <p>I recapiti pubblici non sono ancora stati configurati. Questa sezione verrà attivata appena saranno disponibili.</p>
-              </div>
-            )}
-          </article>
+          <aside>
+            <button type="button" class="active">✉️ Nuovo messaggio</button>
+            <div class="mail-sidebar-note">
+              <strong>Contatta Enrico</strong>
+              <p>Puoi scrivermi direttamente da qui. Riceverò il messaggio nella mia casella personale.</p>
+            </div>
+          </aside>
+          <form
+            class="mail-compose contact-form"
+            action={`https://formsubmit.co/ajax/${site.email}`}
+            method="POST"
+            data-contact-form
+          >
+            <input type="hidden" name="_template" value="table" />
+            <input type="hidden" name="_captcha" value="false" />
+            <input type="text" name="_honey" class="sr-only" tabindex="-1" autocomplete="off" />
+
+            <div class="mail-recipient">
+              <span>A:</span>
+              <strong>Enrico Toso</strong>
+            </div>
+
+            <label>
+              <span>La tua email</span>
+              <input type="email" name="email" placeholder="nome@esempio.com" autocomplete="email" required />
+            </label>
+
+            <label>
+              <span>Oggetto</span>
+              <input type="text" name="_subject" placeholder="Di cosa vuoi parlarmi?" maxlength="140" required />
+            </label>
+
+            <label class="mail-message-field">
+              <span>Messaggio</span>
+              <textarea name="message" placeholder="Scrivi qui il tuo messaggio…" minlength="10" required></textarea>
+            </label>
+
+            <footer class="contact-form-footer">
+              <p>I dati inseriti saranno utilizzati esclusivamente per rispondere al messaggio.</p>
+              <button type="submit" class="contact-submit">Invia messaggio</button>
+            </footer>
+
+            <p class="contact-form-status" data-contact-status aria-live="polite"></p>
+          </form>
         </div>
       </article>
 
@@ -115,35 +211,49 @@ const apps = [
         </div>
       </article>
 
-      <article class="mac-window settings-window" data-window="settings" data-app-title="Impostazioni" style="--left: 19vw; --top: 12vh; --w: 900px; --h: 620px;" role="dialog" aria-label="Impostazioni" aria-modal="false">
-        <div class="window-chrome"><div class="traffic"><button type="button" data-close aria-label="Chiudi Impostazioni"></button><button type="button" data-minimize aria-label="Riduci Impostazioni"></button><button type="button" data-maximize aria-label="Ingrandisci Impostazioni"></button></div><strong>Impostazioni</strong></div>
-        <div class="settings-layout">
-          <aside><button type="button" class="active" data-settings-section="general">Generali</button><button type="button" data-settings-section="skills">Competenze</button><button type="button" data-settings-section="contact">Contatto</button></aside>
-          <section data-settings-panel="general">
-            <div class="profile-card"><div class="avatar">E</div><div><h2>{site.name}</h2><p>{site.role} · {site.location}</p></div></div>
-            <div class="settings-grid">
-              <div><span>Ruolo</span><strong>{site.role}</strong></div>
-              <div><span>Base</span><strong>{site.location}</strong></div>
-              <div><span>Focus</span><strong>Brand / Web / Content / AI</strong></div>
-              <div><span>Stato</span><strong>Portfolio operativo</strong></div>
-            </div>
-          </section>
-          <section data-settings-panel="skills" hidden>
-            <h2>Competenze operative</h2>
-            <div class="module-list">{site.modules.map((m) => <div><strong>{m.name}</strong><p>{m.text}</p><span aria-label={`${m.value} su 100`}><i style={`width:${m.value}%`}></i></span></div>)}</div>
-          </section>
-          <section data-settings-panel="contact" hidden>
-            <h2>Contatti</h2>
-            <div class="contact-pending"><strong>Recapiti pubblici in aggiornamento</strong><p>Il portfolio non espone indirizzi o profili non verificati.</p></div>
-          </section>
-        </div>
+      <article class="mac-window settings-window about-window" data-window="settings" data-app-title="Informazioni" style="--left: 28vw; --top: 8vh; --w: 620px; --h: 680px;" role="dialog" aria-label="Informazioni su Enrico Toso" aria-modal="false">
+        <div class="window-chrome"><div class="traffic"><button type="button" data-close aria-label="Chiudi Informazioni"></button><button type="button" data-minimize aria-label="Riduci Informazioni"></button><button type="button" data-maximize aria-label="Ingrandisci Informazioni"></button></div><strong>Informazioni</strong></div>
+        <article class="about-profile">
+          <div class="about-profile-photo">
+            <span aria-hidden="true">E</span>
+            <img
+              src="/images/foto-profilo-enricotoso.jpg"
+              alt="Enrico Toso"
+              onerror="this.remove()"
+            />
+          </div>
+          <h2>Enrico Toso</h2>
+          <p class="about-profile-established">Est. 2004</p>
+
+          <div class="about-profile-copy">
+            <p>
+              Sono Enrico Toso, digital builder di Padova. Costruisco brand, siti web,
+              e-commerce, contenuti e progetti digitali combinando comunicazione,
+              marketing, tecnologia e intelligenza artificiale.
+            </p>
+            <p>
+              Il mio nome completo è Enrico Paolo Toso. Questo portfolio raccoglie una
+              parte del mio percorso tra Netmarket, Raviez e nuove sperimentazioni,
+              con un approccio che unisce identità, prodotto, comunicazione e distribuzione.
+            </p>
+          </div>
+
+          <nav class="about-profile-socials" aria-label="Profili social di Enrico Toso">
+            <a href={site.socials.instagram} target="_blank" rel="me noreferrer">Instagram</a>
+            <a href={site.socials.linkedin} target="_blank" rel="me noreferrer">LinkedIn</a>
+            <a href={site.socials.youtube} target="_blank" rel="me noreferrer">YouTube</a>
+          </nav>
+
+          <footer>© {new Date().getFullYear()} Enrico Toso</footer>
+        </article>
       </article>
 
       <article class="mac-window readme-window" data-window="readme" data-app-title="README.md" style="--left: 28vw; --top: 16vh; --w: 680px; --h: 560px;" role="dialog" aria-label="README" aria-modal="false">
         <div class="window-chrome"><div class="traffic"><button type="button" data-close aria-label="Chiudi README"></button><button type="button" data-minimize aria-label="Riduci README"></button><button type="button" data-maximize aria-label="Ingrandisci README"></button></div><strong>README.md</strong><button class="info-btn" type="button" aria-label="Informazioni">ⓘ</button></div>
         <article class="readme-body">
-          <h1>README.md</h1>
-          <p>Questo portfolio è un desktop interattivo. Apri app, cartelle e file per esplorare progetti, competenze, contenuti e canali di contatto.</p>
+          <h2>README.md</h2>
+          <p>Sono Enrico Toso, digital builder di Padova. Il mio nome completo è Enrico Paolo Toso. Costruisco brand, siti web, e-commerce, contenuti e progetti digitali combinando comunicazione, marketing, tecnologia e AI.</p>
+          <p>Questo portfolio raccoglie una parte del mio percorso tra Netmarket, Raviez e nuove sperimentazioni digitali.</p>
           <h2>Da dove iniziare</h2>
           <ul><li><strong>Finder</strong> raccoglie progetti e archivio.</li><li><strong>Note</strong> contiene bio, manifesto e timeline.</li><li><strong>Foto</strong> mostra contenuti e progetti visivi.</li><li><strong>Mail</strong> mostra i recapiti quando sono disponibili.</li><li><strong>Terminale</strong> contiene comandi rapidi ed easter egg.</li></ul>
           <p>Premi <kbd>Esc</kbd> per chiudere la finestra in primo piano.</p>

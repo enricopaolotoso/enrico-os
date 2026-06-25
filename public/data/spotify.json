@@ -1,0 +1,20 @@
+{
+  "updatedAt": "2026-06-25T13:53:57.834Z",
+  "profile": {
+    "displayName": "",
+    "url": "",
+    "image": ""
+  },
+  "playlists": [],
+  "topArtists": {
+    "short_term": [],
+    "medium_term": [],
+    "long_term": []
+  },
+  "topTracks": {
+    "short_term": [],
+    "medium_term": [],
+    "long_term": []
+  },
+  "error": "Credenziali Spotify non configurate. I dati saranno generati durante il deploy."
+}

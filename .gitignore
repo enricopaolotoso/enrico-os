@@ -16,6 +16,12 @@ pnpm-debug.log*
 # environment variables
 .env
 .env.production
+.env.local
+.env.*.local
+
+# local deployment keys
+ssh-enrico-os
+ssh-enrico-os.pub
 
 # macOS-specific files
 .DS_Store

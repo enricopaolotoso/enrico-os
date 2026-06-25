@@ -5,16 +5,24 @@ import '../styles/menu-dock.css';
 import '../styles/window-manager.css';
 import '../styles/apps.css';
 import '../styles/finder.css';
+import '../styles/spotify.css';
 import '../styles/responsive.css';
 import { site } from '../data/site';
 
 const { title = site.title, description = site.description } = Astro.props;
 
-const schema = {
+const socialUrls = Object.values(site.socials).filter(
+  (value): value is string => value !== null
+);
+
+const personSchema = {
   '@context': 'https://schema.org',
   '@type': 'Person',
   name: site.name,
+  alternateName: [site.alternateName],
   jobTitle: site.role,
+  description: site.description,
+  email: site.email,
   address: {
     '@type': 'PostalAddress',
     addressLocality: 'Padova',
@@ -22,8 +30,41 @@ const schema = {
     addressCountry: 'IT'
   },
   url: site.url,
-  sameAs: Object.values(site.socials).filter((value): value is string => value !== null)
+  knowsAbout: site.knowsAbout,
+  affiliation: site.affiliations.map((affiliation) => ({
+    '@type': 'Organization',
+    name: affiliation.name,
+    ...(affiliation.url ? { url: affiliation.url } : {})
+  })),
+  sameAs: socialUrls
 };
+
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: site.name,
+  alternateName: `Portfolio di ${site.name}`,
+  url: `${site.url}/`,
+  description: site.description,
+  inLanguage: 'it-IT'
+};
+
+const profilePageSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfilePage',
+  name: site.title,
+  url: `${site.url}/`,
+  description: site.description,
+  inLanguage: 'it-IT',
+  mainEntity: {
+    '@type': 'Person',
+    name: site.name,
+    alternateName: [site.alternateName],
+    url: site.url
+  }
+};
+
+const structuredData = [personSchema, websiteSchema, profilePageSchema];
 ---
 <!doctype html>
 <html lang="it">
@@ -33,20 +74,33 @@ const schema = {
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="robots" content="index, follow" />
-    <link rel="canonical" href={site.url} />
+    <link rel="canonical" href={`${site.url}/`} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:url" content={site.url} />
+    <meta property="og:url" content={`${site.url}/`} />
+    <meta property="og:site_name" content={site.name} />
     <meta property="og:image" content={`${site.url}/social-card.png`} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Enrico Paolo Toso — Digital Builder" />
+    <meta property="og:image:alt" content="Enrico Toso — Digital Builder a Padova" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={`${site.url}/social-card.png`} />
     <meta name="theme-color" content="#0b1220" />
-    <script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+    <!-- Google tag (gtag.js) -->
+    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-9ZCGFDD1KW"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', 'G-9ZCGFDD1KW');
+    </script>
   </head>
   <body>
     <slot />

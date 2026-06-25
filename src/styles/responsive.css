@@ -25,27 +25,155 @@
     background-size: cover;
   }
 
+  .mobile-lock-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 5000;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: max(72px, calc(env(safe-area-inset-top) + 48px)) 18px max(34px, calc(env(safe-area-inset-bottom) + 20px));
+    overflow: hidden;
+    color: #fff;
+    text-align: center;
+    background:
+      linear-gradient(180deg, rgba(0,0,0,.08), rgba(0,0,0,.02) 48%, rgba(0,0,0,.28)),
+      url("/images/sfondo-desktop-mobile.jpg") center/cover no-repeat;
+    text-shadow: 0 2px 12px rgba(0,0,0,.28);
+    transition: opacity .42s ease, visibility .42s ease, transform .42s cubic-bezier(.2,.8,.2,1);
+    cursor: pointer;
+  }
+
+  .mobile-lock-screen::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(180deg, rgba(0,0,0,.12), transparent 38%, rgba(0,0,0,.16));
+  }
+
+  .mobile-lock-screen.is-unlocked {
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(1.035);
+    pointer-events: none;
+  }
+
+  .mobile-lock-content {
+    width: min(100%, 430px);
+  }
+
+  .mobile-lock-date {
+    font-size: 19px;
+    font-weight: 550;
+    letter-spacing: -.02em;
+  }
+
+  .mobile-lock-time {
+    display: block;
+    margin: -2px 0 34px;
+    font-size: clamp(76px, 22vw, 102px);
+    font-weight: 250;
+    line-height: 1;
+    letter-spacing: -.075em;
+  }
+
+  .ios-notification {
+    width: 100%;
+    padding: 13px 15px 15px;
+    color: rgba(20,20,22,.96);
+    text-align: left;
+    text-shadow: none;
+    border: 1px solid rgba(255,255,255,.62);
+    border-radius: 22px;
+    background: rgba(246,246,248,.76);
+    box-shadow: 0 16px 40px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,255,255,.72);
+    backdrop-filter: blur(28px) saturate(1.65);
+    -webkit-backdrop-filter: blur(28px) saturate(1.65);
+  }
+
+  .ios-notification header {
+    display: grid;
+    grid-template-columns: 30px 1fr auto;
+    align-items: center;
+    gap: 9px;
+    margin-bottom: 9px;
+  }
+
+  .ios-notification-avatar {
+    width: 30px;
+    height: 30px;
+    display: grid;
+    place-items: center;
+    border-radius: 8px;
+    color: #fff;
+    font-weight: 750;
+    background: linear-gradient(135deg,#0a84ff,#5e5ce6);
+  }
+
+  .ios-notification header strong {
+    font-size: 13px;
+  }
+
+  .ios-notification header small {
+    color: rgba(60,60,67,.58);
+    font-size: 12px;
+  }
+
+  .ios-notification h2 {
+    margin: 0 0 3px;
+    font-size: 15px;
+    letter-spacing: -.015em;
+  }
+
+  .ios-notification p {
+    margin: 0;
+    color: rgba(44,44,46,.82);
+    font-size: 14px;
+    line-height: 1.38;
+  }
+
+  .mobile-lock-enter {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 650;
+    letter-spacing: .08em;
+    text-transform: lowercase;
+    animation: lockEnterPulse 1.8s ease-in-out infinite;
+  }
+
+  @keyframes lockEnterPulse {
+    0%, 100% { opacity: .58; transform: translateY(0); }
+    50% { opacity: 1; transform: translateY(-3px); }
+  }
+
   .desktop-items {
     inset: calc(var(--menu-height) + 8px) 6px 8px calc(var(--mobile-dock-width) + 8px);
     width: auto;
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    grid-auto-rows: minmax(104px, auto);
-    align-content: start;
-    gap: 8px 4px;
-    padding: 8px 4px;
+    display: block;
+    padding: 0;
     overflow: hidden;
   }
 
   .desktop-item {
-    position: relative;
-    left: auto;
-    top: auto;
-    width: 100%;
+    position: absolute;
+    width: 96px;
     min-width: 0;
     min-height: 100px;
     transform: none;
   }
+
+  .desktop-item:nth-child(1) { left: 2%; top: 2%; }
+  .desktop-item:nth-child(2) { left: 38%; top: 7%; }
+  .desktop-item:nth-child(3) { right: 0; left: auto; top: 1%; }
+  .desktop-item:nth-child(4) { left: 7%; top: 31%; }
+  .desktop-item:nth-child(5) { left: 43%; top: 25%; }
+  .desktop-item:nth-child(6) { right: 2%; left: auto; top: 36%; }
+  .desktop-item:nth-child(7) { left: 1%; top: 64%; }
+  .desktop-item:nth-child(8) { left: 37%; top: 72%; }
+  .desktop-item:nth-child(9) { right: 1%; left: auto; top: 61%; }
+  .desktop-item:nth-child(10) { left: 48%; top: 48%; }
 
   .dock {
     left: 8px;
@@ -100,10 +228,10 @@
 
   .mac-window,
   .finder-window {
-    left: 7px !important;
-    top: 10px !important;
-    width: calc(100vw - var(--mobile-dock-width) - 14px) !important;
-    height: calc(100dvh - var(--menu-height) - 20px) !important;
+    left: calc(5px + var(--mobile-stack-x, 0px)) !important;
+    top: calc(34px + var(--mobile-stack-y, 0px)) !important;
+    width: min(calc(100vw - var(--mobile-dock-width) - 30px), 720px) !important;
+    height: min(68dvh, 620px) !important;
     min-width: 0;
     min-height: 0;
     transform: none !important;
@@ -175,6 +303,12 @@
   }
 }
 
+@media (min-width: 901px) {
+  .mobile-lock-screen {
+    display: none;
+  }
+}
+
 @media (max-width: 560px) {
   :root {
     --mobile-dock-width: 60px;
@@ -224,16 +358,25 @@
 
   .desktop-items {
     inset: calc(var(--menu-height) + 6px) 4px 6px calc(var(--mobile-dock-width) + 6px);
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    grid-auto-rows: minmax(106px, auto);
-    gap: 5px 2px;
-    padding: 6px 2px;
+    padding: 0;
   }
 
   .desktop-item {
+    width: 92px;
     min-height: 102px;
     padding: 5px 2px;
   }
+
+  .desktop-item:nth-child(1) { left: 0; top: 1%; }
+  .desktop-item:nth-child(2) { left: 35%; top: 8%; }
+  .desktop-item:nth-child(3) { right: 0; left: auto; top: 0; }
+  .desktop-item:nth-child(4) { left: 4%; top: 30%; }
+  .desktop-item:nth-child(5) { left: 39%; top: 23%; }
+  .desktop-item:nth-child(6) { right: 0; left: auto; top: 35%; }
+  .desktop-item:nth-child(7) { left: 1%; top: 62%; }
+  .desktop-item:nth-child(8) { left: 34%; top: 70%; }
+  .desktop-item:nth-child(9) { right: 1%; left: auto; top: 59%; }
+  .desktop-item:nth-child(10) { left: 35%; top: 47%; }
 
   .desktop-thumb {
     width: 60px;
@@ -247,10 +390,11 @@
 
   .mac-window,
   .finder-window {
-    width: calc(100vw - var(--mobile-dock-width) - 10px) !important;
-    height: calc(100dvh - var(--menu-height) - 12px) !important;
-    left: 5px !important;
-    top: 6px !important;
+    left: calc(5px + var(--mobile-stack-x, 0px)) !important;
+    top: calc(28px + var(--mobile-stack-y, 0px)) !important;
+    width: calc(100vw - var(--mobile-dock-width) - 30px) !important;
+    height: min(68dvh, 580px) !important;
+    border-radius: 16px;
   }
 
   .notes-layout {
@@ -266,10 +410,32 @@
 
   .note-body,
   .mail-compose,
-  .settings-layout section,
   .readme-body,
   .projects-main {
     padding: 22px;
+  }
+
+  .about-profile {
+    padding: 26px 24px 20px;
+  }
+
+  .about-profile-photo {
+    width: 108px;
+    height: 108px;
+  }
+
+  .about-profile h2 {
+    margin-top: 16px;
+    font-size: 31px;
+  }
+
+  .about-profile-established {
+    margin-bottom: 20px;
+  }
+
+  .about-profile-copy {
+    font-size: 14.5px;
+    line-height: 1.52;
   }
 
   .photo-grid {
@@ -310,6 +476,35 @@
 
   .mail-actions {
     flex-wrap: wrap;
+  }
+
+  .contact-form {
+    padding: 18px;
+  }
+
+  .contact-form label {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-form label > span {
+    padding: 11px 0 0;
+  }
+
+  .contact-form input {
+    padding: 7px 0 12px;
+  }
+
+  .contact-form textarea {
+    min-height: 150px;
+  }
+
+  .contact-form-footer {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .contact-submit {
+    width: 100%;
   }
 
   .launchpad-panel > div {

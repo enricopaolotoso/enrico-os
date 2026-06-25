@@ -3,13 +3,15 @@
   const $$ = (selector, scope = document) => [...scope.querySelectorAll(selector)];
 
   const appNames = {
+    desktop: 'Desktop',
     finder: 'Finder',
     projects: 'Progetti',
     notes: 'Note',
     photos: 'Foto',
     mail: 'Mail',
     terminal: 'Terminale',
-    settings: 'Impostazioni',
+    settings: 'Informazioni',
+    spotify: 'Spotify',
     launchpad: 'Launchpad',
     trash: 'Cestino',
     readme: 'README.md'
@@ -42,6 +44,30 @@
   let tourIndex = 0;
   let dragState = null;
   let focusBeforeModal = null;
+  let renderFinderRecent = () => {};
+
+  const recentStorageKey = 'enrico-finder-recent';
+
+  function readRecentIds() {
+    try {
+      const value = JSON.parse(localStorage.getItem(recentStorageKey) || '[]');
+      return Array.isArray(value) ? value.filter((id) => typeof id === 'string') : [];
+    } catch {
+      return [];
+    }
+  }
+
+  function recordRecent(id) {
+    if (!id) return;
+    const recent = readRecentIds().filter((entry) => entry !== id);
+    recent.unshift(id);
+    try {
+      localStorage.setItem(recentStorageKey, JSON.stringify(recent.slice(0, 12)));
+    } catch {
+      // Storage may be unavailable.
+    }
+    renderFinderRecent();
+  }
 
   function isMobile() {
     return window.matchMedia('(max-width: 900px)').matches;
@@ -67,7 +93,7 @@
 
   function setActiveApp(id) {
     const activeName = $('#activeAppName');
-    if (activeName) activeName.textContent = appNames[id] || 'Finder';
+    if (activeName) activeName.textContent = appNames[id] || 'Desktop';
   }
 
   function updateDockState() {
@@ -83,6 +109,17 @@
     });
   }
 
+  function layoutMobileWindows() {
+    const windows = getOpenWindows().sort(
+      (a, b) => Number(a.style.zIndex || 0) - Number(b.style.zIndex || 0)
+    );
+
+    windows.forEach((win, index) => {
+      win.style.setProperty('--mobile-stack-x', `${Math.min(index, 4) * 5}px`);
+      win.style.setProperty('--mobile-stack-y', `${Math.min(index, 4) * 14}px`);
+    });
+  }
+
   function focusWindow(win) {
     if (!win) return;
     $$('.mac-window').forEach((item) => item.classList.remove('is-focused'));
@@ -91,12 +128,14 @@
     win.style.zIndex = String(++zIndex);
     setActiveApp(getAppId(win));
     updateDockState();
+    if (isMobile()) layoutMobileWindows();
   }
 
-  function openWindow(id) {
+  function openWindow(id, trackRecent = true) {
     if (!id) return;
     if (id === 'launchpad') {
       openLaunchpad();
+      if (trackRecent) recordRecent('app-launchpad');
       return;
     }
 
@@ -108,8 +147,8 @@
     win.classList.add('is-open');
     win.setAttribute('aria-hidden', 'false');
 
-    if (isMobile()) win.classList.add('is-maximized');
     focusWindow(win);
+    if (trackRecent && id !== 'finder') recordRecent(`app-${id}`);
 
     if (id === 'terminal') {
       window.setTimeout(() => $('[data-terminal-input]', win)?.focus(), 50);
@@ -127,8 +166,9 @@
       win.setAttribute('aria-hidden', 'true');
       const next = topWindow();
       if (next) focusWindow(next);
-      else setActiveApp('Finder');
+      else setActiveApp('desktop');
       updateDockState();
+      if (isMobile()) layoutMobileWindows();
     }, 150);
   }
 
@@ -139,8 +179,9 @@
     win.setAttribute('aria-hidden', 'true');
     const next = topWindow();
     if (next) focusWindow(next);
-    else setActiveApp('Finder');
+    else setActiveApp('desktop');
     updateDockState();
+    if (isMobile()) layoutMobileWindows();
   }
 
   function maximizeWindow(win) {
@@ -165,7 +206,7 @@
     if (!launchpad?.classList.contains('is-open')) return;
     launchpad.classList.remove('is-open');
     launchpad.setAttribute('aria-hidden', 'true');
-    setActiveApp(getAppId(topWindow()) || 'Finder');
+    setActiveApp(getAppId(topWindow()) || 'desktop');
     if (restoreFocus && focusBeforeModal instanceof HTMLElement) focusBeforeModal.focus();
   }
 
@@ -228,6 +269,15 @@
     if (focusBeforeModal instanceof HTMLElement) focusBeforeModal.focus();
   }
 
+  function isMobileLocked() {
+    const lockScreen = $('#mobileLockScreen');
+    return Boolean(
+      isMobile() &&
+      lockScreen &&
+      !lockScreen.classList.contains('is-unlocked')
+    );
+  }
+
   function initTour() {
     const tour = $('#tour');
     if (!tour) return;
@@ -254,7 +304,17 @@
     } catch {
       seen = false;
     }
-    if (!seen) window.setTimeout(openTour, 850);
+    if (!seen) {
+      if (isMobileLocked()) {
+        window.addEventListener(
+          'mobile-desktop-unlocked',
+          () => window.setTimeout(openTour, 500),
+          { once: true }
+        );
+      } else {
+        window.setTimeout(openTour, 850);
+      }
+    }
   }
 
   function updateClock() {
@@ -267,6 +327,49 @@
       hour: '2-digit',
       minute: '2-digit'
     }).format(now).replace('.', '');
+  }
+
+  function updateMobileLockClock() {
+    const time = $('#mobileLockTime');
+    const date = $('#mobileLockDate');
+    if (!time || !date) return;
+
+    const now = new Date();
+    time.dateTime = now.toISOString();
+    time.textContent = new Intl.DateTimeFormat('it-IT', {
+      hour: '2-digit',
+      minute: '2-digit'
+    }).format(now);
+    date.textContent = new Intl.DateTimeFormat('it-IT', {
+      weekday: 'long',
+      day: 'numeric',
+      month: 'long'
+    }).format(now);
+  }
+
+  function initMobileLockScreen() {
+    const lockScreen = $('#mobileLockScreen');
+    if (!lockScreen) return;
+
+    updateMobileLockClock();
+
+    const unlock = () => {
+      if (!isMobile() || lockScreen.classList.contains('is-unlocked')) return;
+      lockScreen.classList.add('is-unlocked');
+      lockScreen.setAttribute('aria-hidden', 'true');
+      window.setTimeout(() => {
+        lockScreen.hidden = true;
+        window.dispatchEvent(new CustomEvent('mobile-desktop-unlocked'));
+      }, 430);
+    };
+
+    lockScreen.addEventListener('click', unlock);
+    lockScreen.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        unlock();
+      }
+    });
   }
 
   function bindOpenActions() {
@@ -334,7 +437,8 @@
         if (item.dataset.dragging === 'true') return;
         $$('.desktop-item').forEach((entry) => entry.classList.remove('is-selected'));
         item.classList.add('is-selected');
-        openWindow(item.dataset.open);
+        recordRecent(`desktop-${item.dataset.item}`);
+        if (item.dataset.open) openWindow(item.dataset.open, false);
       });
     });
 
@@ -476,6 +580,50 @@
     });
   }
 
+  function bindContactForm() {
+    const form = $('[data-contact-form]');
+    if (!form) return;
+    const status = $('[data-contact-status]', form);
+    if (!status) return;
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (!form.reportValidity()) return;
+
+      const submit = $('button[type="submit"]', form);
+      const originalText = submit.textContent;
+      submit.disabled = true;
+      submit.textContent = 'Invio in corso…';
+      status.className = 'contact-form-status';
+      status.textContent = '';
+
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json'
+          },
+          body: new FormData(form)
+        });
+
+        const result = await response.json().catch(() => ({}));
+        if (!response.ok || result.success === false) {
+          throw new Error(result.message || 'Invio non riuscito');
+        }
+
+        form.reset();
+        status.classList.add('is-success');
+        status.textContent = 'Messaggio inviato. Grazie, ti risponderò appena possibile.';
+      } catch {
+        status.classList.add('is-error');
+        status.textContent = 'Non è stato possibile inviare il messaggio. Riprova tra poco oppure scrivi a enricopaolotoso@gmail.com.';
+      } finally {
+        submit.disabled = false;
+        submit.textContent = originalText;
+      }
+    });
+  }
+
   function bindTerminal() {
     const input = $('[data-terminal-input]');
     const output = $('[data-terminal-output]');
@@ -565,50 +713,158 @@
   function bindFinder() {
     const finder = getWindow('finder');
     if (!finder) return;
-    const files = $$('.finder-file', finder);
-    const grid = $('[data-finder-grid]', finder);
     const search = $('[data-finder-search]', finder);
     const openButton = $('.finder-open-button', finder);
-    let selectedAction = 'readme';
+    const title = $('[data-finder-title]', finder);
+    const path = $('[data-finder-path]', finder);
+    const back = $('[data-finder-back]', finder);
+    const forward = $('[data-finder-forward]', finder);
+    const sectionLabels = {
+      recenti: 'Recenti',
+      desktop: 'Desktop',
+      documenti: 'Documenti',
+      applicazioni: 'Applicazioni'
+    };
+    let activeSection = 'recenti';
+    let selectedFile = null;
+    let history = ['recenti'];
+    let historyIndex = 0;
+
+    function sourceForRecent(id) {
+      return $$('[data-finder-panel]:not([data-finder-panel="recenti"]) .finder-file', finder)
+        .find((item) => item.dataset.finderId === id);
+    }
+
+    renderFinderRecent = () => {
+      const panel = $('[data-finder-panel="recenti"]', finder);
+      if (!panel) return;
+      panel.innerHTML = '';
+
+      const recentItems = readRecentIds()
+        .map(sourceForRecent)
+        .filter(Boolean);
+
+      if (!recentItems.length) {
+        const empty = document.createElement('div');
+        empty.className = 'finder-placeholder';
+        empty.innerHTML = '<strong>Nessun elemento recente</strong><p>Le app, i documenti e gli elementi aperti compariranno qui.</p>';
+        panel.appendChild(empty);
+        return;
+      }
+
+      recentItems.forEach((source) => {
+        const clone = source.cloneNode(true);
+        clone.classList.remove('is-selected');
+        clone.hidden = false;
+        panel.appendChild(clone);
+      });
+    };
+
+    function currentPanel() {
+      return $(`[data-finder-panel="${activeSection}"]`, finder);
+    }
+
+    function updateNavigation() {
+      back.disabled = historyIndex <= 0;
+      forward.disabled = historyIndex >= history.length - 1;
+    }
+
+    function showSection(section, addToHistory = true) {
+      if (!sectionLabels[section]) return;
+      activeSection = section;
+      selectedFile = null;
+      openButton.disabled = true;
+      openButton.textContent = 'Seleziona un elemento';
+      search.value = '';
+
+      $$('[data-finder-panel]', finder).forEach((panel) => {
+        panel.hidden = panel.dataset.finderPanel !== section;
+        panel.classList.toggle('is-list', $('[data-finder-view="list"]', finder)?.classList.contains('is-active'));
+      });
+      $$('[data-finder-section]', finder).forEach((button) => {
+        button.classList.toggle('is-active', button.dataset.finderSection === section);
+      });
+
+      title.textContent = sectionLabels[section];
+      path.textContent = sectionLabels[section];
+      $('#finderPreviewIcon', finder).textContent = section === 'recenti' ? '🕘' : section === 'desktop' ? '🖥️' : section === 'documenti' ? '📄' : '🚀';
+      $('#finderPreviewTitle', finder).textContent = sectionLabels[section];
+      $('#finderPreviewKind', finder).textContent = 'Sezione Finder';
+      $('#finderPreviewDescription', finder).textContent =
+        section === 'recenti' ? 'Gli ultimi elementi visualizzati in questo browser.' :
+        section === 'desktop' ? 'Tutti gli elementi presenti sul desktop.' :
+        section === 'documenti' ? 'I file caricati nella cartella public/documents.' :
+        'Le app del portfolio e i profili social di Enrico Toso.';
+
+      if (section === 'recenti') renderFinderRecent();
+
+      if (addToHistory && history[historyIndex] !== section) {
+        history = history.slice(0, historyIndex + 1);
+        history.push(section);
+        historyIndex = history.length - 1;
+      }
+      updateNavigation();
+    }
 
     function selectFile(file) {
-      files.forEach((entry) => entry.classList.remove('is-selected'));
+      $$('.finder-file', finder).forEach((entry) => entry.classList.remove('is-selected'));
       file.classList.add('is-selected');
-      $('#finderPreviewIcon', finder).textContent = $('.finder-file-icon', file)?.textContent || '📄';
+      const previewIcon = $('#finderPreviewIcon', finder);
+      previewIcon.innerHTML = '';
+      const sourceIcon = $('.finder-file-icon', file);
+      if (sourceIcon) previewIcon.appendChild(sourceIcon.cloneNode(true));
       $('#finderPreviewTitle', finder).textContent = file.dataset.previewTitle;
       $('#finderPreviewKind', finder).textContent = file.dataset.previewKind;
       $('#finderPreviewDescription', finder).textContent = file.dataset.previewDescription;
-      selectedAction = file.dataset.open;
+      selectedFile = file;
+      openButton.disabled = false;
+      openButton.textContent = file.dataset.externalUrl ? 'Apri collegamento' : 'Apri elemento';
     }
 
-    files.forEach((file) => {
-      file.addEventListener('click', (event) => {
+    function openFinderFile(file) {
+      if (!file) return;
+      recordRecent(file.dataset.finderId);
+      if (file.dataset.externalUrl) {
+        window.open(file.dataset.externalUrl, '_blank', 'noopener,noreferrer');
+      } else if (file.dataset.open) {
+        openWindow(file.dataset.open, false);
+      }
+    }
+
+    finder.addEventListener('click', (event) => {
+      const sectionButton = event.target.closest('[data-finder-section]');
+      if (sectionButton) {
         event.stopPropagation();
-        selectFile(file);
-        if (isMobile()) openWindow(file.dataset.open);
-      });
-      file.addEventListener('dblclick', (event) => {
-        event.stopPropagation();
-        openWindow(file.dataset.open);
-      });
+        showSection(sectionButton.dataset.finderSection);
+        return;
+      }
+
+      const file = event.target.closest('.finder-file');
+      if (!file) return;
+      event.stopPropagation();
+      selectFile(file);
+      if (isMobile()) openFinderFile(file);
+    });
+
+    finder.addEventListener('dblclick', (event) => {
+      const file = event.target.closest('.finder-file');
+      if (!file) return;
+      event.stopPropagation();
+      openFinderFile(file);
     });
 
     openButton.addEventListener('click', (event) => {
       event.stopPropagation();
-      openWindow(selectedAction);
+      openFinderFile(selectedFile);
     });
 
     search.addEventListener('input', () => {
       const query = search.value.trim().toLowerCase();
-      let visible = 0;
-      files.forEach((file) => {
+      $$('.finder-file', currentPanel()).forEach((file) => {
         const haystack = `${file.dataset.previewTitle} ${file.dataset.previewKind} ${file.dataset.previewDescription}`.toLowerCase();
-        const words = haystack.split(/[^a-z0-9à-öø-ÿ]+/).filter(Boolean);
-        const matches = query.length <= 2 ? words.includes(query) : haystack.includes(query);
+        const matches = haystack.includes(query);
         file.hidden = !matches;
-        if (matches) visible += 1;
       });
-      $('.finder-empty', finder).hidden = visible > 0;
     });
 
     $$('[data-finder-view]', finder).forEach((button) => {
@@ -618,9 +874,25 @@
           entry.classList.toggle('is-active', active);
           entry.setAttribute('aria-pressed', active ? 'true' : 'false');
         });
-        grid.classList.toggle('is-list', button.dataset.finderView === 'list');
+        $$('[data-finder-panel]', finder).forEach((panel) => {
+          panel.classList.toggle('is-list', button.dataset.finderView === 'list');
+        });
       });
     });
+
+    back.addEventListener('click', () => {
+      if (historyIndex <= 0) return;
+      historyIndex -= 1;
+      showSection(history[historyIndex], false);
+    });
+    forward.addEventListener('click', () => {
+      if (historyIndex >= history.length - 1) return;
+      historyIndex += 1;
+      showSection(history[historyIndex], false);
+    });
+
+    renderFinderRecent();
+    showSection('recenti', false);
   }
 
   function bindLaunchpadSearch() {
@@ -707,6 +979,180 @@
     });
   }
 
+  function bindSpotify() {
+    const spotify = getWindow('spotify');
+    if (!spotify) return;
+
+    const loading = $('[data-spotify-loading]', spotify);
+    const error = $('[data-spotify-error]', spotify);
+    const results = $('[data-spotify-results]', spotify);
+    let data = null;
+    let section = 'playlists';
+    let range = 'short_term';
+
+    const imageOrFallback = (src, alt, symbol = '●') => {
+      if (src) {
+        const image = document.createElement('img');
+        image.src = src;
+        image.alt = alt;
+        image.loading = 'lazy';
+        return image;
+      }
+      const fallback = document.createElement('div');
+      fallback.className = 'spotify-image-fallback';
+      fallback.textContent = symbol;
+      return fallback;
+    };
+
+    const externalLink = (url) => {
+      const link = document.createElement('a');
+      link.href = url || 'https://open.spotify.com/';
+      link.target = '_blank';
+      link.rel = 'noreferrer';
+      link.textContent = 'Apri su Spotify';
+      return link;
+    };
+
+    function renderCards(items, type) {
+      const grid = document.createElement('div');
+      grid.className = 'spotify-grid';
+      items.forEach((item) => {
+        const card = document.createElement('article');
+        card.className = 'spotify-card';
+        card.appendChild(imageOrFallback(item.image, item.name));
+        const heading = document.createElement('h3');
+        heading.textContent = item.name;
+        const description = document.createElement('p');
+        description.textContent =
+          type === 'playlist'
+            ? `${item.tracksTotal} brani${item.description ? ` · ${item.description}` : ''}`
+            : (item.genres || []).slice(0, 2).join(', ') || `Popolarità ${item.popularity}`;
+        card.append(heading, description, externalLink(item.url));
+        grid.appendChild(card);
+      });
+      return grid;
+    }
+
+    function formatDuration(durationMs) {
+      const totalSeconds = Math.floor((durationMs || 0) / 1000);
+      return `${Math.floor(totalSeconds / 60)}:${String(totalSeconds % 60).padStart(2, '0')}`;
+    }
+
+    function renderRows(items, type) {
+      const list = document.createElement('div');
+      list.className = 'spotify-list';
+      items.forEach((item) => {
+        const row = document.createElement('article');
+        row.className = 'spotify-row';
+        const rank = document.createElement('span');
+        rank.className = 'spotify-rank';
+        rank.textContent = item.rank;
+        const image = imageOrFallback(item.image, item.name);
+        if (!item.image) image.className = 'spotify-row-image';
+        const copy = document.createElement('div');
+        const heading = document.createElement('h3');
+        heading.textContent = item.name;
+        const subline = document.createElement('p');
+        subline.textContent = type === 'track' ? item.artist : (item.genres || []).slice(0, 2).join(', ');
+        copy.append(heading, subline);
+        const meta = document.createElement('span');
+        meta.className = 'spotify-row-meta';
+        meta.textContent = type === 'track' ? `${item.album} · ${formatDuration(item.durationMs)}` : `Popolarità ${item.popularity}`;
+        row.append(rank, image, copy, meta, externalLink(item.url));
+        list.appendChild(row);
+      });
+      return list;
+    }
+
+    function render() {
+      if (!data) return;
+      results.innerHTML = '';
+      let items = [];
+      let content;
+
+      if (section === 'playlists') {
+        items = data.playlists || [];
+        content = renderCards(items, 'playlist');
+      } else if (section === 'artists') {
+        items = data.topArtists?.[range] || [];
+        content = renderRows(items, 'artist');
+      } else {
+        items = data.topTracks?.[range] || [];
+        content = renderRows(items, 'track');
+      }
+
+      if (!items.length) {
+        const empty = document.createElement('div');
+        empty.className = 'spotify-error';
+        const heading = document.createElement('strong');
+        heading.textContent = 'Nessun dato disponibile';
+        const copy = document.createElement('p');
+        copy.textContent = 'Questa sezione verrà popolata al prossimo aggiornamento Spotify.';
+        empty.append(heading, copy);
+        results.appendChild(empty);
+      } else {
+        results.appendChild(content);
+      }
+    }
+
+    $$('[data-spotify-section]', spotify).forEach((button) => {
+      button.addEventListener('click', () => {
+        if (!data || data.error) return;
+        $$('[data-spotify-section]', spotify).forEach((entry) => entry.classList.remove('is-active'));
+        button.classList.add('is-active');
+        section = button.dataset.spotifySection;
+        $('.spotify-ranges', spotify).hidden = section === 'playlists';
+        render();
+      });
+    });
+
+    $$('[data-spotify-range]', spotify).forEach((button) => {
+      button.addEventListener('click', () => {
+        if (!data || data.error) return;
+        $$('[data-spotify-range]', spotify).forEach((entry) => entry.classList.remove('is-active'));
+        button.classList.add('is-active');
+        range = button.dataset.spotifyRange;
+        render();
+      });
+    });
+
+    fetch('/data/spotify.json', { cache: 'no-store' })
+      .then((response) => {
+        if (!response.ok) throw new Error('spotify.json non disponibile');
+        return response.json();
+      })
+      .then((spotifyData) => {
+        data = spotifyData;
+        loading.hidden = true;
+        if (data.error) {
+          error.hidden = false;
+          $('p', error).textContent = data.error;
+          return;
+        }
+
+        results.hidden = false;
+        const profileName = $('[data-spotify-profile-name]', spotify);
+        const profileLink = $('[data-spotify-profile-link]', spotify);
+        const updated = $('[data-spotify-updated]', spotify);
+        const avatar = $('[data-spotify-profile-avatar]', spotify);
+        profileName.textContent = data.profile?.displayName || 'Enrico Toso';
+        profileLink.href = data.profile?.url || 'https://open.spotify.com/';
+        updated.textContent = data.updatedAt
+          ? new Intl.DateTimeFormat('it-IT', { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(data.updatedAt))
+          : '—';
+        if (data.profile?.image) {
+          avatar.textContent = '';
+          avatar.appendChild(imageOrFallback(data.profile.image, data.profile.displayName || 'Profilo Spotify'));
+        }
+        $('.spotify-ranges', spotify).hidden = true;
+        render();
+      })
+      .catch(() => {
+        loading.hidden = true;
+        error.hidden = false;
+      });
+  }
+
   function bindSettings() {
     const settings = getWindow('settings');
     if (!settings) return;
@@ -726,16 +1172,20 @@
   }
 
   function initWindowState() {
-    const finder = getWindow('finder');
-    if (finder?.classList.contains('is-open')) {
-      finder.style.zIndex = String(++zIndex);
-      focusWindow(finder);
-    }
+    $$('.mac-window').forEach((win) => {
+      win.classList.remove('is-open', 'is-focused', 'is-minimized', 'is-maximized', 'is-closing');
+      win.style.zIndex = '';
+      win.setAttribute('aria-hidden', 'true');
+    });
+    setActiveApp('desktop');
   }
 
   function init() {
     updateClock();
+    updateMobileLockClock();
     window.setInterval(updateClock, 15000);
+    window.setInterval(updateMobileLockClock, 15000);
+    initMobileLockScreen();
     bindOpenActions();
     bindWindowControls();
     bindMenuCommands();
@@ -744,17 +1194,22 @@
     bindDragDesktopItems();
     bindKeyboard();
     bindCopyButtons();
+    bindContactForm();
     bindTerminal();
     bindNotes();
     bindFinder();
     bindLaunchpadSearch();
     bindPhotoLibrary();
     bindProjectFilters();
+    bindSpotify();
     bindSettings();
     initTour();
     initLoader();
     initWindowState();
     updateDockState();
+    window.addEventListener('resize', () => {
+      if (isMobile()) layoutMobileWindows();
+    });
   }
 
   if (document.readyState === 'loading') {

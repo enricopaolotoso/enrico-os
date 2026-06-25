@@ -9,6 +9,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "check": "astro check",
+    "spotify:auth": "node scripts/get-spotify-refresh-token.mjs",
+    "spotify:fetch": "node scripts/fetch-spotify.mjs",
     "preview": "astro preview",
     "astro": "astro"
   },
