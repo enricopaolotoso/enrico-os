@@ -1,4 +1,4 @@
-name: Build and deploy to SiteGround
+name: Test SiteGround SSH
 
 on:
   push:
@@ -6,33 +6,24 @@ on:
       - main
 
 jobs:
-  build-and-deploy:
-    name: Build Astro and deploy to SiteGround
+  test-ssh:
+    name: Test SSH connection
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22.12.0
-          cache: npm
+      - name: Test SSH key
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "${{ secrets.SFTP_PRIVATE_KEY }}" > ~/.ssh/siteground_key
+          chmod 600 ~/.ssh/siteground_key
 
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build Astro site
-        run: npm run build
-
-      - name: Deploy dist to SiteGround via SFTP
-        uses: wlixcc/SFTP-Deploy-Action@v1.2.6
-        with:
-          username: ${{ secrets.SFTP_USERNAME }}
-          server: ${{ secrets.SFTP_HOST }}
-          port: ${{ secrets.SFTP_PORT }}
-          ssh_private_key: ${{ secrets.SFTP_PRIVATE_KEY }}
-          local_path: ./dist/*
-          remote_path: ${{ secrets.SFTP_REMOTE_PATH }}
-          sftpArgs: '-o ConnectTimeout=10'
+          ssh -vvv \
+            -p "${{ secrets.SFTP_PORT }}" \
+            -i ~/.ssh/siteground_key \
+            -o IdentitiesOnly=yes \
+            -o StrictHostKeyChecking=no \
+            "${{ secrets.SFTP_USERNAME }}@${{ secrets.SFTP_HOST }}" \
+            "pwd && ls -la"
