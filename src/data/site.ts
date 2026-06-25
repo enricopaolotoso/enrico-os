@@ -49,7 +49,7 @@ export const site = {
     { id: 'ai', title: 'AI Workflows.note', type: 'note', app: 'notes', x: 1010, y: 350 },
     {
       id: 'youtube-2016',
-      title: 'youtube 2016',
+      title: 'youtube_2016.mp4',
       type: 'cover',
       href: 'https://youtu.be/hTxmt7l1pao',
       image: '/images/copertina-video.jpg',
