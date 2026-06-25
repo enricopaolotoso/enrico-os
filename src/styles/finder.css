@@ -4,7 +4,13 @@
    ========================================================== */
 
 .finder-window {
+  height: var(--finder-auto-height, 650px) !important;
   background: rgba(246, 246, 248, 0.82);
+  transition: height .2s cubic-bezier(.2,.8,.2,1);
+}
+
+.finder-window.is-maximized {
+  height: calc(100dvh - var(--menu-height) - 22px) !important;
 }
 
 .finder-titlebar {
@@ -285,11 +291,28 @@
   border-radius: 12px;
   color: rgba(28, 28, 30, 0.9);
   text-align: center;
+  transition: background-color .14s ease,transform .16s cubic-bezier(.2,.8,.2,1);
 }
 
 .finder-file:hover,
 .finder-file.is-selected {
   background: rgba(10, 132, 255, 0.14);
+}
+
+.finder-file:hover {
+  transform: translateY(-2px);
+}
+
+.finder-file:active {
+  transform: scale(.97);
+}
+
+.finder-file-icon {
+  transition: transform .16s cubic-bezier(.2,.8,.2,1),box-shadow .16s ease;
+}
+
+.finder-file:hover .finder-file-icon {
+  transform: scale(1.035);
 }
 
 .finder-file-icon {

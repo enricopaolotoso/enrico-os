@@ -17,6 +17,8 @@ export type FileSystemItem = {
   thumbnail?: string;
   description?: string;
   url?: string;
+  link?: string;
+  external?: boolean;
   app?: string;
   children?: FileSystemItem[];
 };
@@ -120,141 +122,44 @@ export const fileSystem: FileSystemItem = {
       ]
     },
     {
-      id: 'creator-archive',
-      name: 'Creator Archive',
-      type: 'folder',
-      path: '/Desktop/Creator Archive',
-      description:
-        'Archivio di contenuti, video, format social e sperimentazioni creative dal 2014 a oggi.',
-      children: [
-        {
-          id: 'fire-filter-video',
-          name: 'Fire Filter.mp4',
-          type: 'video',
-          path: '/Desktop/Creator Archive/Fire Filter.mp4',
-          thumbnail: '/images/filtri-fire.jpg',
-          url: '/images/fire-filter.mp4',
-          description: 'Video dimostrativo di uno dei filtri Instagram realizzati da Enrico.'
-        },
-        {
-          id: 'youtube-2016',
-          name: 'youtube_2016',
-          type: 'link',
-          path: '/Desktop/Creator Archive/youtube_2016',
-          thumbnail: '/images/copertina-video.jpg',
-          url: 'https://youtu.be/hTxmt7l1pao',
-          description: 'Uno dei primi video YouTube pubblicati da Enrico nel 2016.'
-        },
-        {
-          id: 'creator-podcast',
-          name: 'podcast breccia.jpg',
-          type: 'image',
-          path: '/Desktop/Creator Archive/podcast breccia.jpg',
-          thumbnail: '/photos/podcast%20breccia.jpg',
-          url: '/photos/podcast%20breccia.jpg',
-          description: 'Foto dall’archivio podcast e produzione contenuti.'
-        },
-        {
-          id: 'creator-timeline',
-          name: 'Timeline.note',
-          type: 'note',
-          path: '/Desktop/Creator Archive/Timeline.note',
-          description:
-            '2014: primi video YouTube. 2018: filtri Instagram. 2020: TikTok. Oggi: contenuti, brand e progetti digitali.'
-        },
-        {
-          id: 'youtube-channel',
-          name: 'Canale YouTube',
-          type: 'link',
-          path: '/Desktop/Creator Archive/Canale YouTube',
-          icon: '▶',
-          url: 'https://youtube.com/@enricopaolotoso',
-          description: 'Canale YouTube personale di Enrico Toso.'
-        }
-      ]
+      id: 'youtube-2016',
+      name: 'youtube2016.mp4',
+      type: 'link',
+      path: '/Desktop/youtube2016.mp4',
+      thumbnail: '/images/copertina-video.jpg',
+      url: 'https://youtu.be/hTxmt7l1pao',
+      external: true,
+      description: 'Uno dei primi video YouTube pubblicati da Enrico nel 2016.'
     },
     {
-      id: 'ai-workflows',
-      name: 'AI Workflows',
-      type: 'folder',
-      path: '/Desktop/AI Workflows',
+      id: 'joylife',
+      name: 'joylife.jpg',
+      type: 'image',
+      path: '/Desktop/joylife.jpg',
+      thumbnail: '/images/joylife.jpg',
+      url: '/images/joylife.jpg',
       description:
-        'Flussi di lavoro AI per ricerca, strategia, contenuti, automazioni e produttività.',
-      children: [
-        {
-          id: 'ai-manifesto',
-          name: 'AI Workflow.note',
-          type: 'note',
-          path: '/Desktop/AI Workflows/AI Workflow.note',
-          description:
-            'L’intelligenza artificiale viene usata come leva operativa per accelerare ricerca, ideazione, produzione e analisi.'
-        },
-        {
-          id: 'ai-notes-app',
-          name: 'Note.app',
-          type: 'app',
-          path: '/Desktop/AI Workflows/Note.app',
-          icon: 'N',
-          app: 'notes',
-          description: 'Apre l’app Note del portfolio.'
-        },
-        {
-          id: 'ai-process',
-          name: 'Processo.md',
-          type: 'document',
-          path: '/Desktop/AI Workflows/Processo.md',
-          icon: 'MD',
-          description:
-            'Ricerca → struttura → produzione → revisione umana → pubblicazione → misurazione.'
-        }
-      ]
+        'JoyLife è un progetto digitale e di community nato per sperimentare contenuti, eventi, collaborazioni e nuove opportunità creative.'
     },
     {
-      id: 'ecommerce-builds',
-      name: 'Ecommerce Builds',
-      type: 'folder',
-      path: '/Desktop/Ecommerce Builds',
+      id: 'filtri-mm',
+      name: 'filtri-mm.jpg',
+      type: 'image',
+      path: '/Desktop/filtri-mm.jpg',
+      thumbnail: '/images/filtri-mm.jpg',
+      url: '/images/filtri-mm.jpg',
       description:
-        'Siti, e-commerce, customer journey, WordPress, WooCommerce e sviluppo digitale.',
-      children: [
-        {
-          id: 'ecommerce-stack',
-          name: 'Stack.md',
-          type: 'document',
-          path: '/Desktop/Ecommerce Builds/Stack.md',
-          icon: 'MD',
-          description:
-            'WordPress, WooCommerce, Elementor, analytics, SEO tecnica e ottimizzazione della customer journey.'
-        },
-        {
-          id: 'ecommerce-case',
-          name: 'Ecommerce.case.pdf',
-          type: 'pdf',
-          path: '/Desktop/Ecommerce Builds/Ecommerce.case.pdf',
-          icon: 'PDF',
-          description:
-            'Placeholder per un case study PDF dedicato alla progettazione e crescita di un e-commerce.'
-        },
-        {
-          id: 'ecommerce-photo',
-          name: 'primo e ultimo market.jpg',
-          type: 'image',
-          path: '/Desktop/Ecommerce Builds/primo e ultimo market.jpg',
-          thumbnail: '/photos/primo%20e%20ultimo%20market.jpg',
-          url: '/photos/primo%20e%20ultimo%20market.jpg',
-          description: 'Immagine dall’archivio di progetti e mercati.'
-        }
-      ]
+        'Progetto di filtri Instagram realizzati per locali, eventi e brand: uno dei primi servizi digitali commerciali sviluppati da Enrico.'
     },
     {
-      id: 'contact-mail',
-      name: 'Contact.mail',
-      type: 'app',
-      path: '/Desktop/Contact.mail',
-      icon: '✉',
-      app: 'mail',
+      id: 'cir-come-nella-vita',
+      name: 'cir-comenellavita.jpg',
+      type: 'image',
+      path: '/Desktop/cir-comenellavita.jpg',
+      thumbnail: '/images/cir-comenellavita.jpg',
+      url: '/images/cir-comenellavita.jpg',
       description:
-        'Contatta direttamente Enrico Toso tramite il form email integrato nel portfolio.'
+        'Come nella vita è un progetto creativo legato a storytelling, produzione visuale e sperimentazione di nuovi linguaggi.'
     }
   ]
 };

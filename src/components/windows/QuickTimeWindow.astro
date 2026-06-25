@@ -7,7 +7,7 @@
   aria-label="QuickTime Player"
   aria-modal="false"
 >
-  <div class="window-chrome dark">
+  <div class="window-chrome">
     <div class="traffic">
       <button type="button" data-close aria-label="Chiudi QuickTime"></button>
       <button type="button" data-minimize aria-label="Riduci QuickTime"></button>
@@ -27,11 +27,11 @@
       </div>
     </div>
     <footer>
-      <div>
-        <h2 data-quicktime-title>Video</h2>
-        <p data-quicktime-description></p>
-      </div>
-      <a data-quicktime-open href="#" target="_blank" rel="noreferrer" hidden>Apri video</a>
+      <p data-quicktime-description></p>
+      <a data-quicktime-open href="#" target="_blank" rel="noreferrer" hidden>
+        <span aria-hidden="true">↗</span>
+        Apri collegamento
+      </a>
     </footer>
   </div>
 </article>

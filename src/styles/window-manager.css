@@ -44,6 +44,12 @@
   animation: windowClose 0.14s ease forwards;
 }
 
+.mac-window.is-minimizing {
+  display: flex;
+  pointer-events: none;
+  animation: windowMinimize .17s cubic-bezier(.4,0,1,1) forwards;
+}
+
 .mac-window.is-focused {
   box-shadow:
     0 42px 110px rgba(0, 0, 0, 0.42),
@@ -136,6 +142,118 @@
   box-shadow:
     inset 0 0 0 0.5px rgba(0, 0, 0, 0.20),
     0 1px 1px rgba(255, 255, 255, 0.28);
+  position: relative;
+  overflow: hidden;
+  transition:
+    transform .15s cubic-bezier(.2,.8,.2,1),
+    filter .15s ease,
+    box-shadow .15s ease;
+}
+
+[data-close]::before,
+[data-close]::after,
+[data-minimize]::before,
+[data-maximize]::before,
+[data-maximize]::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  opacity: 0;
+  transform-origin: center;
+  transition:
+    opacity .14s ease,
+    transform .18s cubic-bezier(.2,.9,.2,1);
+}
+
+[data-close]::before,
+[data-close]::after {
+  width: 7px;
+  height: 1px;
+  border-radius: 999px;
+  background: rgba(92, 0, 0, .72);
+}
+
+[data-close]::before { transform: translate(-50%,-50%) rotate(45deg) scale(.35); }
+[data-close]::after { transform: translate(-50%,-50%) rotate(-45deg) scale(.35); }
+
+[data-minimize]::before {
+  width: 7px;
+  height: 1px;
+  border-radius: 999px;
+  background: rgba(112, 70, 0, .72);
+  transform: translate(-50%,-50%) scaleX(.35);
+}
+
+[data-maximize]::before,
+[data-maximize]::after {
+  width: 5px;
+  height: 5px;
+  border: 1px solid rgba(0, 72, 24, .72);
+}
+
+[data-maximize]::before {
+  border-right: 0;
+  border-bottom: 0;
+  transform: translate(-72%,-72%) scale(.35);
+}
+
+[data-maximize]::after {
+  border-left: 0;
+  border-top: 0;
+  transform: translate(-28%,-28%) scale(.35);
+}
+
+.mac-window.is-focused .traffic:hover [data-close]::before,
+.mac-window.is-focused .traffic:hover [data-close]::after,
+.mac-window.is-focused .mac-window-controls:hover [data-close]::before,
+.mac-window.is-focused .mac-window-controls:hover [data-close]::after {
+  opacity: 1;
+}
+
+.mac-window.is-focused .traffic:hover [data-close]::before,
+.mac-window.is-focused .mac-window-controls:hover [data-close]::before {
+  transform: translate(-50%,-50%) rotate(45deg) scale(1);
+}
+
+.mac-window.is-focused .traffic:hover [data-close]::after,
+.mac-window.is-focused .mac-window-controls:hover [data-close]::after {
+  transform: translate(-50%,-50%) rotate(-45deg) scale(1);
+}
+
+.mac-window.is-focused .traffic:hover [data-minimize]::before,
+.mac-window.is-focused .mac-window-controls:hover [data-minimize]::before {
+  opacity: 1;
+  transform: translate(-50%,-50%) scaleX(1);
+}
+
+.mac-window.is-focused .traffic:hover [data-maximize]::before,
+.mac-window.is-focused .mac-window-controls:hover [data-maximize]::before {
+  opacity: 1;
+  transform: translate(-72%,-72%) scale(1);
+}
+
+.mac-window.is-focused .traffic:hover [data-maximize]::after,
+.mac-window.is-focused .mac-window-controls:hover [data-maximize]::after {
+  opacity: 1;
+  transform: translate(-28%,-28%) scale(1);
+}
+
+[data-close]:hover,
+[data-minimize]:hover,
+[data-maximize]:hover {
+  filter: brightness(1.07) saturate(1.08);
+  transform: scale(1.14);
+  box-shadow:
+    inset 0 0 0 .5px rgba(0,0,0,.2),
+    0 2px 5px rgba(0,0,0,.18);
+}
+
+[data-close]:active,
+[data-minimize]:active,
+[data-maximize]:active {
+  transform: scale(.86);
+  transition-duration: .07s;
 }
 
 [data-close],
@@ -315,6 +433,20 @@
   to {
     opacity: 0;
     transform: translateY(8px) scale(0.982);
+  }
+}
+
+@keyframes windowMinimize {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: saturate(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(28px) scale(.9);
+    filter: saturate(.7);
   }
 }
 

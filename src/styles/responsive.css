@@ -139,7 +139,7 @@
     overflow: hidden;
     color: transparent;
     border: 2px solid rgba(235,239,239,.95);
-    border-radius: 7px;
+    border-radius: 100px;
     background: #32d74b;
     box-shadow: 0 2px 6px rgba(0,0,0,.22);
   }
@@ -307,6 +307,16 @@
     border-radius: 16px;
   }
 
+  .finder-window:not(.is-maximized) {
+    height: var(--finder-auto-height, min(68dvh, 620px)) !important;
+  }
+
+  .notes-window:not(.is-maximized) {
+    left: calc(8px + var(--mobile-drag-x, 0px)) !important;
+    width: calc(100vw - 16px) !important;
+    max-width: none !important;
+  }
+
   .mac-window.is-dragging,
   .finder-window.is-dragging {
     transition: none !important;
@@ -338,7 +348,6 @@
   .finder-actions,
   .finder-sidebar,
   .finder-preview,
-  .notes-folders,
   .photos-layout aside,
   .mail-layout aside,
   .settings-layout aside,
@@ -348,20 +357,11 @@
 
   .finder-shell,
   .finder-content,
-  .notes-layout,
   .photos-layout,
   .mail-layout,
   .settings-layout,
   .projects-layout {
     grid-template-columns: 1fr;
-  }
-
-  .notes-layout {
-    grid-template-columns: minmax(180px, 36%) 1fr;
-  }
-
-  .notes-list {
-    display: block;
   }
 
   .settings-grid {
@@ -471,18 +471,15 @@
     border-radius: 16px;
   }
 
-  .notes-layout {
-    grid-template-columns: 1fr;
-    grid-template-rows: 190px minmax(0, 1fr);
+  .finder-window:not(.is-maximized) {
+    height: var(--finder-auto-height, min(68dvh, 580px)) !important;
   }
 
-  .notes-list {
-    display: block;
-    border-right: 0;
-    border-bottom: 1px solid var(--line);
+  .notes-window:not(.is-maximized) {
+    left: calc(6px + var(--mobile-drag-x, 0px)) !important;
+    width: calc(100vw - 12px) !important;
   }
 
-  .note-body,
   .mail-compose,
   .readme-body,
   .projects-main {

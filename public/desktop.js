@@ -137,7 +137,7 @@
   }
 
   function getOpenWindows() {
-    return $$('.mac-window.is-open:not(.is-minimized)');
+    return $$('.mac-window.is-open:not(.is-minimized):not(.is-minimizing)');
   }
 
   function topWindow() {
@@ -205,6 +205,11 @@
     if (!preview) return;
     const media = $('[data-preview-media]', preview);
     const openLink = $('[data-preview-open]', preview);
+    const markdownDocument =
+      item.type === 'document' && item.name.toLowerCase().endsWith('.md');
+    const mediaPreview = item.type === 'image';
+    preview.classList.toggle('is-markdown', markdownDocument);
+    preview.classList.toggle('is-media', mediaPreview);
     media.replaceChildren();
 
     $('[data-preview-window-title]', preview).textContent = item.name;
@@ -213,7 +218,15 @@
     $('[data-preview-description]', preview).textContent =
       item.description || 'Nessuna descrizione disponibile.';
 
-    if (item.type === 'image' && (item.url || item.thumbnail)) {
+    if (markdownDocument) {
+      const documentView = document.createElement('article');
+      documentView.className = 'markdown-preview-document';
+      const content = document.createElement('pre');
+      const documentTitle = item.name.replace(/\.md$/i, '');
+      content.textContent = `# ${documentTitle}\n\n${item.description || 'Contenuto in preparazione.'}`;
+      documentView.appendChild(content);
+      media.appendChild(documentView);
+    } else if (item.type === 'image' && (item.url || item.thumbnail)) {
       const image = document.createElement('img');
       image.src = item.url || item.thumbnail;
       image.alt = item.name;
@@ -236,8 +249,14 @@
       media.appendChild(documentView);
     }
 
-    openLink.hidden = !item.url;
-    if (item.url) openLink.href = item.url;
+    const mediaLink =
+      item.link ||
+      (mediaPreview && item.thumbnail && item.url !== item.thumbnail && /^https?:/i.test(item.url)
+        ? item.url
+        : '');
+    const previewLink = mediaPreview ? mediaLink : item.url;
+    openLink.hidden = !previewLink;
+    if (previewLink) openLink.href = previewLink;
     openWindow('preview', false);
   }
 
@@ -249,6 +268,7 @@
     const unavailable = $('[data-quicktime-unavailable]', quicktime);
     const openLink = $('[data-quicktime-open]', quicktime);
     const playable = Boolean(item.url && /\.(mp4|webm|ogg)(?:$|[?#])/i.test(item.url));
+    const videoLink = item.link || (!playable ? item.url : '');
 
     video.pause();
     video.removeAttribute('src');
@@ -269,11 +289,10 @@
     }
 
     $('[data-quicktime-window-title]', quicktime).textContent = item.name;
-    $('[data-quicktime-title]', quicktime).textContent = item.name;
     $('[data-quicktime-description]', quicktime).textContent =
       item.description || 'Video dall’archivio di Enrico Toso.';
-    openLink.hidden = !item.url;
-    if (item.url) openLink.href = item.url;
+    openLink.hidden = !videoLink;
+    if (videoLink) openLink.href = videoLink;
     openWindow('quicktime', false);
   }
 
@@ -307,7 +326,11 @@
     } else if (item.type === 'video') {
       openQuickTime(item);
     } else if (item.type === 'link') {
-      openSafari(item);
+      if (item.external && item.url) {
+        window.open(item.url, '_blank', 'noopener,noreferrer');
+      } else {
+        openSafari(item);
+      }
     } else if (item.type === 'app' && item.app) {
       openWindow(item.app, false);
     }
@@ -332,7 +355,7 @@
     if (!win) return;
 
     closeLaunchpad(false);
-    win.classList.remove('is-closing', 'is-minimized');
+    win.classList.remove('is-closing', 'is-minimized', 'is-minimizing');
     win.classList.add('is-open');
     win.setAttribute('aria-hidden', 'false');
 
@@ -370,14 +393,21 @@
 
   function minimizeWindow(win) {
     if (!win) return;
-    win.classList.add('is-minimized');
     win.classList.remove('is-focused');
+    win.classList.add('is-minimizing');
     win.setAttribute('aria-hidden', 'true');
     const next = topWindow();
     if (next) focusWindow(next);
     else setActiveApp('desktop');
     updateDockState();
     if (isMobile()) layoutMobileWindows();
+
+    window.setTimeout(() => {
+      win.classList.remove('is-minimizing');
+      win.classList.add('is-minimized');
+      updateDockState();
+      if (isMobile()) layoutMobileWindows();
+    }, 170);
   }
 
   function maximizeWindow(win) {
@@ -633,11 +663,15 @@
         if (item.dataset.dragging === 'true') return;
         $$('.desktop-item').forEach((entry) => entry.classList.remove('is-selected'));
         item.classList.add('is-selected');
-        if (isMobile()) openItem(item.dataset.itemId);
+        if (item.dataset.externalUrl) {
+          window.open(item.dataset.externalUrl, '_blank', 'noopener,noreferrer');
+        } else if (isMobile()) {
+          openItem(item.dataset.itemId);
+        }
       });
 
       item.addEventListener('dblclick', (event) => {
-        if (isMobile() || item.dataset.dragging === 'true') return;
+        if (isMobile() || item.dataset.dragging === 'true' || item.dataset.externalUrl) return;
         event.stopPropagation();
         openItem(item.dataset.itemId);
       });
@@ -754,37 +788,70 @@
   function bindDragDesktopItems() {
     $$('.desktop-item').forEach((item) => {
       item.addEventListener('pointerdown', (event) => {
-        if (isMobile() || event.button !== 0) return;
+        if (event.pointerType === 'mouse' && event.button !== 0) return;
+
         const rect = item.getBoundingClientRect();
         const desktop = $('.desktop-items');
         const desktopRect = desktop.getBoundingClientRect();
         const start = { x: event.clientX, y: event.clientY };
+        const offset = {
+          x: event.clientX - rect.left,
+          y: event.clientY - rect.top
+        };
+        let moved = false;
+
+        item.setPointerCapture(event.pointerId);
 
         const onMove = (moveEvent) => {
           if (moveEvent.pointerId !== event.pointerId) return;
-          if (Math.abs(moveEvent.clientX - start.x) < 4 && Math.abs(moveEvent.clientY - start.y) < 4) return;
+          const distance = Math.hypot(
+            moveEvent.clientX - start.x,
+            moveEvent.clientY - start.y
+          );
+          if (!moved && distance < 6) return;
+
+          moved = true;
           item.dataset.dragging = 'true';
+          item.classList.add('is-dragging');
+          item.style.right = 'auto';
           const left = Math.max(
             0,
-            Math.min(moveEvent.clientX - desktopRect.left - (event.clientX - rect.left), desktopRect.width - item.offsetWidth)
+            Math.min(
+              moveEvent.clientX - desktopRect.left - offset.x,
+              desktopRect.width - item.offsetWidth
+            )
           );
           const top = Math.max(
             0,
-            Math.min(moveEvent.clientY - desktopRect.top - (event.clientY - rect.top), desktopRect.height - item.offsetHeight)
+            Math.min(
+              moveEvent.clientY - desktopRect.top - offset.y,
+              desktopRect.height - item.offsetHeight
+            )
           );
           item.style.left = `${left}px`;
           item.style.top = `${top}px`;
+          moveEvent.preventDefault();
         };
 
-        const onUp = (upEvent) => {
-          if (upEvent.pointerId !== event.pointerId) return;
-          document.removeEventListener('pointermove', onMove);
-          document.removeEventListener('pointerup', onUp);
-          window.setTimeout(() => delete item.dataset.dragging, 0);
+        const endDrag = (endEvent) => {
+          if (endEvent.pointerId !== event.pointerId) return;
+          item.removeEventListener('pointermove', onMove);
+          item.removeEventListener('pointerup', endDrag);
+          item.removeEventListener('pointercancel', endDrag);
+          item.classList.remove('is-dragging');
+          try {
+            item.releasePointerCapture(event.pointerId);
+          } catch {
+            // Pointer capture may already have been released.
+          }
+          if (moved) {
+            window.setTimeout(() => delete item.dataset.dragging, 80);
+          }
         };
 
-        document.addEventListener('pointermove', onMove);
-        document.addEventListener('pointerup', onUp);
+        item.addEventListener('pointermove', onMove);
+        item.addEventListener('pointerup', endDrag);
+        item.addEventListener('pointercancel', endDrag);
       });
     });
   }
@@ -928,40 +995,57 @@
     const title = $('#noteTitle', windowElement);
     const body = $('#noteBody', windowElement);
     const search = $('[data-notes-search]', windowElement);
-    let folder = 'all';
+    const libraryScreen = $('[data-notes-screen="library"]', windowElement);
+    const readerScreen = $('[data-notes-screen="reader"]', windowElement);
+    const count = $('[data-notes-count]', windowElement);
+    const windowTitle = $('[data-notes-window-title]', windowElement);
+    const notesList = $('[data-notes-list]', windowElement);
+
+    if (!title || !body || !search || !libraryScreen || !readerScreen || !count || !windowTitle || !notesList) {
+      return;
+    }
+
+    function showLibrary() {
+      readerScreen.hidden = true;
+      libraryScreen.hidden = false;
+      windowElement.classList.remove('is-reading-note');
+      windowTitle.textContent = 'Note';
+    }
+
+    function showNote(note) {
+      title.textContent = note.dataset.noteTitle;
+      body.textContent = note.dataset.noteBody;
+      windowTitle.textContent = note.dataset.noteTitle;
+      libraryScreen.hidden = true;
+      readerScreen.hidden = false;
+      windowElement.classList.add('is-reading-note');
+      readerScreen.scrollTop = 0;
+    }
 
     function filterNotes() {
       const query = search.value.trim().toLowerCase();
       let visible = 0;
       notes.forEach((note) => {
-        const matchesFolder = folder === 'all' || note.dataset.noteFolder === folder;
         const matchesQuery = `${note.dataset.noteTitle} ${note.dataset.noteBody}`.toLowerCase().includes(query);
-        note.hidden = !(matchesFolder && matchesQuery);
+        note.hidden = !matchesQuery;
         if (!note.hidden) visible += 1;
       });
       $('.notes-empty', windowElement).hidden = visible > 0;
+      count.textContent = String(visible);
     }
 
-    notes.forEach((note) => {
-      note.addEventListener('click', () => {
-        notes.forEach((entry) => entry.classList.remove('active'));
-        note.classList.add('active');
-        title.textContent = note.dataset.noteTitle;
-        body.textContent = note.dataset.noteBody;
-      });
-    });
-
-    $$('[data-note-folder]', windowElement).forEach((button) => {
-      button.addEventListener('click', () => {
-        $$('[data-note-folder]', windowElement).forEach((entry) => entry.classList.remove('active'));
-        button.classList.add('active');
-        folder = button.dataset.noteFolder;
-        filterNotes();
-      });
+    notesList.addEventListener('click', (event) => {
+      const note = event.target.closest('[data-note]');
+      if (!note) return;
+      event.stopPropagation();
+      showNote(note);
     });
 
     search.addEventListener('input', filterNotes);
     $('[data-focus-note-search]', windowElement)?.addEventListener('click', () => search.focus());
+    $('[data-note-back]', windowElement)?.addEventListener('click', showLibrary);
+    showLibrary();
+    filterNotes();
   }
 
   function bindFinder() {
@@ -992,6 +1076,55 @@
     function updateNavigation() {
       back.disabled = historyIndex <= 0;
       forward.disabled = historyIndex >= history.length - 1;
+    }
+
+    function resizeFinderToContent() {
+      if (finder.classList.contains('is-maximized')) return;
+
+      window.requestAnimationFrame(() => {
+        const visibleFiles = $$('.finder-file', grid).filter((file) => !file.hidden);
+        const listView = grid.classList.contains('is-list');
+        const mobile = isMobile();
+        const compact = window.matchMedia('(max-width: 560px)').matches;
+        const horizontalPadding = mobile ? (compact ? 20 : 28) : 48;
+        const verticalPadding = mobile ? (compact ? 40 : 44) : 48;
+        const itemWidth = listView ? grid.clientWidth : compact ? 78 : mobile ? 92 : 112;
+        const columnGap = listView ? 0 : compact ? 6 : mobile ? 8 : 14;
+        const columns = listView
+          ? 1
+          : Math.max(
+              1,
+              Math.floor(
+                (grid.clientWidth - horizontalPadding + columnGap) /
+                (itemWidth + columnGap)
+              )
+            );
+        const rows = Math.max(1, Math.ceil(visibleFiles.length / columns));
+        const itemHeight = listView ? 54 : compact ? 102 : 116;
+        const rowGap = listView ? 4 : compact ? 14 : mobile ? 16 : 22;
+        const minimumContentHeight = mobile ? 180 : 300;
+        const contentHeight = Math.max(
+          minimumContentHeight,
+          verticalPadding + rows * itemHeight + Math.max(0, rows - 1) * rowGap
+        );
+        const chromeHeight =
+          $('.finder-titlebar', finder)?.offsetHeight || 52;
+        const mobileTabs = $('.finder-mobile-tabs', finder);
+        const tabsHeight =
+          mobileTabs && getComputedStyle(mobileTabs).display !== 'none'
+            ? mobileTabs.offsetHeight
+            : 0;
+        const pathHeight = $('.finder-pathbar', finder)?.offsetHeight || 34;
+        const maximumHeight = mobile
+          ? Math.min(window.innerHeight - 70, 620)
+          : Math.min(window.innerHeight - 120, 720);
+        const desiredHeight = Math.min(
+          maximumHeight,
+          chromeHeight + tabsHeight + pathHeight + contentHeight
+        );
+
+        finder.style.setProperty('--finder-auto-height', `${desiredHeight}px`);
+      });
     }
 
     function createPlaceholder(heading, copy) {
@@ -1152,6 +1285,7 @@
         button.classList.toggle('is-active', button.dataset.finderLocation === location);
       });
       resetPreview(locationItem, label, description, location === 'applications' ? applications.length : items.length);
+      resizeFinderToContent();
 
       if (addToHistory && history[historyIndex] !== location) {
         history = history.slice(0, historyIndex + 1);
@@ -1227,6 +1361,7 @@
         const haystack = `${file.dataset.previewTitle} ${file.dataset.previewKind} ${file.dataset.previewDescription}`.toLowerCase();
         file.hidden = !haystack.includes(query);
       });
+      resizeFinderToContent();
     });
 
     $$('[data-finder-view]', finder).forEach((button) => {
@@ -1237,6 +1372,7 @@
           entry.setAttribute('aria-pressed', active ? 'true' : 'false');
         });
         grid.classList.toggle('is-list', button.dataset.finderView === 'list');
+        resizeFinderToContent();
       });
     });
 
@@ -1256,6 +1392,7 @@
     };
     navigateFinder = renderLocation;
     renderLocation('/Desktop', false);
+    window.addEventListener('resize', resizeFinderToContent);
   }
 
   function bindLaunchpadSearch() {
@@ -1536,7 +1673,7 @@
 
   function initWindowState() {
     $$('.mac-window').forEach((win) => {
-      win.classList.remove('is-open', 'is-focused', 'is-minimized', 'is-maximized', 'is-closing');
+      win.classList.remove('is-open', 'is-focused', 'is-minimized', 'is-minimizing', 'is-maximized', 'is-closing');
       win.style.zIndex = '';
       win.setAttribute('aria-hidden', 'true');
     });

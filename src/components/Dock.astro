@@ -85,7 +85,7 @@ const apps = [
 
     {apps.slice(7).map((app) => (
       <button
-        class="dock-item dock-item-utility"
+        class={`dock-item dock-item-utility ${app.id === 'trash' ? 'dock-item-trash' : ''}`}
         data-open={app.id}
         title={app.label}
         aria-label={`Apri ${app.label}`}

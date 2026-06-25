@@ -37,11 +37,12 @@
 html,body{margin:0;min-height:100%;overflow:hidden;font-family:var(--font-system);color:var(--text);background:#050b16;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 body{font-size:14px;line-height:1.35}
 button,a,input,textarea,select{font:inherit}
-button{border:0;background:none;color:inherit;cursor:default;-webkit-tap-highlight-color:transparent}
+button{border:0;background:none;color:inherit;cursor:default;-webkit-tap-highlight-color:transparent;transition:transform .14s ease,background-color .14s ease,color .14s ease,box-shadow .14s ease,opacity .14s ease}
 button:disabled{opacity:.46}
 button:not(:disabled),a,input{cursor:pointer}
 a{color:var(--blue);text-decoration:none}
 a:hover{text-decoration:underline}
+a:active,button:not(:disabled):active{transform:scale(.975)}
 img{max-width:100%;display:block}
 
 ::selection{background:rgba(0,122,255,.22)}

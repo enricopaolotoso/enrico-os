@@ -89,8 +89,7 @@ const apps = [
               <strong>Enrico Toso</strong>
               <small>adesso</small>
             </header>
-            <h2>Benvenuto nel mio portfolio 👋</h2>
-            <p>Tocca lo schermo per entrare ed esplorare il mio spazio digitale.</p>
+            <p>Benvenut* nel mio computer. Tocca lo schermo per entrare.</p>
           </div>
         </article>
       </div>
@@ -111,8 +110,9 @@ const apps = [
       {desktopItems.map((item, index) => (
         <button
           type="button"
-          class={`desktop-item ${item.type}`}
+          class={`desktop-item ${item.type} ${item.thumbnail ? 'has-thumbnail' : ''}`}
           data-item-id={item.id}
+          data-external-url={item.external ? item.url : undefined}
           style={`--x:${52 + ((index * 173) % 1030)}px;--y:${70 + ((index * 137) % 330)}px`}
           aria-label={`Apri ${item.name}`}
         >
@@ -147,18 +147,58 @@ const apps = [
       <FinderWindow />
       <ProjectsWindow />
 
-      <article class="mac-window notes-window" data-window="notes" data-app-title="Note" style="--left: 18vw; --top: 13vh; --w: 900px; --h: 620px;" role="dialog" aria-label="Note" aria-modal="false">
-        <div class="window-chrome"><div class="traffic"><button type="button" data-close aria-label="Chiudi Note"></button><button type="button" data-minimize aria-label="Riduci Note"></button><button type="button" data-maximize aria-label="Ingrandisci Note"></button></div><strong>Note</strong><button class="info-btn" type="button" data-focus-note-search aria-label="Cerca nelle note">⌕</button></div>
-        <div class="notes-layout">
-          <aside class="notes-folders" aria-label="Cartelle note"><button type="button" class="active" data-note-folder="all">📁 Tutte</button><button type="button" data-note-folder="Profilo">📁 Profilo</button><button type="button" data-note-folder="Archivio">📁 Archivio</button></aside>
-          <div class="notes-list">
-            <label class="notes-search"><span class="sr-only">Cerca nelle note</span><input type="search" placeholder="Cerca note" data-notes-search /></label>
-            {site.notes.map((n, i) => <button type="button" class={i===0?'active':''} data-note={n.id} data-note-folder={n.folder} data-note-title={n.title} data-note-body={n.body}><strong>{n.title}</strong><small>{n.body.slice(0,82)}...</small></button>)}
-            <p class="notes-empty" hidden>Nessuna nota trovata.</p>
-          </div>
-          <article class="note-body">
-            <h2 id="noteTitle">{site.notes[0].title}</h2>
-            <p id="noteBody">{site.notes[0].body}</p>
+      <article class="mac-window notes-window" data-window="notes" data-app-title="Note" style="--left: 14vw; --top: 10vh; --w: 1040px; --h: 660px;" role="dialog" aria-label="Note" aria-modal="false">
+        <div class="window-chrome">
+          <div class="traffic"><button type="button" data-close aria-label="Chiudi Note"></button><button type="button" data-minimize aria-label="Riduci Note"></button><button type="button" data-maximize aria-label="Ingrandisci Note"></button></div>
+          <strong data-notes-window-title>Note</strong>
+          <button class="info-btn" type="button" data-focus-note-search aria-label="Cerca nelle note">⌕</button>
+        </div>
+
+        <div class="notes-app">
+          <section class="notes-library-screen" data-notes-screen="library">
+            <aside class="notes-folders" aria-label="Cartelle note">
+              <div class="notes-sidebar-mark" aria-hidden="true">☰</div>
+              <button type="button" class="active" data-note-folder="all"><span>▱</span>Tutte</button>
+              <button type="button" data-note-folder="Profilo"><span>▱</span>Profilo</button>
+              <button type="button" data-note-folder="Archivio"><span>▱</span>Archivio</button>
+            </aside>
+
+            <main class="notes-library-main">
+              <header class="notes-library-header">
+                <div>
+                  <h2 data-notes-folder-title>Tutte le note</h2>
+                  <p><span data-notes-count>{site.notes.length}</span> note</p>
+                </div>
+                <label class="notes-search">
+                  <span class="sr-only">Cerca nelle note</span>
+                  <input type="search" placeholder="Cerca note" data-notes-search />
+                </label>
+              </header>
+
+              <div class="notes-list">
+                {site.notes.map((n) => (
+                  <button type="button" data-note={n.id} data-note-folder={n.folder} data-note-title={n.title} data-note-body={n.body}>
+                    <strong>{n.title}</strong>
+                    <small>{n.body.replace(/\n+/g, ' ').slice(0, 145)}...</small>
+                  </button>
+                ))}
+                <p class="notes-empty" hidden>Nessuna nota trovata.</p>
+              </div>
+            </main>
+          </section>
+
+          <article class="note-reader-screen" data-notes-screen="reader" hidden>
+            <header class="note-reader-header">
+              <button type="button" class="note-back-button" data-note-back aria-label="Torna all’elenco delle note">‹</button>
+              <div>
+                <h2 id="noteTitle">{site.notes[0].title}</h2>
+                <p data-note-folder-label>{site.notes[0].folder}</p>
+              </div>
+            </header>
+            <div class="note-reader-content">
+              <time>{new Intl.DateTimeFormat('it-IT', { dateStyle: 'long' }).format(new Date())}</time>
+              <p id="noteBody">{site.notes[0].body}</p>
+            </div>
           </article>
         </div>
       </article>
