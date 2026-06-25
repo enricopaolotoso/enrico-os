@@ -155,14 +155,7 @@ const apps = [
         </div>
 
         <div class="notes-app">
-          <section class="notes-library-screen" data-notes-screen="library">
-            <aside class="notes-folders" aria-label="Cartelle note">
-              <div class="notes-sidebar-mark" aria-hidden="true">☰</div>
-              <button type="button" class="active" data-note-folder="all"><span>▱</span>Tutte</button>
-              <button type="button" data-note-folder="Profilo"><span>▱</span>Profilo</button>
-              <button type="button" data-note-folder="Archivio"><span>▱</span>Archivio</button>
-            </aside>
-
+          <section class="notes-library-screen is-active" data-notes-screen="library">
             <main class="notes-library-main">
               <header class="notes-library-header">
                 <div>
@@ -175,9 +168,9 @@ const apps = [
                 </label>
               </header>
 
-              <div class="notes-list">
+              <div class="notes-list" data-notes-list>
                 {site.notes.map((n) => (
-                  <button type="button" data-note={n.id} data-note-folder={n.folder} data-note-title={n.title} data-note-body={n.body}>
+                  <button type="button" data-note={n.id} data-note-title={n.title} data-note-body={n.body}>
                     <strong>{n.title}</strong>
                     <small>{n.body.replace(/\n+/g, ' ').slice(0, 145)}...</small>
                   </button>
@@ -187,12 +180,12 @@ const apps = [
             </main>
           </section>
 
-          <article class="note-reader-screen" data-notes-screen="reader" hidden>
+          <article class="note-reader-screen" data-notes-screen="reader">
             <header class="note-reader-header">
               <button type="button" class="note-back-button" data-note-back aria-label="Torna all’elenco delle note">‹</button>
               <div>
                 <h2 id="noteTitle">{site.notes[0].title}</h2>
-                <p data-note-folder-label>{site.notes[0].folder}</p>
+                <p>Nota</p>
               </div>
             </header>
             <div class="note-reader-content">

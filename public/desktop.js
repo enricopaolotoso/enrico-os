@@ -353,6 +353,7 @@
 
     const win = getWindow(id);
     if (!win) return;
+    const wasOpen = win.classList.contains('is-open');
 
     closeLaunchpad(false);
     win.classList.remove('is-closing', 'is-minimized', 'is-minimizing');
@@ -364,6 +365,10 @@
 
     if (id === 'photos') {
       ensurePhotoImagesLoaded(win);
+    }
+
+    if (id === 'notes' && !wasOpen) {
+      win.dispatchEvent(new CustomEvent('notes:show-library'));
     }
 
     if (id === 'terminal') {
@@ -999,15 +1004,14 @@
     const readerScreen = $('[data-notes-screen="reader"]', windowElement);
     const count = $('[data-notes-count]', windowElement);
     const windowTitle = $('[data-notes-window-title]', windowElement);
-    const notesList = $('[data-notes-list]', windowElement);
 
-    if (!title || !body || !search || !libraryScreen || !readerScreen || !count || !windowTitle || !notesList) {
+    if (!title || !body || !search || !libraryScreen || !readerScreen || !count || !windowTitle) {
       return;
     }
 
     function showLibrary() {
-      readerScreen.hidden = true;
-      libraryScreen.hidden = false;
+      readerScreen.classList.remove('is-active');
+      libraryScreen.classList.add('is-active');
       windowElement.classList.remove('is-reading-note');
       windowTitle.textContent = 'Note';
     }
@@ -1016,8 +1020,8 @@
       title.textContent = note.dataset.noteTitle;
       body.textContent = note.dataset.noteBody;
       windowTitle.textContent = note.dataset.noteTitle;
-      libraryScreen.hidden = true;
-      readerScreen.hidden = false;
+      libraryScreen.classList.remove('is-active');
+      readerScreen.classList.add('is-active');
       windowElement.classList.add('is-reading-note');
       readerScreen.scrollTop = 0;
     }
@@ -1034,16 +1038,32 @@
       count.textContent = String(visible);
     }
 
-    notesList.addEventListener('click', (event) => {
-      const note = event.target.closest('[data-note]');
-      if (!note) return;
-      event.stopPropagation();
-      showNote(note);
+    notes.forEach((note) => {
+      note.addEventListener('pointerdown', (event) => event.stopPropagation());
+      note.addEventListener('click', (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        showNote(note);
+      });
     });
 
     search.addEventListener('input', filterNotes);
-    $('[data-focus-note-search]', windowElement)?.addEventListener('click', () => search.focus());
-    $('[data-note-back]', windowElement)?.addEventListener('click', showLibrary);
+    const searchButton = $('[data-focus-note-search]', windowElement);
+    searchButton?.addEventListener('pointerdown', (event) => event.stopPropagation());
+    searchButton?.addEventListener('click', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      showLibrary();
+      window.setTimeout(() => search.focus(), 0);
+    });
+    const backButton = $('[data-note-back]', windowElement);
+    backButton?.addEventListener('pointerdown', (event) => event.stopPropagation());
+    backButton?.addEventListener('click', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      showLibrary();
+    });
+    windowElement.addEventListener('notes:show-library', showLibrary);
     showLibrary();
     filterNotes();
   }
