@@ -1,0 +1,511 @@
+/* ==========================================================
+   FINDER APP
+   App realistica stile macOS
+   ========================================================== */
+
+.finder-window {
+  background: rgba(246, 246, 248, 0.82);
+}
+
+.finder-titlebar {
+  height: 52px;
+  min-height: 52px;
+  padding: 0 14px;
+}
+
+.finder-titlebar .mac-window-controls {
+  position: relative;
+  z-index: 3;
+}
+
+.finder-toolbar {
+  width: 100%;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: auto minmax(180px, 1fr) auto;
+  align-items: center;
+  gap: 14px;
+  margin-left: 4px;
+}
+
+.finder-nav {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.finder-nav button,
+.finder-view-button {
+  width: 30px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  border-radius: 7px;
+  color: rgba(30, 30, 30, 0.68);
+  background: rgba(255, 255, 255, 0.34);
+  border: 1px solid rgba(60, 60, 67, 0.08);
+}
+
+.finder-nav button:hover,
+.finder-view-button:hover,
+.finder-view-button.is-active {
+  background: rgba(255, 255, 255, 0.74);
+}
+
+.finder-nav svg,
+.finder-view-button svg,
+.finder-search svg,
+.finder-pathbar svg {
+  width: 17px;
+  height: 17px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.finder-view-button svg rect {
+  fill: currentColor;
+  stroke: none;
+}
+
+.finder-current-folder {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  color: rgba(28, 28, 30, 0.84);
+  font-size: 13px;
+  letter-spacing: -0.02em;
+}
+
+.finder-current-folder strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.finder-folder-dot {
+  width: 22px;
+  height: 18px;
+  flex: 0 0 auto;
+  display: inline-block;
+  border-radius: 5px 5px 4px 4px;
+  background: linear-gradient(180deg, #7cc0ff, #0a84ff);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.44),
+    0 3px 8px rgba(10, 132, 255, 0.22);
+}
+
+.finder-folder-dot::before {
+  content: "";
+  position: absolute;
+}
+
+.finder-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 7px;
+  min-width: 0;
+}
+
+.finder-search {
+  width: 178px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 9px;
+  border-radius: 8px;
+  color: rgba(60, 60, 67, 0.58);
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(60, 60, 67, 0.08);
+}
+
+.finder-search input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  color: rgba(28, 28, 30, 0.88);
+  background: transparent;
+  font: inherit;
+  font-size: 13px;
+}
+
+.finder-shell {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 216px minmax(0, 1fr);
+}
+
+.finder-sidebar {
+  min-height: 0;
+  overflow: auto;
+  padding: 14px 10px;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(242, 242, 247, 0.68),
+      rgba(229, 229, 234, 0.52)
+    );
+  border-right: 1px solid rgba(60, 60, 67, 0.12);
+  backdrop-filter: blur(30px) saturate(1.6);
+  -webkit-backdrop-filter: blur(30px) saturate(1.6);
+}
+
+.finder-sidebar-section + .finder-sidebar-section {
+  margin-top: 20px;
+}
+
+.finder-sidebar-section p {
+  margin: 0 0 6px 10px;
+  color: rgba(60, 60, 67, 0.62);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.finder-sidebar button {
+  width: 100%;
+  min-height: 30px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 9px;
+  border-radius: 7px;
+  color: rgba(28, 28, 30, 0.82);
+  font-size: 13px;
+  font-weight: 520;
+  text-align: left;
+}
+
+.finder-sidebar button:hover,
+.finder-sidebar button.is-active {
+  background: rgba(10, 132, 255, 0.15);
+}
+
+.finder-sidebar button span {
+  width: 20px;
+  display: inline-grid;
+  place-items: center;
+  font-size: 15px;
+}
+
+.finder-main {
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background: rgba(255, 255, 255, 0.54);
+}
+
+.finder-pathbar {
+  height: 34px;
+  min-height: 34px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0 18px;
+  color: rgba(60, 60, 67, 0.68);
+  font-size: 12px;
+  border-bottom: 1px solid rgba(60, 60, 67, 0.10);
+  background: rgba(255, 255, 255, 0.36);
+}
+
+.finder-pathbar strong {
+  color: rgba(28, 28, 30, 0.82);
+}
+
+.finder-pathbar svg {
+  width: 14px;
+  height: 14px;
+}
+
+.finder-content {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 250px;
+}
+
+.finder-grid {
+  min-width: 0;
+  min-height: 0;
+  overflow: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(112px, 1fr));
+  align-content: start;
+  gap: 22px 14px;
+  padding: 24px;
+}
+
+.finder-file {
+  min-width: 0;
+  min-height: 116px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 6px;
+  padding: 9px 6px;
+  border-radius: 12px;
+  color: rgba(28, 28, 30, 0.9);
+  text-align: center;
+}
+
+.finder-file:hover,
+.finder-file.is-selected {
+  background: rgba(10, 132, 255, 0.14);
+}
+
+.finder-file-icon {
+  width: 62px;
+  height: 62px;
+  display: grid;
+  place-items: center;
+  border-radius: 17px;
+  font-size: 34px;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.80),
+      rgba(242, 242, 247, 0.72)
+    );
+  border: 1px solid rgba(60, 60, 67, 0.08);
+  box-shadow:
+    0 8px 18px rgba(0, 0, 0, 0.10),
+    inset 0 1px 0 rgba(255, 255, 255, 0.76);
+}
+
+.finder-file-name {
+  max-width: 100%;
+  color: rgba(28, 28, 30, 0.88);
+  font-size: 12.5px;
+  font-weight: 560;
+  line-height: 1.15;
+  word-break: break-word;
+}
+
+.finder-file small {
+  color: rgba(60, 60, 67, 0.58);
+  font-size: 11px;
+}
+
+.finder-grid.is-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 14px;
+}
+
+.finder-grid.is-list .finder-file {
+  min-height: 54px;
+  display: grid;
+  grid-template-columns: 46px minmax(0, 1fr) 150px;
+  align-items: center;
+  text-align: left;
+}
+
+.finder-grid.is-list .finder-file-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 11px;
+  font-size: 24px;
+}
+
+.finder-empty {
+  grid-column: 1 / -1;
+  margin: 30px auto;
+  color: var(--muted);
+}
+
+.finder-preview {
+  min-width: 0;
+  min-height: 0;
+  overflow: auto;
+  padding: 18px;
+  background: rgba(246, 246, 248, 0.64);
+  border-left: 1px solid rgba(60, 60, 67, 0.10);
+}
+
+.finder-preview-card {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+}
+
+.finder-preview-icon {
+  width: 86px;
+  height: 86px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 12px;
+  border-radius: 22px;
+  font-size: 44px;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(60, 60, 67, 0.08);
+  box-shadow:
+    0 12px 26px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.80);
+}
+
+.finder-preview h3 {
+  max-width: 100%;
+  margin: 0;
+  color: rgba(28, 28, 30, 0.92);
+  font-size: 18px;
+  font-weight: 720;
+  letter-spacing: -0.035em;
+  word-break: break-word;
+}
+
+.finder-preview-kind {
+  margin: 4px 0 14px;
+  color: rgba(60, 60, 67, 0.62);
+  font-size: 12px;
+}
+
+.finder-preview p:not(.finder-preview-kind) {
+  margin: 0;
+  color: rgba(44, 44, 46, 0.82);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.finder-preview-meta {
+  width: 100%;
+  margin: 18px 0;
+  border-top: 1px solid rgba(60, 60, 67, 0.12);
+}
+
+.finder-preview-meta div {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 9px 0;
+  border-bottom: 1px solid rgba(60, 60, 67, 0.10);
+  text-align: left;
+}
+
+.finder-preview-meta span {
+  color: rgba(60, 60, 67, 0.62);
+  font-size: 12px;
+}
+
+.finder-preview-meta strong {
+  max-width: 120px;
+  color: rgba(28, 28, 30, 0.86);
+  font-size: 12px;
+  font-weight: 620;
+  text-align: right;
+}
+
+.finder-open-button {
+  width: 100%;
+  min-height: 34px;
+  border-radius: 9px;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 650;
+  background: #0a84ff;
+  box-shadow:
+    0 8px 18px rgba(10, 132, 255, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.28);
+}
+
+.finder-open-button:hover {
+  background: #007aff;
+}
+
+/* Mobile */
+@media (max-width: 900px) {
+  .finder-window {
+    width: calc(100vw - var(--mobile-dock-width) - 16px) !important;
+  }
+
+  .finder-titlebar {
+    height: 50px;
+    min-height: 50px;
+  }
+
+  .finder-toolbar {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .finder-actions {
+    display: none;
+  }
+
+  .finder-current-folder {
+    justify-content: flex-start;
+  }
+
+  .finder-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .finder-sidebar {
+    display: none;
+  }
+
+  .finder-content {
+    grid-template-columns: 1fr;
+  }
+
+  .finder-preview {
+    display: none;
+  }
+
+  .finder-grid {
+    grid-template-columns: repeat(auto-fill, minmax(92px, 1fr));
+    gap: 16px 8px;
+    padding: 18px 14px 26px;
+  }
+
+  .finder-file-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 15px;
+    font-size: 30px;
+  }
+}
+
+@media (max-width: 560px) {
+  .finder-nav button {
+    width: 27px;
+  }
+
+  .finder-current-folder {
+    font-size: 12.5px;
+  }
+
+  .finder-pathbar {
+    padding: 0 12px;
+    overflow: hidden;
+  }
+
+  .finder-grid {
+    grid-template-columns: repeat(auto-fill, minmax(78px, 1fr));
+    gap: 14px 6px;
+    padding: 16px 10px 24px;
+  }
+
+  .finder-file {
+    min-height: 102px;
+  }
+
+  .finder-file-name {
+    font-size: 11.5px;
+  }
+
+  .finder-file small {
+    display: none;
+  }
+}

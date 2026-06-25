@@ -1,0 +1,102 @@
+---
+const apps = [
+  {
+    id: 'finder',
+    label: 'Finder',
+    icon: 'finder.png',
+    fallback: 'F'
+  },
+  {
+    id: 'notes',
+    label: 'Note',
+    icon: 'notes.png',
+    fallback: 'N'
+  },
+  {
+    id: 'photos',
+    label: 'Foto',
+    icon: 'photos.png',
+    fallback: 'P'
+  },
+  {
+    id: 'mail',
+    label: 'Mail',
+    icon: 'mail.png',
+    fallback: 'M'
+  },
+  {
+    id: 'terminal',
+    label: 'Terminale',
+    icon: 'terminal.png',
+    fallback: 'T'
+  },
+  {
+    id: 'settings',
+    label: 'Impostazioni',
+    icon: 'settings.png',
+    fallback: 'S'
+  },
+  {
+    id: 'launchpad',
+    label: 'Launchpad',
+    icon: 'launchpad.png',
+    fallback: 'L'
+  },
+  {
+    id: 'trash',
+    label: 'Cestino',
+    icon: 'trash.png',
+    fallback: 'C'
+  }
+];
+---
+
+<nav class="dock" aria-label="Dock">
+  <div class="dock-inner">
+    {apps.slice(0, 6).map((app) => (
+      <button
+        class="dock-item"
+        data-open={app.id}
+        title={app.label}
+        aria-label={`Apri ${app.label}`}
+        type="button"
+      >
+        <span class="dock-icon" aria-hidden="true">
+          <img
+            src={`/apple-icons/${app.icon}`}
+            alt=""
+            loading="eager"
+            decoding="async"
+            onerror="this.style.display='none'"
+          />
+          <b>{app.fallback}</b>
+        </span>
+        <small>{app.label}</small>
+      </button>
+    ))}
+
+    <span class="dock-separator" aria-hidden="true"></span>
+
+    {apps.slice(6).map((app) => (
+      <button
+        class="dock-item dock-item-utility"
+        data-open={app.id}
+        title={app.label}
+        aria-label={`Apri ${app.label}`}
+        type="button"
+      >
+        <span class="dock-icon" aria-hidden="true">
+          <img
+            src={`/apple-icons/${app.icon}`}
+            alt=""
+            loading="eager"
+            decoding="async"
+            onerror="this.style.display='none'"
+          />
+          <b>{app.fallback}</b>
+        </span>
+        <small>{app.label}</small>
+      </button>
+    ))}
+  </div>
+</nav>

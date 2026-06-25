@@ -1,0 +1,615 @@
+/* ==========================================================
+   MENU BAR + DOCK
+   Patch punto 2 — UI più vicina a macOS moderno
+   ========================================================== */
+
+/* ---------------------------
+   MENU BAR
+--------------------------- */
+
+.menu-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--menu-height);
+  z-index: 900;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+  color: rgba(255, 255, 255, 0.96);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: -0.018em;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.22);
+  background: rgba(20, 24, 32, 0.22);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(30px) saturate(1.8);
+  -webkit-backdrop-filter: blur(30px) saturate(1.8);
+}
+
+.menu-left,
+.menu-right {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.menu-left {
+  min-width: 0;
+  gap: 4px;
+}
+
+.menu-right {
+  flex-shrink: 0;
+  gap: 5px;
+}
+
+.menu-app {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 8px;
+  font-weight: 700;
+  white-space: nowrap;
+  border-radius: 5px;
+}
+
+.menu-items {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  gap: 1px;
+}
+
+.menu-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.menu-trigger {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 8px;
+  border-radius: 5px;
+  white-space: nowrap;
+  color: inherit;
+}
+
+.menu-trigger:hover,
+.menu-group:focus-within > .menu-trigger {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.menu-apple {
+  width: 28px;
+  justify-content: center;
+  padding: 0;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1;
+  background: transparent;
+  box-shadow: none;
+  mask: none;
+  -webkit-mask: none;
+}
+
+.menu-apple span {
+  display: block;
+  width: auto;
+  height: auto;
+  line-height: 1;
+}
+
+.menu-dropdown {
+  position: absolute;
+  top: 27px;
+  left: 0;
+  min-width: 214px;
+  padding: 6px;
+  border-radius: 10px;
+  color: rgba(20, 20, 22, 0.94);
+  text-shadow: none;
+  background: rgba(246, 246, 248, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.58);
+  box-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.25),
+    0 3px 12px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.62);
+  backdrop-filter: blur(36px) saturate(1.85);
+  -webkit-backdrop-filter: blur(36px) saturate(1.85);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-4px) scale(0.985);
+  transform-origin: top left;
+  transition:
+    opacity 0.12s ease,
+    visibility 0.12s ease,
+    transform 0.12s ease;
+}
+
+.apple-dropdown {
+  min-width: 238px;
+}
+
+.menu-group:hover > .menu-dropdown,
+.menu-group:focus-within > .menu-dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+.menu-dropdown button {
+  width: 100%;
+  min-height: 26px;
+  display: flex;
+  align-items: center;
+  padding: 0 9px;
+  border-radius: 6px;
+  color: rgba(20, 20, 22, 0.94);
+  font-size: 13px;
+  text-align: left;
+}
+
+.menu-dropdown button:hover,
+.menu-dropdown button:focus-visible {
+  color: #fff;
+  background: #0a84ff;
+  outline: none;
+}
+
+.menu-dropdown button:disabled:hover,
+.menu-dropdown button:disabled:focus-visible {
+  color: rgba(20, 20, 22, 0.5);
+  background: transparent;
+}
+
+.menu-dropdown hr {
+  height: 1px;
+  margin: 5px 6px;
+  border: 0;
+  background: rgba(60, 60, 67, 0.18);
+}
+
+.status-icon,
+.menu-clock {
+  height: 22px;
+  min-width: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 7px;
+  border-radius: 5px;
+  color: inherit;
+}
+
+.status-icon:hover,
+.menu-clock:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.status-icon svg {
+  width: 17px;
+  height: 17px;
+  display: block;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.control-center svg {
+  fill: currentColor;
+  stroke: none;
+}
+
+.battery-icon {
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.menu-clock {
+  min-width: auto;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+
+
+/* ---------------------------
+   DOCK DESKTOP
+--------------------------- */
+
+.dock {
+  position: absolute;
+  left: 50%;
+  bottom: max(12px, env(safe-area-inset-bottom));
+  z-index: 850;
+  transform: translateX(-50%);
+  display: block;
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+  border-radius: 0;
+  overflow: visible;
+}
+
+.dock::before {
+  display: none;
+}
+
+.dock-inner {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  padding: 9px 12px 11px;
+  border-radius: 26px;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.52),
+      rgba(255, 255, 255, 0.28)
+    );
+  border: 1px solid rgba(255, 255, 255, 0.44);
+  box-shadow:
+    0 26px 70px rgba(0, 0, 0, 0.30),
+    0 6px 18px rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.70),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(34px) saturate(1.95);
+  -webkit-backdrop-filter: blur(34px) saturate(1.95);
+}
+
+.dock-inner::before {
+  content: "";
+  position: absolute;
+  top: 6px;
+  left: 18px;
+  right: 18px;
+  height: 1px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.54);
+  pointer-events: none;
+}
+
+.dock-item {
+  position: relative;
+  width: 58px;
+  min-width: 58px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-direction: column;
+  gap: 0;
+}
+
+.dock-icon {
+  width: 54px;
+  height: 54px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 14px;
+  background: transparent;
+  box-shadow:
+    0 10px 20px rgba(0, 0, 0, 0.22),
+    0 1px 3px rgba(0, 0, 0, 0.12);
+  transform-origin: center bottom;
+  transition:
+    transform 0.17s cubic-bezier(0.2, 0.9, 0.25, 1.15),
+    filter 0.17s ease;
+}
+
+.dock-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.dock-icon b {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  border-radius: inherit;
+  color: #fff;
+  font-size: 22px;
+  font-weight: 750;
+  background: linear-gradient(135deg, #0a84ff, #5e5ce6);
+}
+
+.dock-icon img:not([style*="display: none"]) + b {
+  display: none;
+}
+
+.dock-item small {
+  position: absolute;
+  bottom: 72px;
+  left: 50%;
+  transform: translateX(-50%) translateY(2px);
+  display: block;
+  padding: 4px 8px;
+  border-radius: 7px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 550;
+  line-height: 1.1;
+  white-space: nowrap;
+  background: rgba(32, 32, 34, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22);
+  backdrop-filter: blur(18px) saturate(1.4);
+  -webkit-backdrop-filter: blur(18px) saturate(1.4);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.12s ease,
+    visibility 0.12s ease,
+    transform 0.12s ease;
+  pointer-events: none;
+}
+
+.dock-separator {
+  width: 1px;
+  height: 43px;
+  margin: 0 3px 7px;
+  border-radius: 999px;
+  background: rgba(60, 60, 67, 0.22);
+  box-shadow: 1px 0 rgba(255, 255, 255, 0.34);
+}
+
+.dock-item.is-active::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -2px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.24);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .dock-item:hover .dock-icon {
+    transform: translateY(-10px) scale(1.18);
+    filter: saturate(1.08) contrast(1.02);
+  }
+
+  .dock-item:hover small {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  .dock-inner:has(.dock-item:hover) .dock-item:not(:hover) .dock-icon {
+    transform: translateY(-1px) scale(0.96);
+  }
+}
+
+
+/* ---------------------------
+   MOBILE / TABLET
+   Dock verticale a sinistra
+--------------------------- */
+
+@media (max-width: 900px) {
+  :root {
+    --dock-height: 0px;
+    --mobile-dock-width: 70px;
+  }
+
+  .menu-bar {
+    padding-left: max(10px, env(safe-area-inset-left));
+    padding-right: max(10px, env(safe-area-inset-right));
+  }
+
+  .menu-items {
+    display: none;
+  }
+
+  .menu-app {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+
+  .menu-right {
+    gap: 3px;
+  }
+
+  .battery-icon {
+    display: none;
+  }
+
+  .control-center {
+    display: none;
+  }
+
+  .menu-clock {
+    font-size: 12px;
+    padding-right: 3px;
+  }
+
+  .dock {
+    left: max(8px, env(safe-area-inset-left));
+    top: calc(var(--menu-height) + 10px);
+    bottom: auto;
+    transform: none;
+    width: var(--mobile-dock-width);
+    height: calc(100dvh - var(--menu-height) - 20px);
+    max-height: calc(100dvh - var(--menu-height) - 20px);
+  }
+
+  .dock-inner {
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 7px;
+    padding: 10px 7px;
+    border-radius: 24px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: none;
+  }
+
+  .dock-inner::-webkit-scrollbar {
+    display: none;
+  }
+
+  .dock-inner::before {
+    top: 10px;
+    bottom: 10px;
+    left: 6px;
+    right: auto;
+    width: 1px;
+    height: auto;
+    background: rgba(255, 255, 255, 0.36);
+  }
+
+  .dock-item {
+    width: 54px;
+    min-width: 54px;
+    height: 55px;
+    flex-shrink: 0;
+  }
+
+  .dock-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    transform: none !important;
+  }
+
+  .dock-item small {
+    display: none;
+  }
+
+  .dock-separator {
+    width: 42px;
+    height: 1px;
+    margin: 4px 0;
+    background: rgba(60, 60, 67, 0.24);
+    box-shadow: 0 1px rgba(255, 255, 255, 0.32);
+  }
+
+  .dock-item.is-active::after {
+    left: -4px;
+    top: 50%;
+    bottom: auto;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 4px;
+  }
+
+  .desktop-items {
+    inset: calc(var(--menu-height) + 12px) 0 0 var(--mobile-dock-width);
+    padding-left: 8px;
+    padding-bottom: 20px;
+  }
+
+  .window-layer {
+    inset: var(--menu-height) 0 0 var(--mobile-dock-width);
+  }
+
+  .mac-window {
+    left: 50% !important;
+    top: 48px !important;
+    transform: translateX(-50%);
+    width: calc(100vw - var(--mobile-dock-width) - 24px) !important;
+    height: calc(100dvh - var(--menu-height) - 70px) !important;
+  }
+
+  .mac-window.is-maximized {
+    left: 0 !important;
+    top: 0 !important;
+    transform: none;
+    width: calc(100vw - var(--mobile-dock-width)) !important;
+    height: calc(100dvh - var(--menu-height)) !important;
+    border-radius: 0;
+  }
+
+  .launchpad {
+    left: var(--mobile-dock-width);
+    width: calc(100vw - var(--mobile-dock-width));
+  }
+}
+
+@media (max-width: 560px) {
+  :root {
+    --mobile-dock-width: 60px;
+  }
+
+  .menu-bar {
+    height: var(--menu-height);
+  }
+
+  .menu-apple {
+    width: 23px;
+    font-size: 14px;
+  }
+
+  .menu-app {
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .status-icon {
+    min-width: 22px;
+    padding: 0 4px;
+  }
+
+  .status-icon svg {
+    width: 15px;
+    height: 15px;
+  }
+
+  .menu-clock {
+    font-size: 11.5px;
+  }
+
+  .dock {
+    left: max(6px, env(safe-area-inset-left));
+    top: calc(var(--menu-height) + 8px);
+    width: var(--mobile-dock-width);
+    height: calc(100dvh - var(--menu-height) - 16px);
+  }
+
+  .dock-inner {
+    padding: 8px 6px;
+    gap: 6px;
+    border-radius: 21px;
+  }
+
+  .dock-item {
+    width: 48px;
+    min-width: 48px;
+    height: 49px;
+  }
+
+  .dock-icon {
+    width: 41px;
+    height: 41px;
+    border-radius: 10px;
+  }
+
+  .dock-separator {
+    width: 36px;
+  }
+
+  .mac-window {
+    width: calc(100vw - var(--mobile-dock-width) - 14px) !important;
+    height: calc(100dvh - var(--menu-height) - 62px) !important;
+    top: 42px !important;
+  }
+}

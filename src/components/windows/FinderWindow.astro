@@ -1,0 +1,258 @@
+---
+const folders = [
+  {
+    id: 'readme',
+    name: 'README.md',
+    kind: 'Documento Markdown',
+    icon: '📄',
+    description:
+      'La guida rapida per capire come esplorare questo portfolio interattivo.',
+    action: 'readme'
+  },
+  {
+    id: 'raviez',
+    name: 'Raviez.folder',
+    kind: 'Cartella progetto',
+    icon: '📁',
+    description:
+      'Brand DTC nato come laboratorio reale su identità, community, contenuto e vendita online.',
+    action: 'projects'
+  },
+  {
+    id: 'netmarket',
+    name: 'Netmarket.app',
+    kind: 'Applicazione',
+    icon: '💼',
+    description:
+      'L’ambiente operativo dove Enrico lavora su branding, siti web, e-commerce, contenuti e strategie digitali.',
+    action: 'projects'
+  },
+  {
+    id: 'creator',
+    name: 'Creator_Archive',
+    kind: 'Archivio',
+    icon: '🎬',
+    description:
+      'Dai primi video YouTube agli esperimenti TikTok con milioni di visualizzazioni.',
+    action: 'photos'
+  },
+  {
+    id: 'filters',
+    name: 'Instagram_Filters.folder',
+    kind: 'Cartella',
+    icon: '✨',
+    description:
+      'Primi progetti commerciali venduti a locali, eventi, brand e discoteche.',
+    action: 'projects'
+  },
+  {
+    id: 'ecommerce',
+    name: 'Ecommerce_Builds.folder',
+    kind: 'Cartella',
+    icon: '🛒',
+    description:
+      'Siti, e-commerce, customer journey, WordPress, WooCommerce e sviluppo digitale.',
+    action: 'projects'
+  },
+  {
+    id: 'ai',
+    name: 'AI_Workflows.note',
+    kind: 'Nota',
+    icon: '🧠',
+    description:
+      'Flussi di lavoro AI per ricerca, strategia, contenuti, automazioni e produttività.',
+    action: 'notes'
+  },
+  {
+    id: 'contact',
+    name: 'Contact.mail',
+    kind: 'Messaggio',
+    icon: '✉️',
+    description:
+      'Canale diretto per collaborazioni, progetti digitali e nuove opportunità.',
+    action: 'mail'
+  }
+];
+---
+
+<section
+  class="mac-window finder-window is-open is-focused"
+  data-window="finder"
+  style="left: 72px; top: 54px; width: 980px; height: 640px;"
+  aria-label="Finder"
+  role="dialog"
+  aria-modal="false"
+>
+  <header class="mac-window-header finder-titlebar">
+    <div class="mac-window-controls">
+      <button type="button" data-close aria-label="Chiudi"></button>
+      <button type="button" data-minimize aria-label="Riduci"></button>
+      <button type="button" data-maximize aria-label="Ingrandisci"></button>
+    </div>
+
+    <div class="finder-toolbar">
+      <div class="finder-nav" aria-label="Navigazione">
+        <button type="button" aria-label="Indietro" disabled title="Nessuna posizione precedente">
+          <svg viewBox="0 0 20 20" aria-hidden="true">
+            <path d="M12.5 4.5 7 10l5.5 5.5" />
+          </svg>
+        </button>
+        <button type="button" aria-label="Avanti" disabled title="Nessuna posizione successiva">
+          <svg viewBox="0 0 20 20" aria-hidden="true">
+            <path d="M7.5 4.5 13 10l-5.5 5.5" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="finder-current-folder">
+        <span class="finder-folder-dot"></span>
+        <strong>Portfolio di Enrico</strong>
+      </div>
+
+      <div class="finder-actions" aria-label="Azioni Finder">
+        <button type="button" class="finder-view-button is-active" aria-label="Vista icone" data-finder-view="grid" aria-pressed="true">
+          <svg viewBox="0 0 20 20" aria-hidden="true">
+            <rect x="4" y="4" width="4" height="4" rx="1" />
+            <rect x="12" y="4" width="4" height="4" rx="1" />
+            <rect x="4" y="12" width="4" height="4" rx="1" />
+            <rect x="12" y="12" width="4" height="4" rx="1" />
+          </svg>
+        </button>
+
+        <button type="button" class="finder-view-button" aria-label="Vista lista" data-finder-view="list" aria-pressed="false">
+          <svg viewBox="0 0 20 20" aria-hidden="true">
+            <path d="M5 6h10M5 10h10M5 14h10" />
+          </svg>
+        </button>
+
+        <label class="finder-search">
+          <svg viewBox="0 0 20 20" aria-hidden="true">
+            <circle cx="8.5" cy="8.5" r="4.5" />
+            <path d="m12 12 4 4" />
+          </svg>
+          <input type="search" placeholder="Cerca" aria-label="Cerca nel portfolio" data-finder-search />
+        </label>
+      </div>
+    </div>
+  </header>
+
+  <div class="finder-shell">
+    <aside class="finder-sidebar" aria-label="Sidebar Finder">
+      <div class="finder-sidebar-section">
+        <p>Preferiti</p>
+        <button type="button" class="is-active">
+          <span>🖥️</span>
+          Desktop
+        </button>
+        <button type="button" data-open="readme">
+          <span>📄</span>
+          README.md
+        </button>
+        <button type="button" data-open="projects">
+          <span>📁</span>
+          Progetti
+        </button>
+        <button type="button" data-open="notes">
+          <span>📝</span>
+          Note
+        </button>
+      </div>
+
+      <div class="finder-sidebar-section">
+        <p>Portfolio</p>
+        <button type="button" data-open="projects">
+          <span>👕</span>
+          Raviez
+        </button>
+        <button type="button" data-open="projects">
+          <span>💼</span>
+          Netmarket
+        </button>
+        <button type="button" data-open="photos">
+          <span>🎬</span>
+          Creator archive
+        </button>
+        <button type="button" data-open="terminal">
+          <span>⌘</span>
+          Terminale
+        </button>
+      </div>
+
+      <div class="finder-sidebar-section">
+        <p>Azioni rapide</p>
+        <button type="button" data-open="mail">
+          <span>✉️</span>
+          Contatto
+        </button>
+        <button type="button" data-open="settings">
+          <span>⚙️</span>
+          Profilo
+        </button>
+      </div>
+    </aside>
+
+    <main class="finder-main">
+      <div class="finder-pathbar">
+        <span>Macintosh HD</span>
+        <svg viewBox="0 0 16 16" aria-hidden="true">
+          <path d="M6 3.5 10.5 8 6 12.5" />
+        </svg>
+        <span>Utenti</span>
+        <svg viewBox="0 0 16 16" aria-hidden="true">
+          <path d="M6 3.5 10.5 8 6 12.5" />
+        </svg>
+        <strong>Enrico</strong>
+      </div>
+
+      <div class="finder-content">
+        <section class="finder-grid" aria-label="Elementi portfolio" data-finder-grid>
+          {folders.map((item) => (
+            <button
+              type="button"
+              class="finder-file"
+              data-open={item.action}
+              data-preview-title={item.name}
+              data-preview-kind={item.kind}
+              data-preview-description={item.description}
+            >
+              <span class="finder-file-icon" aria-hidden="true">{item.icon}</span>
+              <span class="finder-file-name">{item.name}</span>
+              <small>{item.kind}</small>
+            </button>
+          ))}
+          <p class="finder-empty" hidden>Nessun elemento trovato.</p>
+        </section>
+
+        <aside class="finder-preview" aria-label="Anteprima">
+          <div class="finder-preview-card">
+            <div class="finder-preview-icon" id="finderPreviewIcon">📄</div>
+            <h3 id="finderPreviewTitle">README.md</h3>
+            <p class="finder-preview-kind" id="finderPreviewKind">Documento Markdown</p>
+            <p id="finderPreviewDescription">
+              La guida rapida per capire come esplorare questo portfolio interattivo.
+            </p>
+
+            <div class="finder-preview-meta">
+              <div>
+                <span>Creato da</span>
+                <strong>Enrico Paolo Toso</strong>
+              </div>
+              <div>
+                <span>Tipo</span>
+                <strong>Portfolio interattivo</strong>
+              </div>
+              <div>
+                <span>Base</span>
+                <strong>Padova, Veneto</strong>
+              </div>
+            </div>
+
+            <button type="button" class="finder-open-button" data-open="readme">
+              Apri elemento
+            </button>
+          </div>
+        </aside>
+      </div>
+    </main>
+  </div>
+</section>

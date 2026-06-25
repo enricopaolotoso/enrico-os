@@ -1,0 +1,323 @@
+@media (max-width: 900px) {
+  :root {
+    --dock-height: 0px;
+    --mobile-dock-width: 70px;
+  }
+
+  .menu-items,
+  .battery-icon,
+  .control-center {
+    display: none;
+  }
+
+  .menu-bar {
+    padding: 0 9px;
+    font-size: 12px;
+  }
+
+  .menu-right {
+    gap: 3px;
+  }
+
+  .wallpaper {
+    background-image: url("/images/sfondo-desktop-mobile.jpg");
+    background-position: center center;
+    background-size: cover;
+  }
+
+  .desktop-items {
+    inset: calc(var(--menu-height) + 8px) 6px 8px calc(var(--mobile-dock-width) + 8px);
+    width: auto;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-auto-rows: minmax(104px, auto);
+    align-content: start;
+    gap: 8px 4px;
+    padding: 8px 4px;
+    overflow: hidden;
+  }
+
+  .desktop-item {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: 100%;
+    min-width: 0;
+    min-height: 100px;
+    transform: none;
+  }
+
+  .dock {
+    left: 8px;
+    top: calc(50% + var(--menu-height) / 2);
+    bottom: auto;
+    width: var(--mobile-dock-width);
+    height: auto;
+    max-height: none;
+    transform: translateY(-50%);
+  }
+
+  .dock-inner {
+    width: 100%;
+    height: auto;
+    flex-direction: column;
+    gap: 7px;
+    padding: 9px 7px;
+    overflow: visible;
+  }
+
+  .dock-inner::before {
+    display: none;
+  }
+
+  .dock-item {
+    width: 54px;
+    min-width: 54px;
+    height: 55px;
+    flex-shrink: 0;
+  }
+
+  .dock-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    transform: none !important;
+  }
+
+  .dock-item small {
+    display: none !important;
+  }
+
+  .dock-separator {
+    width: 42px;
+    height: 1px;
+    margin: 4px 0;
+  }
+
+  .window-layer {
+    inset: var(--menu-height) 0 0 var(--mobile-dock-width);
+  }
+
+  .mac-window,
+  .finder-window {
+    left: 7px !important;
+    top: 10px !important;
+    width: calc(100vw - var(--mobile-dock-width) - 14px) !important;
+    height: calc(100dvh - var(--menu-height) - 20px) !important;
+    min-width: 0;
+    min-height: 0;
+    transform: none !important;
+    border-radius: 16px;
+  }
+
+  .mac-window.is-maximized {
+    left: 0 !important;
+    top: 0 !important;
+    width: calc(100vw - var(--mobile-dock-width)) !important;
+    height: calc(100dvh - var(--menu-height)) !important;
+    border-radius: 0;
+  }
+
+  .launchpad {
+    left: 0;
+    width: 100%;
+  }
+
+  .window-chrome,
+  .finder-titlebar {
+    height: 50px;
+    min-height: 50px;
+  }
+
+  .finder-toolbar {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .finder-actions,
+  .finder-sidebar,
+  .finder-preview,
+  .notes-folders,
+  .photos-layout aside,
+  .mail-layout aside,
+  .settings-layout aside,
+  .projects-sidebar {
+    display: none;
+  }
+
+  .finder-shell,
+  .finder-content,
+  .notes-layout,
+  .photos-layout,
+  .mail-layout,
+  .settings-layout,
+  .projects-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .notes-layout {
+    grid-template-columns: minmax(180px, 36%) 1fr;
+  }
+
+  .notes-list {
+    display: block;
+  }
+
+  .settings-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .projects-main {
+    padding: 22px;
+  }
+
+  .tour-card {
+    width: calc(100vw - 34px);
+  }
+}
+
+@media (max-width: 560px) {
+  :root {
+    --mobile-dock-width: 60px;
+  }
+
+  .menu-app {
+    max-width: 112px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .status-icon {
+    min-width: 20px;
+    padding: 0 3px;
+  }
+
+  .menu-clock {
+    font-size: 11px;
+  }
+
+  .dock {
+    left: 6px;
+    top: calc(50% + var(--menu-height) / 2);
+    width: var(--mobile-dock-width);
+    height: auto;
+    transform: translateY(-50%);
+  }
+
+  .dock-inner {
+    height: auto;
+    padding: 8px 6px;
+    gap: 6px;
+    overflow: visible;
+  }
+
+  .dock-item {
+    width: 48px;
+    min-width: 48px;
+    height: 49px;
+  }
+
+  .dock-icon {
+    width: 41px;
+    height: 41px;
+    border-radius: 10px;
+  }
+
+  .desktop-items {
+    inset: calc(var(--menu-height) + 6px) 4px 6px calc(var(--mobile-dock-width) + 6px);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-auto-rows: minmax(106px, auto);
+    gap: 5px 2px;
+    padding: 6px 2px;
+  }
+
+  .desktop-item {
+    min-height: 102px;
+    padding: 5px 2px;
+  }
+
+  .desktop-thumb {
+    width: 60px;
+    height: 60px;
+  }
+
+  .desktop-label {
+    max-width: 88px;
+    font-size: 11.5px;
+  }
+
+  .mac-window,
+  .finder-window {
+    width: calc(100vw - var(--mobile-dock-width) - 10px) !important;
+    height: calc(100dvh - var(--menu-height) - 12px) !important;
+    left: 5px !important;
+    top: 6px !important;
+  }
+
+  .notes-layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: 190px minmax(0, 1fr);
+  }
+
+  .notes-list {
+    display: block;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .note-body,
+  .mail-compose,
+  .settings-layout section,
+  .readme-body,
+  .projects-main {
+    padding: 22px;
+  }
+
+  .photo-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding: 18px;
+  }
+
+  .photos-library-toolbar {
+    align-items:stretch;
+    flex-direction:column;
+    padding:14px 16px;
+    gap:10px;
+  }
+
+  .photos-library-toolbar .photo-search {
+    width:100%;
+  }
+
+  .photos-library .photo-grid {
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:12px;
+    padding:14px;
+  }
+
+  .project-card {
+    grid-template-columns: 1fr;
+  }
+
+  .project-mark {
+    width: 72px;
+    height: 72px;
+  }
+
+  .project-heading {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .mail-actions {
+    flex-wrap: wrap;
+  }
+
+  .launchpad-panel > div {
+    grid-template-columns: repeat(2, minmax(82px, 1fr));
+    gap: 20px;
+  }
+
+  .tour-card {
+    padding: 19px;
+  }
+}

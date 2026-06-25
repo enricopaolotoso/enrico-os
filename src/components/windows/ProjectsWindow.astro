@@ -1,0 +1,73 @@
+---
+import { site } from '../../data/site';
+---
+
+<article
+  class="mac-window projects-window"
+  data-window="projects"
+  data-app-title="Progetti"
+  style="--left: 15vw; --top: 10vh; --w: 980px; --h: 650px;"
+  role="dialog"
+  aria-label="Progetti"
+  aria-modal="false"
+>
+  <div class="window-chrome">
+    <div class="traffic">
+      <button type="button" data-close aria-label="Chiudi Progetti"></button>
+      <button type="button" data-minimize aria-label="Riduci Progetti"></button>
+      <button type="button" data-maximize aria-label="Ingrandisci Progetti"></button>
+    </div>
+    <strong>Progetti</strong>
+    <span class="window-count">{site.projects.length} elementi</span>
+  </div>
+
+  <div class="projects-layout">
+    <aside class="projects-sidebar" aria-label="Filtri progetti">
+      <button type="button" class="active" data-project-filter="all">Tutti</button>
+      <button type="button" data-project-filter="brand">Brand</button>
+      <button type="button" data-project-filter="digital">Digitale</button>
+      <button type="button" data-project-filter="content">Contenuti</button>
+    </aside>
+
+    <section class="projects-main" aria-label="Case study">
+      <header>
+        <p>Archivio operativo</p>
+        <h2>Progetti costruiti sul campo</h2>
+        <span>Brand, prodotti, contenuti e sistemi digitali.</span>
+      </header>
+
+      <div class="projects-grid">
+        {site.projects.map((project, index) => {
+          const category =
+            project.name === 'Raviez'
+              ? 'brand'
+              : project.name === 'Creator Archive'
+                ? 'content'
+                : 'digital';
+
+          return (
+            <article class="project-card" data-project-category={category}>
+              <div class={`project-mark project-mark-${index + 1}`} aria-hidden="true">
+                {project.name.slice(0, 2).toUpperCase()}
+              </div>
+              <div class="project-card-copy">
+                <div class="project-heading">
+                  <div>
+                    <small>{project.kind}</small>
+                    <h3>{project.name}</h3>
+                  </div>
+                  <time>{project.date}</time>
+                </div>
+                <p>{project.description}</p>
+                <ul>
+                  {project.stats.map((stat) => <li>{stat}</li>)}
+                </ul>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+      <p class="projects-empty" hidden>Nessun progetto in questa categoria.</p>
+    </section>
+  </div>
+</article>

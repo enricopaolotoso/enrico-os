@@ -1,0 +1,143 @@
+---
+import { site } from '../data/site';
+
+type MenuEntry = {
+  label: string;
+  action?: string;
+  command?: string;
+  disabled?: boolean;
+};
+
+type Menu = {
+  label: string;
+  items: MenuEntry[];
+};
+
+const menuItems: Menu[] = [
+  {
+    label: 'File',
+    items: [
+      { label: 'Apri Finder', action: 'finder' },
+      { label: 'Apri README.md', action: 'readme' },
+      { label: 'Chiudi finestra attiva', command: 'close-active' }
+    ]
+  },
+  {
+    label: 'Modifica',
+    items: [
+      { label: site.email ? 'Copia email' : 'Email non configurata', command: 'copy-email', disabled: !site.email },
+      { label: 'Seleziona tutto', command: 'select-desktop' }
+    ]
+  },
+  {
+    label: 'Vista',
+    items: [
+      { label: 'Mostra desktop', command: 'show-desktop' },
+      { label: 'Apri Launchpad', action: 'launchpad' }
+    ]
+  },
+  {
+    label: 'Vai',
+    items: [
+      { label: 'Progetti', action: 'finder' },
+      { label: 'Note', action: 'notes' },
+      { label: 'Contatti', action: 'mail' }
+    ]
+  },
+  {
+    label: 'Finestra',
+    items: [
+      { label: 'Finder', action: 'finder' },
+      { label: 'Note', action: 'notes' },
+      { label: 'Terminale', action: 'terminal' }
+    ]
+  },
+  {
+    label: 'Aiuto',
+    items: [
+      { label: 'Guida rapida', command: 'open-tour' },
+      { label: 'README.md', action: 'readme' }
+    ]
+  }
+];
+---
+
+<header class="menu-bar" aria-label="Barra menu">
+  <div class="menu-left">
+    <div class="menu-group apple-menu">
+      <button class="menu-trigger menu-apple" aria-label="Menu portfolio" type="button">
+        <span aria-hidden="true"></span>
+      </button>
+
+      <div class="menu-dropdown apple-dropdown" role="menu">
+        <button type="button" data-open="settings" role="menuitem">
+          Informazioni su Enrico
+        </button>
+        <button type="button" data-open="readme" role="menuitem">
+          README.md
+        </button>
+        <hr />
+        <button type="button" data-command="open-tour" role="menuitem">
+          Riapri guida
+        </button>
+        <button type="button" data-command="show-desktop" role="menuitem">
+          Mostra desktop
+        </button>
+      </div>
+    </div>
+
+    <strong class="menu-app" id="activeAppName">Finder</strong>
+
+    <nav class="menu-items" aria-label="Menu applicazione">
+      {menuItems.map((menu) => (
+        <div class="menu-group">
+          <button class="menu-trigger" type="button">
+            {menu.label}
+          </button>
+
+          <div class="menu-dropdown" role="menu">
+            {menu.items.map((item) => (
+              item.action ? (
+                <button type="button" data-open={item.action} role="menuitem">
+                  {item.label}
+                </button>
+              ) : (
+                <button type="button" data-command={item.command} role="menuitem" disabled={item.disabled}>
+                  {item.label}
+                </button>
+              )
+            ))}
+          </div>
+        </div>
+      ))}
+    </nav>
+  </div>
+
+  <div class="menu-right" aria-label="Stato sistema">
+    <span class="status-icon" aria-label="Wi-Fi connesso" role="img">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M3.4 8.7C8.2 4.8 15.8 4.8 20.6 8.7" />
+        <path d="M6.8 12.1C9.7 9.8 14.3 9.8 17.2 12.1" />
+        <path d="M10.1 15.4C11.1 14.7 12.9 14.7 13.9 15.4" />
+        <path d="M12 18.4h.01" />
+      </svg>
+    </span>
+
+    <span class="status-icon battery-icon" aria-label="Batteria al 100%" role="img">
+      <span>100%</span>
+    </span>
+
+    <span class="status-icon control-center" aria-hidden="true">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <rect x="4" y="6" width="16" height="5" rx="2.5" />
+        <circle cx="8" cy="8.5" r="1.6" />
+        <rect x="4" y="13" width="16" height="5" rx="2.5" />
+        <circle cx="16" cy="15.5" r="1.6" />
+      </svg>
+    </span>
+
+    <time class="menu-clock" id="clock" aria-label="Ora corrente">
+      --:--
+    </time>
+  </div>
+</header>

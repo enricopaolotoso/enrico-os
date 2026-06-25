@@ -1,0 +1,350 @@
+/* ==========================================================
+   WINDOW MANAGER
+   Patch punto 3 — finestre più realistiche e comportamento Mac-like
+   ========================================================== */
+
+.window-layer {
+  position: absolute;
+  inset: var(--menu-height) 0 0 0;
+  z-index: 500;
+  pointer-events: none;
+}
+
+.mac-window {
+  position: absolute;
+  z-index: 10;
+  display: none;
+  flex-direction: column;
+  min-width: 360px;
+  min-height: 260px;
+  color: rgba(28, 28, 30, 0.96);
+  background: rgba(248, 248, 250, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.58);
+  border-radius: 14px;
+  box-shadow:
+    0 34px 90px rgba(0, 0, 0, 0.34),
+    0 10px 34px rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.60);
+  backdrop-filter: blur(34px) saturate(1.85);
+  -webkit-backdrop-filter: blur(34px) saturate(1.85);
+  overflow: hidden;
+  pointer-events: auto;
+  opacity: 0;
+  transform: translateY(12px) scale(0.985);
+  transform-origin: center;
+}
+
+.mac-window.is-open {
+  display: flex;
+  animation: windowOpen 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.mac-window.is-closing {
+  display: flex;
+  animation: windowClose 0.14s ease forwards;
+}
+
+.mac-window.is-focused {
+  box-shadow:
+    0 42px 110px rgba(0, 0, 0, 0.42),
+    0 14px 40px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.70);
+}
+
+.mac-window:not(.is-focused) {
+  filter: saturate(0.94);
+}
+
+.mac-window.is-minimized {
+  display: none !important;
+}
+
+.mac-window.is-maximized {
+  left: 10px !important;
+  top: 10px !important;
+  width: calc(100vw - 20px) !important;
+  height: calc(100dvh - var(--menu-height) - 22px) !important;
+  border-radius: 13px;
+}
+
+.window-header,
+.window-titlebar,
+.mac-window-header {
+  position: relative;
+  min-height: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 14px;
+  flex-shrink: 0;
+  color: rgba(28, 28, 30, 0.88);
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.58),
+      rgba(242, 242, 247, 0.38)
+    );
+  border-bottom: 1px solid rgba(60, 60, 67, 0.12);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.mac-window.is-focused .window-header,
+.mac-window.is-focused .window-titlebar,
+.mac-window.is-focused .mac-window-header {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.72),
+      rgba(242, 242, 247, 0.46)
+    );
+}
+
+.window-header:active,
+.window-titlebar:active,
+.mac-window-header:active {
+  cursor: grabbing;
+}
+
+.traffic,
+.window-controls,
+.mac-window-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.traffic button,
+.window-controls button,
+.mac-window-controls button,
+[data-close],
+[data-minimize],
+[data-maximize] {
+  width: 12px;
+  height: 12px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  color: transparent;
+  font-size: 0;
+  line-height: 1;
+  box-shadow:
+    inset 0 0 0 0.5px rgba(0, 0, 0, 0.20),
+    0 1px 1px rgba(255, 255, 255, 0.28);
+}
+
+[data-close],
+.traffic button:nth-child(1),
+.window-controls button:nth-child(1),
+.mac-window-controls button:nth-child(1) {
+  background: #ff5f57;
+}
+
+[data-minimize],
+.traffic button:nth-child(2),
+.window-controls button:nth-child(2),
+.mac-window-controls button:nth-child(2) {
+  background: #febc2e;
+}
+
+[data-maximize],
+.traffic button:nth-child(3),
+.window-controls button:nth-child(3),
+.mac-window-controls button:nth-child(3) {
+  background: #28c840;
+}
+
+.mac-window:not(.is-focused) [data-close],
+.mac-window:not(.is-focused) [data-minimize],
+.mac-window:not(.is-focused) [data-maximize],
+.mac-window:not(.is-focused) .traffic button,
+.mac-window:not(.is-focused) .window-controls button,
+.mac-window:not(.is-focused) .mac-window-controls button {
+  background: rgba(120, 120, 128, 0.36);
+}
+
+.window-title,
+.mac-window-title {
+  flex: 1;
+  min-width: 0;
+  color: rgba(28, 28, 30, 0.76);
+  font-size: 13px;
+  font-weight: 650;
+  text-align: center;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.window-body,
+.mac-window-body {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+
+.window-body::-webkit-scrollbar,
+.mac-window-body::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.window-body::-webkit-scrollbar-thumb,
+.mac-window-body::-webkit-scrollbar-thumb {
+  border: 3px solid transparent;
+  border-radius: 999px;
+  background-clip: padding-box;
+  background-color: rgba(60, 60, 67, 0.28);
+}
+
+.window-body::-webkit-scrollbar-thumb:hover,
+.mac-window-body::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(60, 60, 67, 0.42);
+}
+
+/* Desktop item selection */
+.desktop-item {
+  border-radius: 13px;
+}
+
+.desktop-item.is-selected,
+.desktop-item.selected {
+  background: rgba(10, 132, 255, 0.18);
+  box-shadow: 0 0 0 1px rgba(10, 132, 255, 0.20);
+}
+
+.desktop-item.is-selected .desktop-label,
+.desktop-item.selected .desktop-label {
+  color: #fff;
+  background: rgba(10, 132, 255, 0.86);
+  text-shadow: none;
+}
+
+/* Dock active state refined */
+.dock-item.is-active::after {
+  opacity: 1;
+}
+
+.dock-item:not(.is-active)::after {
+  opacity: 0;
+}
+
+/* Launchpad should behave like app layer */
+.launchpad {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 0.18s ease,
+    visibility 0.18s ease;
+}
+
+.launchpad.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .mac-window.is-open,
+  .mac-window.is-closing,
+  .launchpad,
+  .dock-icon {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .mac-window.is-open{opacity:1}
+}
+
+/* Mobile windows */
+@media (max-width: 900px) {
+  .window-layer {
+    inset: var(--menu-height) 0 0 var(--mobile-dock-width);
+  }
+
+  .mac-window {
+    min-width: 0;
+    min-height: 0;
+    border-radius: 18px;
+  }
+
+  .window-header,
+  .window-titlebar,
+  .mac-window-header {
+    min-height: 46px;
+    height: 46px;
+    padding: 0 12px;
+  }
+
+  .mac-window.is-maximized {
+    left: 0 !important;
+    top: 0 !important;
+    width: calc(100vw - var(--mobile-dock-width)) !important;
+    height: calc(100dvh - var(--menu-height)) !important;
+    border-radius: 0;
+  }
+}
+
+@keyframes windowOpen {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.982);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes windowClose {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(8px) scale(0.982);
+  }
+}
+
+
+/* Tour fix */
+#tour,
+.tour,
+.tour-overlay,
+[data-tour] {
+  z-index: 3000;
+}
+
+#tour.is-visible,
+#tour.is-open,
+#tour.active,
+.tour.is-visible,
+.tour.is-open,
+.tour.active,
+.tour-overlay.is-visible,
+.tour-overlay.is-open,
+.tour-overlay.active,
+[data-tour].is-visible,
+[data-tour].is-open,
+[data-tour].active {
+  pointer-events: auto;
+}
+
+#tour button,
+.tour button,
+.tour-overlay button,
+[data-tour] button {
+  pointer-events: auto;
+  cursor: pointer;
+}

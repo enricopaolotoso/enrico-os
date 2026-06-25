@@ -1,0 +1,82 @@
+---
+import { readdir } from 'node:fs/promises';
+import { join } from 'node:path';
+
+const photosDirectory = join(process.cwd(), 'public', 'photos');
+const supportedExtensions = /\.(avif|gif|jpe?g|png|webp)$/i;
+
+let photoFiles: string[] = [];
+
+try {
+  photoFiles = (await readdir(photosDirectory))
+    .filter((file) => supportedExtensions.test(file))
+    .sort((a, b) => a.localeCompare(b, 'it', { numeric: true }));
+} catch {
+  photoFiles = [];
+}
+
+const photos = photoFiles.map((file) => ({
+  file,
+  title: file.replace(/\.[^.]+$/, '').replace(/[-_]+/g, ' '),
+  src: `/photos/${encodeURIComponent(file)}`
+}));
+---
+
+<article
+  class="mac-window photos-window"
+  data-window="photos"
+  data-app-title="Foto"
+  style="--left: 20vw; --top: 15vh; --w: 900px; --h: 620px;"
+  role="dialog"
+  aria-label="Foto"
+  aria-modal="false"
+>
+  <div class="window-chrome">
+    <div class="traffic">
+      <button type="button" data-close aria-label="Chiudi Foto"></button>
+      <button type="button" data-minimize aria-label="Riduci Foto"></button>
+      <button type="button" data-maximize aria-label="Ingrandisci Foto"></button>
+    </div>
+    <strong>Foto</strong>
+    <button class="info-btn" type="button" data-focus-photo-search aria-label="Cerca nelle foto">⌕</button>
+  </div>
+
+  <div class="photos-library">
+    <header class="photos-library-toolbar">
+      <div>
+        <h2>Libreria</h2>
+        <span>{photos.length} {photos.length === 1 ? 'foto' : 'foto'}</span>
+      </div>
+      <label class="photo-search">
+        <span class="sr-only">Cerca nella libreria</span>
+        <input type="search" placeholder="Cerca nella libreria" data-photo-search />
+      </label>
+    </header>
+
+    <div class="photo-grid" data-photo-grid>
+      {photos.map((photo) => (
+        <button
+          type="button"
+          class="photo-item"
+          data-photo-src={photo.src}
+          data-photo-title={photo.title}
+        >
+          <img src={photo.src} alt={photo.title} loading="lazy" decoding="async" />
+          <strong>{photo.title}</strong>
+        </button>
+      ))}
+
+      <div class="photos-empty" hidden={photos.length > 0}>
+        <strong>Nessuna foto nella libreria</strong>
+        <p>Aggiungi immagini nella cartella <code>public/photos</code>.</p>
+      </div>
+      <p class="photos-no-results" hidden>Nessuna foto trovata.</p>
+    </div>
+  </div>
+
+  <div class="photo-viewer" data-photo-viewer hidden>
+    <button type="button" class="photo-viewer-close" data-photo-viewer-close aria-label="Chiudi anteprima">×</button>
+    <img data-photo-viewer-image alt="" />
+    <p data-photo-viewer-title></p>
+  </div>
+</article>
