@@ -1,4 +1,4 @@
-name: Test SiteGround SSH
+name: Build Astro and deploy to SiteGround
 
 on:
   push:
@@ -6,24 +6,39 @@ on:
       - main
 
 jobs:
-  test-ssh:
-    name: Test SSH connection
+  build-and-deploy:
+    name: Build Astro and deploy to SiteGround
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Test SSH key
-        run: |
-          mkdir -p ~/.ssh
-          printf '%s\n' "${{ secrets.SFTP_PRIVATE_KEY }}" > ~/.ssh/siteground_key
-          chmod 600 ~/.ssh/siteground_key
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
 
-          ssh -vvv \
-            -p "${{ secrets.SFTP_PORT }}" \
-            -i ~/.ssh/siteground_key \
-            -o IdentitiesOnly=yes \
-            -o StrictHostKeyChecking=no \
-            "${{ secrets.SFTP_USERNAME }}@${{ secrets.SFTP_HOST }}" \
-            "pwd && ls -la"
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Astro site
+        run: npm run build
+
+      - name: Check build output
+        run: |
+          test -d dist || (echo "dist folder missing" && exit 1)
+          ls -la dist
+
+      - name: Deploy dist to SiteGround via SCP
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SFTP_HOST }}
+          username: ${{ secrets.SFTP_USERNAME }}
+          port: ${{ secrets.SFTP_PORT }}
+          key: ${{ secrets.SFTP_PRIVATE_KEY }}
+          source: "dist/*"
+          target: ${{ secrets.SFTP_REMOTE_PATH }}
+          strip_components: 1
+          overwrite: true
