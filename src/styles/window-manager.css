@@ -88,6 +88,7 @@
   border-bottom: 1px solid rgba(60, 60, 67, 0.12);
   user-select: none;
   -webkit-user-select: none;
+  touch-action: none;
 }
 
 .mac-window.is-focused .window-header,

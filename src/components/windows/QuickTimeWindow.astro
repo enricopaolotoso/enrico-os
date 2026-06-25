@@ -1,0 +1,37 @@
+<article
+  class="mac-window quicktime-window"
+  data-window="quicktime"
+  data-app-title="QuickTime Player"
+  style="--left:19vw;--top:10vh;--w:860px;--h:590px"
+  role="dialog"
+  aria-label="QuickTime Player"
+  aria-modal="false"
+>
+  <div class="window-chrome dark">
+    <div class="traffic">
+      <button type="button" data-close aria-label="Chiudi QuickTime"></button>
+      <button type="button" data-minimize aria-label="Riduci QuickTime"></button>
+      <button type="button" data-maximize aria-label="Ingrandisci QuickTime"></button>
+    </div>
+    <strong data-quicktime-window-title>QuickTime Player</strong>
+  </div>
+
+  <div class="quicktime-player">
+    <div class="quicktime-stage">
+      <video data-quicktime-video controls playsinline preload="metadata"></video>
+      <img data-quicktime-poster alt="" hidden />
+      <div class="quicktime-unavailable" data-quicktime-unavailable hidden>
+        <span>▶</span>
+        <strong>Anteprima video</strong>
+        <p>Questo video è disponibile tramite un collegamento esterno.</p>
+      </div>
+    </div>
+    <footer>
+      <div>
+        <h2 data-quicktime-title>Video</h2>
+        <p data-quicktime-description></p>
+      </div>
+      <a data-quicktime-open href="#" target="_blank" rel="noreferrer" hidden>Apri video</a>
+    </footer>
+  </div>
+</article>

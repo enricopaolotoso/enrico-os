@@ -61,7 +61,13 @@ const photos = photoFiles.map((file) => ({
           data-photo-src={photo.src}
           data-photo-title={photo.title}
         >
-          <img src={photo.src} alt={photo.title} loading="lazy" decoding="async" />
+          <img
+            src={photo.src}
+            data-photo-image
+            alt={photo.title}
+            loading="eager"
+            decoding="async"
+          />
           <strong>{photo.title}</strong>
         </button>
       ))}

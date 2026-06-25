@@ -7,6 +7,27 @@ import FinderWindow from '../components/windows/FinderWindow.astro';
 import ProjectsWindow from '../components/windows/ProjectsWindow.astro';
 import PhotosWindow from '../components/windows/PhotosWindow.astro';
 import SpotifyWindow from '../components/windows/SpotifyWindow.astro';
+import PreviewWindow from '../components/windows/PreviewWindow.astro';
+import QuickTimeWindow from '../components/windows/QuickTimeWindow.astro';
+import SafariWindow from '../components/windows/SafariWindow.astro';
+import { fileSystem, flattenFileSystem, type FileSystemItem } from '../data/filesystem';
+
+const desktopItems = fileSystem.children ?? [];
+const searchableFileSystemItems = flattenFileSystem().filter((item) => item.id !== fileSystem.id);
+const fileSystemJson = JSON.stringify(fileSystem).replace(/</g, '\\u003c');
+
+const desktopMark = (item: FileSystemItem) => {
+  if (item.icon) return item.icon;
+  if (item.type === 'image') return 'IMG';
+  if (item.type === 'video') return '▶';
+  if (item.type === 'document') return 'MD';
+  if (item.type === 'pdf') return 'PDF';
+  if (item.type === 'link') return '↗';
+  if (item.type === 'note') return 'Nota';
+  if (item.type === 'app') return 'APP';
+  return '';
+};
+
 const apps = [
   { id: 'finder', label: 'Finder', icon: 'finder.png', fallback: '🗂️' },
   { id: 'mail', label: 'Mail', icon: 'mail.png', fallback: '✉️' },
@@ -34,7 +55,17 @@ const apps = [
         comunicazione, tecnologia e distribuzione. Questo sito è il portfolio personale di
         Enrico Toso.
       </p>
+      <h2>Archivio del portfolio</h2>
+      <ul>
+        {searchableFileSystemItems.map((item) => (
+          <li>
+            <strong>{item.name}</strong>
+            {item.description ? ` — ${item.description}` : ''}
+          </li>
+        ))}
+      </ul>
     </section>
+    <script id="filesystem-data" type="application/json" is:inline set:html={fileSystemJson} />
     <div class="wallpaper" aria-hidden="true"></div>
 
     <section
@@ -49,13 +80,18 @@ const apps = [
         <time class="mobile-lock-time" id="mobileLockTime">--:--</time>
 
         <article class="ios-notification" aria-label="Notifica di benvenuto da Enrico Toso">
-          <header>
-            <span class="ios-notification-avatar" aria-hidden="true">E</span>
-            <strong>Enrico Toso</strong>
-            <small>adesso</small>
-          </header>
-          <h2>Benvenuto 👋</h2>
-          <p>Questo è il mio spazio digitale. Tocca lo schermo ed esplora il desktop.</p>
+          <div class="ios-notification-avatar" aria-hidden="true">
+            <img src="/images/foto-profilo-enricotoso.jpg" alt="" />
+            <span class="ios-notification-app-icon">●</span>
+          </div>
+          <div class="ios-notification-body">
+            <header>
+              <strong>Enrico Toso</strong>
+              <small>adesso</small>
+            </header>
+            <h2>Benvenuto nel mio portfolio 👋</h2>
+            <p>Tocca lo schermo per entrare ed esplorare il mio spazio digitale.</p>
+          </div>
         </article>
       </div>
 
@@ -72,46 +108,24 @@ const apps = [
     <MenuBar />
 
     <section class="desktop-items" aria-label="Elementi desktop">
-      {site.desktopItems.map((item) => {
-        const content = (
-          <>
-            <span class="desktop-thumb" aria-hidden="true">
-              {item.type === 'folder' && <img src="/apple-icons/folder.png" alt="" onerror="this.style.display='none'" />}
-              {item.type === 'document' && <span class="doc-thumb">MD</span>}
-              {item.type === 'video' && <span class="video-thumb">▶</span>}
-              {item.type === 'pdf' && <span class="pdf-thumb">PDF</span>}
-              {item.type === 'note' && <span class="note-thumb">Nota</span>}
-              {item.type === 'appfile' && <span class="app-thumb">N</span>}
-              {item.type === 'cover' && <img src={item.image} alt="" />}
-            </span>
-            <span class="desktop-label">{item.title}</span>
-          </>
-        );
-
-        return item.href ? (
-          <a
-            class={`desktop-item ${item.type}`}
-            href={item.href}
-            target="_blank"
-            rel="noreferrer"
-            data-item={item.id}
-            style={`--x:${item.x}px;--y:${item.y}px`}
-            aria-label={`Apri ${item.title} su YouTube`}
-          >
-            {content}
-          </a>
-        ) : (
-          <button
-            type="button"
-            class={`desktop-item ${item.type}`}
-            data-open={item.app}
-            data-item={item.id}
-            style={`--x:${item.x}px;--y:${item.y}px`}
-          >
-            {content}
-          </button>
-        );
-      })}
+      {desktopItems.map((item, index) => (
+        <button
+          type="button"
+          class={`desktop-item ${item.type}`}
+          data-item-id={item.id}
+          style={`--x:${52 + ((index * 173) % 1030)}px;--y:${70 + ((index * 137) % 330)}px`}
+          aria-label={`Apri ${item.name}`}
+        >
+          <span class="desktop-thumb" aria-hidden="true">
+            {item.thumbnail
+              ? <img src={item.thumbnail} alt="" loading="eager" />
+              : item.type === 'folder'
+                ? <img src="/apple-icons/folder.png" alt="" />
+                : <span class={`${item.type}-thumb`}>{desktopMark(item)}</span>}
+          </span>
+          <span class="desktop-label">{item.name}</span>
+        </button>
+      ))}
     </section>
 
     <section id="tour" class="tour" role="dialog" aria-modal="true" aria-labelledby="tourTitle" aria-describedby="tourText" aria-hidden="true">
@@ -151,6 +165,9 @@ const apps = [
 
       <PhotosWindow />
       <SpotifyWindow />
+      <PreviewWindow />
+      <QuickTimeWindow />
+      <SafariWindow />
 
       <article class="mac-window mail-window" data-window="mail" data-app-title="Mail" style="--left: 17vw; --top: 17vh; --w: 920px; --h: 600px;" role="dialog" aria-label="Contatti" aria-modal="false">
         <div class="window-chrome"><div class="traffic"><button type="button" data-close aria-label="Chiudi Mail"></button><button type="button" data-minimize aria-label="Riduci Mail"></button><button type="button" data-maximize aria-label="Ingrandisci Mail"></button></div><strong>Mail</strong></div>
@@ -245,18 +262,6 @@ const apps = [
           </nav>
 
           <footer>© {new Date().getFullYear()} Enrico Toso</footer>
-        </article>
-      </article>
-
-      <article class="mac-window readme-window" data-window="readme" data-app-title="README.md" style="--left: 28vw; --top: 16vh; --w: 680px; --h: 560px;" role="dialog" aria-label="README" aria-modal="false">
-        <div class="window-chrome"><div class="traffic"><button type="button" data-close aria-label="Chiudi README"></button><button type="button" data-minimize aria-label="Riduci README"></button><button type="button" data-maximize aria-label="Ingrandisci README"></button></div><strong>README.md</strong><button class="info-btn" type="button" aria-label="Informazioni">ⓘ</button></div>
-        <article class="readme-body">
-          <h2>README.md</h2>
-          <p>Sono Enrico Toso, digital builder di Padova. Il mio nome completo è Enrico Paolo Toso. Costruisco brand, siti web, e-commerce, contenuti e progetti digitali combinando comunicazione, marketing, tecnologia e AI.</p>
-          <p>Questo portfolio raccoglie una parte del mio percorso tra Netmarket, Raviez e nuove sperimentazioni digitali.</p>
-          <h2>Da dove iniziare</h2>
-          <ul><li><strong>Finder</strong> raccoglie progetti e archivio.</li><li><strong>Note</strong> contiene bio, manifesto e timeline.</li><li><strong>Foto</strong> mostra contenuti e progetti visivi.</li><li><strong>Mail</strong> mostra i recapiti quando sono disponibili.</li><li><strong>Terminale</strong> contiene comandi rapidi ed easter egg.</li></ul>
-          <p>Premi <kbd>Esc</kbd> per chiudere la finestra in primo piano.</p>
         </article>
       </article>
 

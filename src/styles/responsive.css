@@ -81,57 +81,117 @@
 
   .ios-notification {
     width: 100%;
-    padding: 13px 15px 15px;
-    color: rgba(20,20,22,.96);
+    display: grid;
+    grid-template-columns: 54px minmax(0, 1fr);
+    align-items: start;
+    gap: 12px;
+    padding: 13px 15px 14px;
+    color: rgba(255,255,255,.97);
     text-align: left;
-    text-shadow: none;
-    border: 1px solid rgba(255,255,255,.62);
-    border-radius: 22px;
-    background: rgba(246,246,248,.76);
-    box-shadow: 0 16px 40px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,255,255,.72);
-    backdrop-filter: blur(28px) saturate(1.65);
-    -webkit-backdrop-filter: blur(28px) saturate(1.65);
+    text-shadow: 0 1px 7px rgba(0,0,0,.24);
+    border: 1px solid rgba(255,255,255,.34);
+    border-radius: 25px;
+    background: rgba(96,108,112,.5);
+    box-shadow: 0 16px 42px rgba(0,0,0,.2), inset 0 1px 0 rgba(255,255,255,.28);
+    backdrop-filter: blur(30px) saturate(1.45);
+    -webkit-backdrop-filter: blur(30px) saturate(1.45);
+    opacity: 0;
+    transform: translateY(30px);
+    animation: iosNotificationIn .68s .38s cubic-bezier(.2,.78,.2,1) forwards;
+  }
+
+  .ios-notification-body {
+    min-width: 0;
   }
 
   .ios-notification header {
-    display: grid;
-    grid-template-columns: 30px 1fr auto;
+    display: flex;
     align-items: center;
-    gap: 9px;
-    margin-bottom: 9px;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 1px;
   }
 
   .ios-notification-avatar {
-    width: 30px;
-    height: 30px;
+    position: relative;
+    width: 54px;
+    height: 54px;
+    flex: 0 0 auto;
+  }
+
+  .ios-notification-avatar > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border: 1px solid rgba(255,255,255,.48);
+    border-radius: 50%;
+    box-shadow: 0 4px 12px rgba(0,0,0,.2);
+  }
+
+  .ios-notification-app-icon {
+    position: absolute;
+    right: -3px;
+    bottom: -2px;
+    width: 20px;
+    height: 20px;
     display: grid;
     place-items: center;
-    border-radius: 8px;
-    color: #fff;
-    font-weight: 750;
-    background: linear-gradient(135deg,#0a84ff,#5e5ce6);
+    overflow: hidden;
+    color: transparent;
+    border: 2px solid rgba(235,239,239,.95);
+    border-radius: 7px;
+    background: #32d74b;
+    box-shadow: 0 2px 6px rgba(0,0,0,.22);
+  }
+
+  .ios-notification-app-icon::after {
+    content: "";
+    width: 9px;
+    height: 7px;
+    border-radius: 5px;
+    background: #fff;
   }
 
   .ios-notification header strong {
-    font-size: 13px;
+    overflow: hidden;
+    font-size: 15px;
+    font-weight: 720;
+    line-height: 1.15;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .ios-notification header small {
-    color: rgba(60,60,67,.58);
-    font-size: 12px;
+    flex: 0 0 auto;
+    color: rgba(235,240,245,.76);
+    font-size: 13px;
+    font-weight: 450;
   }
 
   .ios-notification h2 {
-    margin: 0 0 3px;
+    margin: 1px 0 2px;
     font-size: 15px;
+    font-weight: 700;
+    line-height: 1.2;
     letter-spacing: -.015em;
   }
 
   .ios-notification p {
     margin: 0;
-    color: rgba(44,44,46,.82);
+    color: rgba(255,255,255,.9);
     font-size: 14px;
-    line-height: 1.38;
+    line-height: 1.32;
+  }
+
+  @keyframes iosNotificationIn {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   .mobile-lock-enter {
@@ -146,6 +206,14 @@
   @keyframes lockEnterPulse {
     0%, 100% { opacity: .58; transform: translateY(0); }
     50% { opacity: 1; transform: translateY(-3px); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ios-notification {
+      opacity: 1;
+      transform: none;
+      animation: none;
+    }
   }
 
   .desktop-items {
@@ -224,18 +292,24 @@
 
   .window-layer {
     inset: var(--menu-height) 0 0 var(--mobile-dock-width);
+    z-index: 860;
   }
 
   .mac-window,
   .finder-window {
-    left: calc(5px + var(--mobile-stack-x, 0px)) !important;
-    top: calc(34px + var(--mobile-stack-y, 0px)) !important;
+    left: calc(5px + var(--mobile-stack-x, 0px) + var(--mobile-drag-x, 0px)) !important;
+    top: calc(34px + var(--mobile-stack-y, 0px) + var(--mobile-drag-y, 0px)) !important;
     width: min(calc(100vw - var(--mobile-dock-width) - 30px), 720px) !important;
     height: min(68dvh, 620px) !important;
     min-width: 0;
     min-height: 0;
     transform: none !important;
     border-radius: 16px;
+  }
+
+  .mac-window.is-dragging,
+  .finder-window.is-dragging {
+    transition: none !important;
   }
 
   .mac-window.is-maximized {
@@ -330,7 +404,7 @@
   }
 
   .dock {
-    left: 6px;
+    left: 16px;
     top: calc(50% + var(--menu-height) / 2);
     width: var(--mobile-dock-width);
     height: auto;
@@ -390,8 +464,8 @@
 
   .mac-window,
   .finder-window {
-    left: calc(5px + var(--mobile-stack-x, 0px)) !important;
-    top: calc(28px + var(--mobile-stack-y, 0px)) !important;
+    left: calc(5px + var(--mobile-stack-x, 0px) + var(--mobile-drag-x, 0px)) !important;
+    top: calc(28px + var(--mobile-stack-y, 0px) + var(--mobile-drag-y, 0px)) !important;
     width: calc(100vw - var(--mobile-dock-width) - 30px) !important;
     height: min(68dvh, 580px) !important;
     border-radius: 16px;

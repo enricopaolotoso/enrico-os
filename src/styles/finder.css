@@ -221,6 +221,23 @@
   color: rgba(28, 28, 30, 0.82);
 }
 
+.finder-pathbar button {
+  padding: 3px 5px;
+  border-radius: 5px;
+  color: rgba(28, 28, 30, 0.78);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.finder-pathbar button:hover {
+  background: rgba(10, 132, 255, 0.12);
+}
+
+.finder-path-separator {
+  color: rgba(60, 60, 67, 0.45);
+  font-size: 16px;
+}
+
 .finder-pathbar svg {
   width: 14px;
   height: 14px;
@@ -307,6 +324,41 @@
   font-weight: 800;
   background: linear-gradient(145deg, #ff5f57, #ff2d55);
 }
+
+.finder-type-folder {
+  overflow: visible;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.finder-type-image,
+.finder-type-video {
+  overflow: hidden;
+  color: #fff;
+  background: #161618;
+}
+
+.finder-type-image img,
+.finder-type-video img {
+  object-fit: cover;
+}
+
+.finder-type-document,
+.finder-type-pdf,
+.finder-type-note,
+.finder-type-link,
+.finder-type-app {
+  color: #fff;
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.finder-type-document { background: linear-gradient(145deg,#4f8cff,#0a62d8); }
+.finder-type-pdf { background: linear-gradient(145deg,#ff625a,#ff2d55); }
+.finder-type-note { color:#594500;background:linear-gradient(145deg,#ffe169,#ffc928); }
+.finder-type-link { background:linear-gradient(145deg,#0a84ff,#5e5ce6);font-size:27px; }
+.finder-type-app { background:linear-gradient(145deg,#242429,#0a84ff); }
 
 .finder-app-icon {
   padding: 0;

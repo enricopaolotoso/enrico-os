@@ -37,26 +37,6 @@ export const site = {
     headline: 'Portfolio personale, reimmaginato come un desktop Mac.',
     text: 'Ogni app, cartella e file apre una parte diversa di ciò che costruisco: brand, siti web, contenuti, e-commerce, AI e progetti digitali.'
   },
-  desktopItems: [
-    { id: 'readme', title: 'README.md', type: 'document', app: 'readme', x: 52, y: 350 },
-    { id: 'raviez', title: 'Raviez', type: 'folder', app: 'finder', x: 170, y: 90 },
-    { id: 'netmarket', title: 'Netmarket.app', type: 'appfile', app: 'finder', x: 340, y: 110 },
-    { id: 'tiktok', title: 'TikTok_5M.mov', type: 'video', app: 'photos', x: 580, y: 70 },
-    { id: 'filters', title: 'Instagram Filters', type: 'folder', app: 'finder', x: 820, y: 120 },
-    { id: 'youtube', title: 'YouTube Archive', type: 'folder', app: 'finder', x: 1040, y: 85 },
-    { id: 'branding', title: 'Branding.case', type: 'pdf', app: 'finder', x: 250, y: 360 },
-    { id: 'ecommerce', title: 'E-commerce Builds', type: 'folder', app: 'finder', x: 720, y: 360 },
-    { id: 'ai', title: 'AI Workflows.note', type: 'note', app: 'notes', x: 1010, y: 350 },
-    {
-      id: 'youtube-2016',
-      title: 'youtube_2016.mp4',
-      type: 'cover',
-      href: 'https://youtu.be/hTxmt7l1pao',
-      image: '/images/copertina-video.jpg',
-      x: 500,
-      y: 390
-    }
-  ],
   projects: [
     {
       name: 'Raviez',
