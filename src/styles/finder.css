@@ -370,6 +370,28 @@
 }
 
 .finder-type-document { background: linear-gradient(145deg,#4f8cff,#0a62d8); }
+.finder-type-markdown {
+  position: relative;
+  overflow: hidden;
+  color: #243041;
+  background: linear-gradient(180deg,#fff,#f2f4f8);
+  box-shadow: 0 8px 18px rgba(0,0,0,.10);
+}
+
+.finder-type-markdown::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-style: solid;
+  border-width: 0 17px 17px 0;
+  border-color: transparent #dfe3ec transparent transparent;
+}
+
+.finder-type-markdown img {
+  display: none;
+}
+
 .finder-type-pdf { background: linear-gradient(145deg,#ff625a,#ff2d55); }
 .finder-type-note { color:#594500;background:linear-gradient(145deg,#ffe169,#ffc928); }
 .finder-type-link { background:linear-gradient(145deg,#0a84ff,#5e5ce6);font-size:27px; }

@@ -21,24 +21,39 @@
 
   const tourSteps = [
     {
-      title: 'Benvenuto nel desktop di Enrico',
-      body: 'Questo portfolio è stato reimmaginato come un desktop Mac. Ogni app, cartella e file apre una parte diversa del percorso di Enrico.',
+      id: 'welcome',
+      target: null,
+      placement: 'center',
+      title: 'Benvenuto',
+      text: 'Questo sito funziona come un desktop interattivo. Puoi aprire app, cartelle e file come su un computer personale.'
     },
     {
-      title: 'Il desktop',
-      body: 'Seleziona gli elementi con un clic e aprili con un doppio clic. Su touch basta un singolo tocco.',
+      id: 'readme',
+      target: '[data-tour-target="readme"]',
+      placement: 'right',
+      title: 'README.md',
+      text: 'Da qui puoi leggere una panoramica rapida su Enrico Toso, cosa fa e come è organizzato il sito.'
     },
     {
-      title: 'Il Dock',
-      body: 'Dal Dock puoi aprire Finder, Note, Foto, Mail, Terminale, Impostazioni, Launchpad e Cestino.',
+      id: 'finder',
+      target: '[data-tour-target="finder"]',
+      placement: 'right',
+      title: 'Finder',
+      text: 'Apri Finder per esplorare cartelle, progetti, immagini, documenti e contenuti.'
     },
     {
-      title: 'Progetti e competenze',
-      body: 'Finder e Progetti raccolgono i case study. Note racconta il percorso, mentre Impostazioni presenta le competenze operative.',
+      id: 'dock',
+      target: '[data-tour-target="dock"]',
+      placement: 'top',
+      title: 'Dock',
+      text: 'Il Dock ti permette di aprire rapidamente le app principali del sito.'
     },
     {
-      title: 'Scorciatoie',
-      body: 'Premi Esc oppure ⌘/Ctrl + W per chiudere la finestra in primo piano. Puoi trascinare e ingrandire le finestre su desktop.',
+      id: 'mail',
+      target: '[data-tour-target="mail"]',
+      placement: 'top',
+      title: 'Contatti',
+      text: 'Apri Mail per contattarmi direttamente dal sito. Da qui puoi inviarmi un messaggio in modo rapido.'
     }
   ];
 
@@ -101,6 +116,11 @@
       note: 'Nota',
       app: 'APP'
     }[item.type] || 'FILE';
+  }
+
+  function isMarkdownItem(item) {
+    return item?.type === 'document' &&
+      (item.mimeType === 'text/markdown' || item.name.toLowerCase().endsWith('.md'));
   }
 
   const recentStorageKey = 'enrico-finder-recent';
@@ -224,8 +244,7 @@
       const documentView = document.createElement('article');
       documentView.className = 'markdown-preview-document';
       const content = document.createElement('pre');
-      const documentTitle = item.name.replace(/\.md$/i, '');
-      content.textContent = `# ${documentTitle}\n\n${item.description || 'Contenuto in preparazione.'}`;
+      content.textContent = item.content || item.description || 'Contenuto in preparazione.';
       documentView.appendChild(content);
       media.appendChild(documentView);
     } else if (item.type === 'image' && (item.url || item.thumbnail)) {
@@ -246,7 +265,7 @@
       const heading = document.createElement('h3');
       heading.textContent = item.name;
       const body = document.createElement('p');
-      body.textContent = item.description || 'Contenuto in preparazione.';
+      body.textContent = item.content || item.description || 'Contenuto in preparazione.';
       documentView.append(heading, body);
       media.appendChild(documentView);
     }
@@ -464,14 +483,128 @@
     const tour = $('#tour');
     if (!tour) return;
 
+    const popover = $('[data-tour-popover]', tour);
+    const highlight = $('[data-tour-highlight]', tour);
+    if (!popover || !highlight || !step) return;
+
     $('[data-tour-title]', tour).textContent = step.title;
-    $('[data-tour-body]', tour).textContent = step.body;
-    $('[data-tour-step]', tour).textContent = `Step ${tourIndex + 1} di ${tourSteps.length}`;
+    $('[data-tour-body]', tour).textContent = step.text || step.body || '';
+    $('[data-tour-step]', tour).textContent = `${tourIndex + 1} / ${tourSteps.length}`;
 
     const back = $('[data-tour-back]', tour);
     const next = $('[data-tour-next]', tour);
-    back.hidden = tourIndex === 0;
+    back.disabled = tourIndex === 0;
     next.textContent = tourIndex === tourSteps.length - 1 ? 'Fine' : 'Avanti';
+
+    positionTourStep();
+  }
+
+  function validTourRect(element) {
+    if (!element) return null;
+    const rect = element.getBoundingClientRect();
+    const style = getComputedStyle(element);
+    const visible =
+      rect.width > 0 &&
+      rect.height > 0 &&
+      style.display !== 'none' &&
+      style.visibility !== 'hidden' &&
+      rect.bottom > 0 &&
+      rect.right > 0 &&
+      rect.top < window.innerHeight &&
+      rect.left < window.innerWidth;
+    return visible ? rect : null;
+  }
+
+  function clamp(value, min, max) {
+    if (max < min) return min;
+    return Math.min(Math.max(value, min), max);
+  }
+
+  function getTourTarget(step) {
+    if (!step?.target) return null;
+    const element = $(step.target);
+    const rect = validTourRect(element);
+    if (!rect && element instanceof HTMLElement && isMobile()) {
+      element.scrollIntoView({ block: 'center', inline: 'center', behavior: 'smooth' });
+    }
+    return rect ? { element, rect } : null;
+  }
+
+  function positionTourStep() {
+    const tour = $('#tour.is-visible');
+    if (!tour) return;
+    const step = tourSteps[tourIndex];
+    const popover = $('[data-tour-popover]', tour);
+    const highlight = $('[data-tour-highlight]', tour);
+    if (!step || !popover || !highlight) return;
+
+    const gap = 16;
+    const margin = 16;
+    const padding = 10;
+    const mobile = window.matchMedia('(max-width: 768px)').matches;
+    const target = getTourTarget(step);
+    const popoverRect = popover.getBoundingClientRect();
+    const popoverWidth = popoverRect.width || Math.min(430, window.innerWidth - margin * 2);
+    const popoverHeight = popoverRect.height || 240;
+
+    if (target) {
+      const rect = target.rect;
+      tour.classList.add('has-target');
+      highlight.hidden = false;
+      highlight.style.left = `${clamp(rect.left - padding, 8, window.innerWidth - 16)}px`;
+      highlight.style.top = `${clamp(rect.top - padding, 8, window.innerHeight - 16)}px`;
+      highlight.style.width = `${Math.min(rect.width + padding * 2, window.innerWidth - 16)}px`;
+      highlight.style.height = `${Math.min(rect.height + padding * 2, window.innerHeight - 16)}px`;
+      highlight.style.borderRadius = `${Math.max(14, Math.min(28, rect.height / 5))}px`;
+    } else {
+      tour.classList.remove('has-target');
+      highlight.hidden = true;
+    }
+
+    let left = (window.innerWidth - popoverWidth) / 2;
+    let top = (window.innerHeight - popoverHeight) / 2;
+
+    if (target && step.placement !== 'center') {
+      const rect = target.rect;
+      const mobilePreferredPlacement = (() => {
+        if (!mobile) return step.placement;
+        const canRight = rect.right + gap + popoverWidth <= window.innerWidth - margin;
+        const canLeft = rect.left - gap - popoverWidth >= margin;
+        const canBottom = rect.bottom + gap + popoverHeight <= window.innerHeight - margin;
+        const canTop = rect.top - gap - popoverHeight >= margin;
+        if (canRight) return 'right';
+        if (canLeft) return 'left';
+        if (canBottom) return 'bottom';
+        if (canTop) return 'top';
+        return rect.top + rect.height / 2 > window.innerHeight / 2 ? 'top' : 'bottom';
+      })();
+
+      if (mobilePreferredPlacement === 'top') {
+        left = rect.left + rect.width / 2 - popoverWidth / 2;
+        top = rect.top - popoverHeight - gap;
+      } else if (mobilePreferredPlacement === 'bottom') {
+        left = rect.left + rect.width / 2 - popoverWidth / 2;
+        top = rect.bottom + gap;
+      } else if (mobilePreferredPlacement === 'left') {
+        left = rect.left - popoverWidth - gap;
+        top = rect.top + rect.height / 2 - popoverHeight / 2;
+      } else if (mobilePreferredPlacement === 'right') {
+        left = rect.right + gap;
+        top = rect.top + rect.height / 2 - popoverHeight / 2;
+      }
+    } else if (mobile && !target) {
+      left = margin;
+      top = window.innerHeight - popoverHeight - margin;
+    }
+
+    if (!Number.isFinite(left) || !Number.isFinite(top)) {
+      left = (window.innerWidth - popoverWidth) / 2;
+      top = (window.innerHeight - popoverHeight) / 2;
+    }
+
+    popover.style.left = `${clamp(left, margin, window.innerWidth - popoverWidth - margin)}px`;
+    popover.style.top = `${clamp(top, margin, window.innerHeight - popoverHeight - margin)}px`;
+    popover.dataset.placement = target ? step.placement : 'center';
   }
 
   function openTour() {
@@ -479,10 +612,13 @@
     if (!tour) return;
     focusBeforeModal = document.activeElement;
     tourIndex = 0;
-    renderTour();
     tour.classList.add('is-visible');
     tour.setAttribute('aria-hidden', 'false');
-    window.setTimeout(() => $('.tour-card', tour)?.focus(), 30);
+    renderTour();
+    window.setTimeout(() => {
+      $('.tour-card', tour)?.focus();
+      positionTourStep();
+    }, 30);
   }
 
   function closeTour() {
@@ -490,8 +626,10 @@
     if (!tour) return;
     tour.classList.remove('is-visible');
     tour.setAttribute('aria-hidden', 'true');
+    $('[data-tour-highlight]', tour)?.setAttribute('hidden', '');
     try {
       localStorage.setItem('enrico-desktop-tour-seen', '1');
+      localStorage.setItem('enricoTourDismissed', 'true');
     } catch {
       // Storage may be unavailable in privacy mode.
     }
@@ -527,9 +665,16 @@
 
     $('[data-tour-skip]', tour)?.addEventListener('click', closeTour);
 
+    const reposition = () => window.requestAnimationFrame(positionTourStep);
+    window.addEventListener('resize', reposition);
+    window.addEventListener('orientationchange', reposition);
+    window.addEventListener('scroll', reposition, true);
+
     let seen = false;
     try {
-      seen = localStorage.getItem('enrico-desktop-tour-seen') === '1';
+      seen =
+        localStorage.getItem('enrico-desktop-tour-seen') === '1' ||
+        localStorage.getItem('enricoTourDismissed') === 'true';
     } catch {
       seen = false;
     }
@@ -642,11 +787,11 @@
 
   function bindMenuCommands() {
     document.addEventListener('click', async (event) => {
-      const button = event.target.closest('[data-command]');
+      const button = event.target.closest('[data-command], [data-action]');
       if (!button || button.disabled) return;
       event.stopPropagation();
 
-      const command = button.dataset.command;
+      const command = button.dataset.command || button.dataset.action;
       if (command === 'close-active') closeTopLayer();
       if (command === 'open-tour') openTour();
       if (command === 'show-desktop') {
@@ -1179,7 +1324,7 @@
       button.dataset.previewDescription = item.description || '';
 
       const icon = document.createElement('span');
-      icon.className = `finder-file-icon finder-type-${item.type}`;
+      icon.className = `finder-file-icon finder-type-${item.type}${isMarkdownItem(item) ? ' finder-type-markdown' : ''}`;
       icon.setAttribute('aria-hidden', 'true');
       if (item.thumbnail || item.type === 'folder') {
         const image = document.createElement('img');

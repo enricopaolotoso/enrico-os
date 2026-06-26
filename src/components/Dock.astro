@@ -57,12 +57,13 @@ const apps = [
 ];
 ---
 
-<nav class="dock" aria-label="Dock">
+<nav class="dock" aria-label="Dock" data-tour-target="dock">
   <div class="dock-inner">
     {apps.slice(0, 7).map((app) => (
       <button
         class="dock-item"
         data-open={app.id}
+        data-tour-target={app.id === 'finder' || app.id === 'spotify' || app.id === 'mail' ? app.id : undefined}
         title={app.label}
         aria-label={`Apri ${app.label}`}
         type="button"
@@ -87,6 +88,7 @@ const apps = [
       <button
         class={`dock-item dock-item-utility ${app.id === 'trash' ? 'dock-item-trash' : ''}`}
         data-open={app.id}
+        data-tour-target={app.id === 'finder' || app.id === 'spotify' || app.id === 'mail' ? app.id : undefined}
         title={app.label}
         aria-label={`Apri ${app.label}`}
         type="button"

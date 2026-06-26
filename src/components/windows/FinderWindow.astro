@@ -27,6 +27,13 @@ const itemMark = (item: FileSystemItem) => {
   if (item.type === 'playlist') return '♫';
   return 'APP';
 };
+
+const isMarkdownItem = (item: FileSystemItem) =>
+  item.type === 'document' &&
+  (item.mimeType === 'text/markdown' || item.name.toLowerCase().endsWith('.md'));
+
+const finderIconClass = (item: FileSystemItem) =>
+  `finder-file-icon finder-type-${item.type}${isMarkdownItem(item) ? ' finder-type-markdown' : ''}`;
 ---
 
 <section
@@ -108,7 +115,7 @@ const itemMark = (item: FileSystemItem) => {
                 data-preview-kind={kindLabels[item.type]}
                 data-preview-description={item.description ?? ''}
               >
-                <span class={`finder-file-icon finder-type-${item.type}`} aria-hidden="true">
+                <span class={finderIconClass(item)} aria-hidden="true">
                   {item.thumbnail
                     ? <img src={item.thumbnail} alt="" loading="eager" />
                     : item.type === 'folder'

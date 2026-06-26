@@ -130,12 +130,13 @@ const apps = [
 
     <MenuBar />
 
-    <section class="desktop-items" aria-label="Elementi desktop">
+    <section class="desktop-items" aria-label="Elementi desktop" data-tour-target="desktop">
       {desktopItems.map((item, index) => (
         <button
           type="button"
           class={desktopItemClass(item)}
           data-item-id={item.id}
+          data-tour-target={item.id === 'readme' ? 'readme' : undefined}
           data-external-url={item.external ? item.url : undefined}
           style={`--x:${52 + ((index * 173) % 1030)}px;--y:${70 + ((index * 137) % 330)}px`}
           aria-label={`Apri ${item.name}`}
@@ -180,9 +181,12 @@ const apps = [
     </section>
 
     <section id="tour" class="tour" role="dialog" aria-modal="true" aria-labelledby="tourTitle" aria-describedby="tourText" aria-hidden="true">
-      <div class="tour-card" tabindex="-1">
-        <h2 id="tourTitle" data-tour-title>Benvenuto nel desktop di Enrico</h2>
-        <p id="tourText" data-tour-body>Questo portfolio è stato reimmaginato come un desktop Mac. Ogni app, cartella e file apre una parte diversa del percorso di Enrico.</p>
+      <div class="tour-overlay" data-tour-overlay></div>
+      <div class="tour-highlight" data-tour-highlight hidden></div>
+      <div id="tour-popover" class="tour-card tour-popover" tabindex="-1" data-tour-popover>
+        <small class="tour-progress" id="tourStep" data-tour-step>1 / 9</small>
+        <h2 id="tourTitle" data-tour-title>Benvenuto</h2>
+        <p id="tourText" data-tour-body>Questo sito funziona come un desktop interattivo.</p>
         <div class="tour-actions">
           <button id="skipTour" class="text-btn" type="button" data-tour-skip>Salta guida</button>
           <div class="tour-nav">
@@ -190,7 +194,6 @@ const apps = [
             <button id="nextTour" class="primary-btn" type="button" data-tour-next>Avanti</button>
           </div>
         </div>
-        <small id="tourStep" data-tour-step>Step 1 di 5</small>
       </div>
     </section>
 
