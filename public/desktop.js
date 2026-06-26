@@ -83,7 +83,9 @@
       pdf: 'PDF',
       link: 'Collegamento',
       note: 'Nota',
-      app: 'Applicazione'
+      app: 'Applicazione',
+      audio: 'Audio',
+      playlist: 'Playlist'
     }[type] || 'File';
   }
 
@@ -324,13 +326,20 @@
     } else if (item.type === 'image' || item.type === 'pdf' || item.type === 'document' || item.type === 'note') {
       openPreview(item);
     } else if (item.type === 'video') {
-      openQuickTime(item);
+      if (item.external && item.url) {
+        window.open(item.url, '_blank', 'noopener,noreferrer');
+      } else {
+        openQuickTime(item);
+      }
     } else if (item.type === 'link') {
       if (item.external && item.url) {
         window.open(item.url, '_blank', 'noopener,noreferrer');
       } else {
         openSafari(item);
       }
+    } else if (item.type === 'audio' || item.type === 'playlist') {
+      if (item.url) openSafari(item);
+      else openPreview(item);
     } else if (item.type === 'app' && item.app) {
       openWindow(item.app, false);
     }
@@ -345,17 +354,11 @@
 
   function openWindow(id, trackRecent = true) {
     if (!id) return;
-    if (id === 'launchpad') {
-      openLaunchpad();
-      if (trackRecent) recordRecent('app-launchpad');
-      return;
-    }
-
     const win = getWindow(id);
     if (!win) return;
     const wasOpen = win.classList.contains('is-open');
 
-    closeLaunchpad(false);
+    if (id !== 'launchpad') closeLaunchpad(false);
     win.classList.remove('is-closing', 'is-minimized', 'is-minimizing');
     win.classList.add('is-open');
     win.setAttribute('aria-hidden', 'false');
@@ -373,6 +376,10 @@
 
     if (id === 'terminal') {
       window.setTimeout(() => $('[data-terminal-input]', win)?.focus(), 50);
+    }
+
+    if (id === 'launchpad') {
+      window.setTimeout(() => $('[data-launchpad-search]', win)?.focus(), 30);
     }
   }
 
@@ -421,24 +428,15 @@
     focusWindow(win);
   }
 
-  function openLaunchpad() {
-    const launchpad = getWindow('launchpad');
-    if (!launchpad) return;
-    focusBeforeModal = document.activeElement;
-    launchpad.classList.add('is-open');
-    launchpad.style.zIndex = String(++zIndex);
-    launchpad.setAttribute('aria-hidden', 'false');
-    setActiveApp('launchpad');
-    window.setTimeout(() => $('[data-launchpad-search]', launchpad)?.focus(), 30);
-  }
-
   function closeLaunchpad(restoreFocus = true) {
     const launchpad = getWindow('launchpad');
     if (!launchpad?.classList.contains('is-open')) return;
-    launchpad.classList.remove('is-open');
+    launchpad.classList.remove('is-open', 'is-focused', 'is-minimized', 'is-minimizing', 'is-maximized');
+    launchpad.style.zIndex = '';
     launchpad.setAttribute('aria-hidden', 'true');
     setActiveApp(getAppId(topWindow()) || 'desktop');
     if (restoreFocus && focusBeforeModal instanceof HTMLElement) focusBeforeModal.focus();
+    updateDockState();
   }
 
   function closeTopLayer() {
@@ -605,6 +603,14 @@
 
   function bindOpenActions() {
     document.addEventListener('click', (event) => {
+      const urlTrigger = event.target.closest('[data-url]');
+      if (urlTrigger) {
+        event.stopPropagation();
+        if (urlTrigger.closest('.launchpad')) closeLaunchpad(false);
+        window.open(urlTrigger.dataset.url, '_blank', 'noopener,noreferrer');
+        return;
+      }
+
       const trigger = event.target.closest('[data-open]');
       if (!trigger) return;
       if (trigger.classList.contains('desktop-item') || trigger.classList.contains('finder-file')) return;
@@ -1086,7 +1092,12 @@
       { id: 'mail', name: 'Mail', icon: '/apple-icons/mail.png', description: 'Form di contatto diretto.' },
       { id: 'terminal', name: 'Terminale', icon: '/apple-icons/terminal.png', description: 'Comandi rapidi del portfolio.' },
       { id: 'settings', name: 'Informazioni', icon: '/apple-icons/settings.png', description: 'Biografia e profili di Enrico.' },
-      { id: 'spotify', name: 'Spotify', icon: '/apple-icons/spotify.svg', description: 'Playlist, artisti e tracce.' }
+      { id: 'spotify', name: 'Spotify', icon: '/apple-icons/spotify.svg', description: 'Playlist, artisti e tracce.' },
+      { id: 'launchpad', name: 'App', icon: '/apple-icons/launchpad.png', description: 'Tutte le applicazioni disponibili nel sito.' },
+      { id: 'instagram', name: 'Instagram', icon: '/apple-icons/app_instagram.webp', social: 'instagram', fallback: '◎', url: 'https://instagram.com/enricotosoo', description: 'Profilo Instagram di Enrico Toso.' },
+      { id: 'tiktok', name: 'TikTok', icon: '/apple-icons/app_tiktok.webp', social: 'tiktok', fallback: '♪', url: 'https://tiktok.com/@enricotosoo', description: 'Profilo TikTok di Enrico Toso.' },
+      { id: 'linkedin', name: 'LinkedIn', icon: '/apple-icons/app_linkedin.webp', social: 'linkedin', fallback: 'in', url: 'https://linkedin.com/in/enricopaolotoso', description: 'Profilo LinkedIn di Enrico Toso.' },
+      { id: 'youtube', name: 'YouTube', icon: '/apple-icons/app_youtube.webp', social: 'youtube', fallback: '▶', url: 'https://youtube.com/@enricopaolotoso', description: 'Canale YouTube di Enrico Toso.' }
     ];
     let currentLocation = '/Desktop';
     let selectedFile = null;
@@ -1193,23 +1204,32 @@
       const button = document.createElement('button');
       button.type = 'button';
       button.className = 'finder-file';
-      button.dataset.openApp = app.id;
+      if (app.url) button.dataset.openUrl = app.url;
+      else button.dataset.openApp = app.id;
       button.dataset.previewTitle = app.name;
-      button.dataset.previewKind = 'Applicazione';
+      button.dataset.previewKind = app.url ? 'Collegamento app' : 'Applicazione';
       button.dataset.previewDescription = app.description;
 
       const icon = document.createElement('span');
-      icon.className = 'finder-file-icon finder-app-icon';
+      icon.className = `finder-file-icon finder-app-icon ${app.social ? `finder-social-icon ${app.social}` : ''}`;
       icon.setAttribute('aria-hidden', 'true');
-      const image = document.createElement('img');
-      image.src = app.icon;
-      image.alt = '';
-      icon.appendChild(image);
+      if (app.icon) {
+        const image = document.createElement('img');
+        image.src = app.icon;
+        image.alt = '';
+        image.onerror = () => {
+          image.remove();
+          icon.textContent = app.fallback || app.name.slice(0, 1);
+        };
+        icon.appendChild(image);
+      } else {
+        icon.textContent = app.fallback || app.name.slice(0, 1);
+      }
       const name = document.createElement('span');
       name.className = 'finder-file-name';
       name.textContent = app.name;
       const kind = document.createElement('small');
-      kind.textContent = 'Applicazione';
+      kind.textContent = app.url ? 'Link' : 'Applicazione';
       button.append(icon, name, kind);
       return button;
     }
@@ -1339,6 +1359,7 @@
       if (!file) return;
       if (file.dataset.itemId) openItem(file.dataset.itemId);
       if (file.dataset.openApp) openWindow(file.dataset.openApp);
+      if (file.dataset.openUrl) window.open(file.dataset.openUrl, '_blank', 'noopener,noreferrer');
     }
 
     finder.addEventListener('click', (event) => {
@@ -1430,8 +1451,12 @@
       });
       $('.launchpad-empty', launchpad).hidden = visible > 0;
     });
-    launchpad.addEventListener('click', (event) => {
-      if (event.target === launchpad) closeLaunchpad();
+
+    document.addEventListener('pointerdown', (event) => {
+      if (!launchpad.classList.contains('is-open')) return;
+      if (event.target.closest('.launchpad')) return;
+      if (event.target.closest('[data-open="launchpad"]')) return;
+      closeLaunchpad(false);
     });
   }
 

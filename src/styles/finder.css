@@ -322,16 +322,8 @@
   place-items: center;
   border-radius: 17px;
   font-size: 34px;
-  background:
-    linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.80),
-      rgba(242, 242, 247, 0.72)
-    );
-  border: 1px solid rgba(60, 60, 67, 0.08);
-  box-shadow:
-    0 8px 18px rgba(0, 0, 0, 0.10),
-    inset 0 1px 0 rgba(255, 255, 255, 0.76);
+  background: transparent;
+  box-shadow: none;
 }
 
 .finder-file-icon img {
@@ -385,22 +377,27 @@
 
 .finder-app-icon {
   padding: 0;
-  overflow: hidden;
+  overflow: visible;
   background: transparent;
 }
 
 .finder-social-icon {
-  color: #fff;
+  color: inherit;
   font-size: 19px;
   font-weight: 800;
   border: 0;
+  background: transparent;
+  text-shadow: none;
 }
 
-.finder-social-icon.instagram { background: linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045); }
-.finder-social-icon.tiktok { color:#25f4ee;background:#090909;text-shadow:2px 1px #fe2c55; }
-.finder-social-icon.linkedin { background:#0a66c2; }
-.finder-social-icon.youtube { background:#ff0033; }
-.finder-social-icon.spotify { color:#080808;background:#1ed760; }
+.finder-social-icon.instagram,
+.finder-social-icon.tiktok,
+.finder-social-icon.linkedin,
+.finder-social-icon.youtube,
+.finder-social-icon.spotify {
+  background: transparent;
+  text-shadow: none;
+}
 
 .finder-file-name {
   max-width: 100%;

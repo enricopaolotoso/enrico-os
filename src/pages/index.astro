@@ -24,12 +24,32 @@ const desktopMark = (item: FileSystemItem) => {
   if (item.type === 'pdf') return 'PDF';
   if (item.type === 'link') return '↗';
   if (item.type === 'note') return 'Nota';
+  if (item.type === 'audio') return '♪';
+  if (item.type === 'playlist') return '♫';
   if (item.type === 'app') return 'APP';
   return '';
 };
 
+const desktopAspect = (item: FileSystemItem) => {
+  if (item.type === 'app') return 'square';
+  if (item.type === 'folder') return 'folder';
+  if (item.type === 'video') return item.aspectRatio ?? 'horizontal';
+  if (item.type === 'image') return item.aspectRatio ?? 'auto';
+  if (item.type === 'pdf' || item.type === 'document' || item.type === 'note') return item.aspectRatio ?? 'portrait';
+  if (item.type === 'link' || item.type === 'audio' || item.type === 'playlist') return item.aspectRatio ?? 'horizontal';
+  return item.aspectRatio ?? 'auto';
+};
+
+const desktopItemClass = (item: FileSystemItem) => [
+  'desktop-item',
+  `desktop-item--${item.type}`,
+  `desktop-item--${desktopAspect(item)}`,
+  item.thumbnail ? 'has-thumbnail' : ''
+].filter(Boolean).join(' ');
+
 const apps = [
   { id: 'finder', label: 'Finder', icon: 'finder.png', fallback: '🗂️' },
+  { id: 'projects', label: 'Progetti', icon: 'folder.png', fallback: 'P' },
   { id: 'mail', label: 'Mail', icon: 'mail.png', fallback: '✉️' },
   { id: 'notes', label: 'Note', icon: 'notes.png', fallback: '📝' },
   { id: 'photos', label: 'Foto', icon: 'photos.png', fallback: '🌈' },
@@ -37,7 +57,11 @@ const apps = [
   { id: 'settings', label: 'Informazioni', icon: 'settings.png', fallback: '⚙️' },
   { id: 'spotify', label: 'Spotify', icon: 'spotify.svg', fallback: 'S' },
   { id: 'launchpad', label: 'App', icon: 'launchpad.png', fallback: '✳︎' },
-  { id: 'trash', label: 'Cestino', icon: 'trash.png', fallback: '🗑️' }
+  { id: 'trash', label: 'Cestino', icon: 'trash.png', fallback: '🗑️' },
+  { id: 'instagram', label: 'Instagram', icon: 'app_instagram.webp', fallback: '◎', url: site.socials.instagram, social: 'instagram' },
+  { id: 'tiktok', label: 'TikTok', icon: 'app_tiktok.webp', fallback: '♪', url: site.socials.tiktok, social: 'tiktok' },
+  { id: 'linkedin', label: 'LinkedIn', icon: 'app_linkedin.webp', fallback: 'in', url: site.socials.linkedin, social: 'linkedin' },
+  { id: 'youtube', label: 'YouTube', icon: 'app_youtube.webp', fallback: '▶', url: site.socials.youtube, social: 'youtube' }
 ];
 ---
 <BaseLayout>
@@ -110,18 +134,45 @@ const apps = [
       {desktopItems.map((item, index) => (
         <button
           type="button"
-          class={`desktop-item ${item.type} ${item.thumbnail ? 'has-thumbnail' : ''}`}
+          class={desktopItemClass(item)}
           data-item-id={item.id}
           data-external-url={item.external ? item.url : undefined}
           style={`--x:${52 + ((index * 173) % 1030)}px;--y:${70 + ((index * 137) % 330)}px`}
           aria-label={`Apri ${item.name}`}
         >
-          <span class="desktop-thumb" aria-hidden="true">
-            {item.thumbnail
-              ? <img src={item.thumbnail} alt="" loading="eager" />
-              : item.type === 'folder'
-                ? <img src="/apple-icons/folder.png" alt="" />
-                : <span class={`${item.type}-thumb`}>{desktopMark(item)}</span>}
+          <span class="desktop-item__visual desktop-thumb" aria-hidden="true">
+            {item.type === 'folder' ? (
+              <img class="desktop-item__folder-icon" src="/apple-icons/folder.png" alt="" />
+            ) : item.type === 'video' ? (
+              <>
+                {item.thumbnail ? <img src={item.thumbnail} alt="" loading="eager" /> : <span class="desktop-item__fallback">{desktopMark(item)}</span>}
+                <span class="desktop-item__play">▶</span>
+              </>
+            ) : item.type === 'image' && item.thumbnail ? (
+              <img src={item.thumbnail} alt="" loading="eager" />
+            ) : item.type === 'document' || item.type === 'pdf' ? (
+              <span class="desktop-item__sheet">
+                <span>{item.type === 'pdf' ? 'PDF' : item.icon || 'MD'}</span>
+              </span>
+            ) : item.type === 'note' ? (
+              <span class="desktop-item__note">
+                <i></i><i></i><i></i>
+              </span>
+            ) : item.type === 'link' ? (
+              <span class="desktop-item__link-card">
+                <strong>{desktopMark(item)}</strong>
+                <small>URL</small>
+              </span>
+            ) : item.type === 'audio' || item.type === 'playlist' ? (
+              <span class="desktop-item__audio-card">
+                <strong>{desktopMark(item)}</strong>
+                <small>{item.type === 'playlist' ? 'Playlist' : 'Audio'}</small>
+              </span>
+            ) : item.thumbnail ? (
+              <img src={item.thumbnail} alt="" loading="eager" />
+            ) : (
+              <span class="desktop-item__fallback">{desktopMark(item)}</span>
+            )}
           </span>
           <span class="desktop-label">{item.name}</span>
         </button>
@@ -298,8 +349,45 @@ const apps = [
         </article>
       </article>
 
-      <article class="launchpad" data-window="launchpad" data-app-title="App" role="dialog" aria-label="Launchpad" aria-modal="true" aria-hidden="true">
-        <div class="launchpad-panel"><label><span class="sr-only">Cerca applicazione</span><input type="search" placeholder="Cerca app" data-launchpad-search /></label><div>{apps.map((app) => <button type="button" data-open={app.id} data-app-label={app.label}><span class="dock-icon"><img src={`/apple-icons/${app.icon}`} alt="" onerror="this.style.display='none'"/><b>{app.fallback}</b></span><small>{app.label}</small></button>)}</div><p class="launchpad-empty" hidden>Nessuna app trovata.</p></div>
+      <article
+        class="mac-window launchpad"
+        data-window="launchpad"
+        data-app-title="App"
+        style="--left: 16vw; --top: 11vh; --w: 840px; --h: 610px;"
+        role="dialog"
+        aria-label="Launchpad"
+        aria-modal="false"
+        aria-hidden="true"
+      >
+        <div class="window-chrome launchpad-chrome">
+          <strong>App</strong>
+        </div>
+        <div class="launchpad-panel">
+          <label class="launchpad-search">
+            <span class="sr-only">Cerca applicazione</span>
+            <input type="search" placeholder="Cerca applicazioni" data-launchpad-search />
+          </label>
+          <div class="launchpad-grid">
+            {apps.map((app) => (
+              <button
+                type="button"
+                data-open={app.url ? undefined : app.id}
+                data-url={app.url || undefined}
+                data-app-label={app.label}
+                aria-label={`Apri ${app.label}`}
+              >
+                <span class={`launchpad-icon ${app.social ? `is-social ${app.social}` : ''}`} aria-hidden="true">
+                  {app.icon ? (
+                    <img src={`/apple-icons/${app.icon}`} alt="" onerror="this.style.display='none'"/>
+                  ) : null}
+                  <b>{app.fallback}</b>
+                </span>
+                <small>{app.label}</small>
+              </button>
+            ))}
+          </div>
+          <p class="launchpad-empty" hidden>Nessuna app trovata.</p>
+        </div>
       </article>
 
       <article class="mac-window trash-window" data-window="trash" data-app-title="Cestino" style="--left: 36vw; --top: 28vh; --w: 430px; --h: 270px;" role="dialog" aria-label="Cestino" aria-modal="false">

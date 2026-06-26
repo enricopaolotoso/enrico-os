@@ -295,12 +295,10 @@
   height: 54px;
   display: grid;
   place-items: center;
-  overflow: hidden;
+  overflow: visible;
   border-radius: 14px;
   background: transparent;
-  box-shadow:
-    0 10px 20px rgba(0, 0, 0, 0.22),
-    0 1px 3px rgba(0, 0, 0, 0.12);
+  box-shadow: none;
   transform-origin: center bottom;
   transition:
     transform 0.17s cubic-bezier(0.2, 0.9, 0.25, 1.15),
@@ -319,10 +317,10 @@
   display: grid;
   place-items: center;
   border-radius: inherit;
-  color: #fff;
+  color: var(--text);
   font-size: 22px;
   font-weight: 750;
-  background: linear-gradient(135deg, #0a84ff, #5e5ce6);
+  background: transparent;
 }
 
 .dock-icon img:not([style*="display: none"]) + b {

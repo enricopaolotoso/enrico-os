@@ -6,7 +6,17 @@ export type FileSystemItemType =
   | 'pdf'
   | 'link'
   | 'note'
-  | 'app';
+  | 'app'
+  | 'audio'
+  | 'playlist';
+
+export type FileSystemItemAspectRatio =
+  | 'square'
+  | 'horizontal'
+  | 'vertical'
+  | 'wide'
+  | 'portrait'
+  | 'auto';
 
 export type FileSystemItem = {
   id: string;
@@ -15,6 +25,10 @@ export type FileSystemItem = {
   path: string;
   icon?: string;
   thumbnail?: string;
+  aspectRatio?: FileSystemItemAspectRatio;
+  width?: number;
+  height?: number;
+  mimeType?: string;
   description?: string;
   url?: string;
   link?: string;
@@ -36,6 +50,8 @@ export const fileSystem: FileSystemItem = {
       type: 'document',
       path: '/Desktop/README.md',
       icon: 'MD',
+      aspectRatio: 'portrait',
+      mimeType: 'text/markdown',
       description:
         'Guida rapida al portfolio: app, cartelle, progetti e scorciatoie per esplorare Enrico OS.'
     },
@@ -53,6 +69,8 @@ export const fileSystem: FileSystemItem = {
           type: 'document',
           path: '/Desktop/Raviez/Raviez Overview.md',
           icon: 'MD',
+          aspectRatio: 'portrait',
+          mimeType: 'text/markdown',
           description:
             'Raviez è uno statement apparel brand nato nel 2023. Il progetto unisce prodotto, identità, community, contenuti e vendita online.'
         },
@@ -62,6 +80,10 @@ export const fileSystem: FileSystemItem = {
           type: 'image',
           path: '/Desktop/Raviez/raviez ok.jpg',
           thumbnail: '/photos/raviez%20ok.jpg',
+          aspectRatio: 'vertical',
+          width: 1000,
+          height: 1250,
+          mimeType: 'image/jpeg',
           url: '/photos/raviez%20ok.jpg',
           description: 'Immagine dall’archivio visuale di Raviez.'
         },
@@ -70,6 +92,8 @@ export const fileSystem: FileSystemItem = {
           name: 'Risultati.note',
           type: 'note',
           path: '/Desktop/Raviez/Risultati.note',
+          aspectRatio: 'portrait',
+          mimeType: 'text/plain',
           description:
             'Circa 1.600 magliette vendute e una community Instagram cresciuta fino a circa 7.000 follower.'
         },
@@ -79,6 +103,7 @@ export const fileSystem: FileSystemItem = {
           type: 'link',
           path: '/Desktop/Raviez/Raviez online',
           icon: '↗',
+          aspectRatio: 'horizontal',
           description: 'Collegamento al progetto Raviez. Il sito pubblico è in aggiornamento.',
           url: 'https://instagram.com/raviez'
         }
@@ -98,6 +123,8 @@ export const fileSystem: FileSystemItem = {
           type: 'document',
           path: '/Desktop/Netmarket/Netmarket.md',
           icon: 'MD',
+          aspectRatio: 'portrait',
+          mimeType: 'text/markdown',
           description:
             'In Netmarket Enrico lavora su web design, WooCommerce, SEO, branding, contenuti e marketing digitale.'
         },
@@ -107,6 +134,7 @@ export const fileSystem: FileSystemItem = {
           type: 'app',
           path: '/Desktop/Netmarket/Progetti.app',
           icon: 'P',
+          aspectRatio: 'square',
           app: 'projects',
           description: 'Apre l’app Progetti del portfolio.'
         },
@@ -116,6 +144,7 @@ export const fileSystem: FileSystemItem = {
           type: 'link',
           path: '/Desktop/Netmarket/netmarket.it',
           icon: '↗',
+          aspectRatio: 'horizontal',
           url: 'https://www.netmarket.it',
           description: 'Sito ufficiale di Netmarket.'
         }
@@ -124,9 +153,13 @@ export const fileSystem: FileSystemItem = {
     {
       id: 'youtube-2016',
       name: 'youtube2016.mp4',
-      type: 'link',
+      type: 'video',
       path: '/Desktop/youtube2016.mp4',
       thumbnail: '/images/copertina-video.jpg',
+      aspectRatio: 'wide',
+      width: 816,
+      height: 452,
+      mimeType: 'video/mp4',
       url: 'https://youtu.be/hTxmt7l1pao',
       external: true,
       description: 'Uno dei primi video YouTube pubblicati da Enrico nel 2016.'
@@ -137,6 +170,10 @@ export const fileSystem: FileSystemItem = {
       type: 'image',
       path: '/Desktop/joylife.jpg',
       thumbnail: '/images/joylife.jpg',
+      aspectRatio: 'square',
+      width: 1169,
+      height: 1155,
+      mimeType: 'image/jpeg',
       url: '/images/joylife.jpg',
       description:
         'JoyLife è un progetto digitale e di community nato per sperimentare contenuti, eventi, collaborazioni e nuove opportunità creative.'
@@ -147,6 +184,10 @@ export const fileSystem: FileSystemItem = {
       type: 'image',
       path: '/Desktop/filtri-mm.jpg',
       thumbnail: '/images/filtri-mm.jpg',
+      aspectRatio: 'vertical',
+      width: 640,
+      height: 1260,
+      mimeType: 'image/jpeg',
       url: '/images/filtri-mm.jpg',
       description:
         'Progetto di filtri Instagram realizzati per locali, eventi e brand: uno dei primi servizi digitali commerciali sviluppati da Enrico.'
@@ -157,6 +198,10 @@ export const fileSystem: FileSystemItem = {
       type: 'image',
       path: '/Desktop/cir-comenellavita.jpg',
       thumbnail: '/images/cir-comenellavita.jpg',
+      aspectRatio: 'square',
+      width: 1163,
+      height: 1156,
+      mimeType: 'image/jpeg',
       url: '/images/cir-comenellavita.jpg',
       description:
         'Come nella vita è un progetto creativo legato a storytelling, produzione visuale e sperimentazione di nuovi linguaggi.'

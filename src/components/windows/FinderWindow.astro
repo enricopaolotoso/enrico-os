@@ -9,7 +9,9 @@ const kindLabels: Record<FileSystemItem['type'], string> = {
   pdf: 'PDF',
   link: 'Collegamento',
   note: 'Nota',
-  app: 'Applicazione'
+  app: 'Applicazione',
+  audio: 'Audio',
+  playlist: 'Playlist'
 };
 
 const itemMark = (item: FileSystemItem) => {
@@ -21,6 +23,8 @@ const itemMark = (item: FileSystemItem) => {
   if (item.type === 'document') return 'DOC';
   if (item.type === 'note') return 'Nota';
   if (item.type === 'link') return '↗';
+  if (item.type === 'audio') return '♪';
+  if (item.type === 'playlist') return '♫';
   return 'APP';
 };
 ---
