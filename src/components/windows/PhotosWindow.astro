@@ -38,7 +38,6 @@ const photos = photoFiles.map((file) => ({
       <button type="button" data-maximize aria-label="Ingrandisci Foto"></button>
     </div>
     <strong>Foto</strong>
-    <button class="info-btn" type="button" data-focus-photo-search aria-label="Cerca nelle foto">⌕</button>
   </div>
 
   <div class="photos-library">
@@ -47,10 +46,6 @@ const photos = photoFiles.map((file) => ({
         <h2>Libreria</h2>
         <span>{photos.length} {photos.length === 1 ? 'foto' : 'foto'}</span>
       </div>
-      <label class="photo-search">
-        <span class="sr-only">Cerca nella libreria</span>
-        <input type="search" placeholder="Cerca nella libreria" data-photo-search />
-      </label>
     </header>
 
     <div class="photo-grid" data-photo-grid>
@@ -76,7 +71,6 @@ const photos = photoFiles.map((file) => ({
         <strong>Nessuna foto nella libreria</strong>
         <p>Aggiungi immagini nella cartella <code>public/photos</code>.</p>
       </div>
-      <p class="photos-no-results" hidden>Nessuna foto trovata.</p>
     </div>
   </div>
 

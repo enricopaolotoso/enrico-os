@@ -1236,7 +1236,7 @@
       { id: 'photos', name: 'Foto', icon: '/apple-icons/photos.png', description: 'Libreria fotografica personale.' },
       { id: 'mail', name: 'Mail', icon: '/apple-icons/mail.png', description: 'Form di contatto diretto.' },
       { id: 'terminal', name: 'Terminale', icon: '/apple-icons/terminal.png', description: 'Comandi rapidi del portfolio.' },
-      { id: 'settings', name: 'Informazioni', icon: '/apple-icons/settings.png', description: 'Biografia e profili di Enrico.' },
+      { id: 'settings', name: 'Informazioni', icon: '/apple-icons/settings.webp', description: 'Biografia e profili di Enrico.' },
       { id: 'spotify', name: 'Spotify', icon: '/apple-icons/spotify.svg', description: 'Playlist, artisti e tracce.' },
       { id: 'launchpad', name: 'App', icon: '/apple-icons/launchpad.png', description: 'Tutte le applicazioni disponibili nel sito.' },
       { id: 'instagram', name: 'Instagram', icon: '/apple-icons/app_instagram.webp', social: 'instagram', fallback: '◎', url: 'https://instagram.com/enricotosoo', description: 'Profilo Instagram di Enrico Toso.' },
@@ -1609,21 +1609,9 @@
     const photos = getWindow('photos');
     if (!photos) return;
     const items = $$('[data-photo-src]', photos);
-    const search = $('[data-photo-search]', photos);
     const viewer = $('[data-photo-viewer]', photos);
     const viewerImage = $('[data-photo-viewer-image]', photos);
     const viewerTitle = $('[data-photo-viewer-title]', photos);
-
-    function filterPhotos() {
-      const query = search.value.trim().toLowerCase();
-      let visible = 0;
-      items.forEach((item) => {
-        const matchesQuery = item.dataset.photoTitle.toLowerCase().includes(query);
-        item.hidden = !matchesQuery;
-        if (!item.hidden) visible += 1;
-      });
-      $('.photos-no-results', photos).hidden = visible > 0 || items.length === 0;
-    }
 
     items.forEach((item) => {
       item.addEventListener('click', () => {
@@ -1645,9 +1633,6 @@
     viewer?.addEventListener('click', (event) => {
       if (event.target === viewer) closeViewer();
     });
-
-    search.addEventListener('input', filterPhotos);
-    $('[data-focus-photo-search]', photos)?.addEventListener('click', () => search.focus());
   }
 
   function bindProjectFilters() {
@@ -1713,10 +1698,18 @@
         const heading = document.createElement('h3');
         heading.textContent = item.name;
         const description = document.createElement('p');
-        description.textContent =
-          type === 'playlist'
-            ? `${item.tracksTotal} brani${item.description ? ` · ${item.description}` : ''}`
-            : (item.genres || []).slice(0, 2).join(', ') || `Popolarità ${item.popularity}`;
+        if (type === 'playlist') {
+          const tracksTotal = Number(item.tracksTotal);
+          const parts = [];
+          if (Number.isFinite(tracksTotal) && tracksTotal > 0) {
+            parts.push(`${tracksTotal} ${tracksTotal === 1 ? 'brano' : 'brani'}`);
+          }
+          if (item.description) parts.push(item.description);
+          description.textContent = parts.join(' · ') || 'Playlist';
+        } else {
+          description.textContent =
+            (item.genres || []).slice(0, 2).join(', ') || `Popolarità ${item.popularity}`;
+        }
         card.append(heading, description, externalLink(item.url));
         grid.appendChild(card);
       });
