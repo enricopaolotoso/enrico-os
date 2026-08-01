@@ -30,9 +30,11 @@ const personSchema = {
   '@id': `${site.url}/#person`,
   name: site.name,
   givenName: 'Enrico',
+  additionalName: 'Paolo',
   familyName: 'Toso',
-  alternateName: [site.alternateName],
+  alternateName: [site.fullName, site.alternateName, `${site.name} Padova`, `${site.name} Netmarket`],
   jobTitle: site.role,
+  disambiguatingDescription: site.disambiguatingDescription,
   description: site.description,
   email: site.email,
   image: `${site.url}/images/foto-profilo-enricotoso.jpg`,
@@ -45,6 +47,19 @@ const personSchema = {
   url: site.url,
   mainEntityOfPage: `${site.url}/enrico-toso/`,
   knowsAbout: site.knowsAbout,
+  hasOccupation: {
+    '@type': 'Occupation',
+    name: site.role,
+    occupationLocation: {
+      '@type': 'City',
+      name: 'Padova'
+    },
+    skills: site.knowsAbout
+  },
+  homeLocation: {
+    '@type': 'Place',
+    name: 'Padova, Veneto, Italia'
+  },
   affiliation: site.affiliations.map((affiliation) => ({
     '@type': 'Organization',
     name: affiliation.name,
@@ -109,6 +124,13 @@ const structuredData = [personSchema, websiteSchema, webPageSchema, ...structure
     <link rel="alternate" type="text/plain" href="/llms.txt" title="LLMS profile summary" />
     {socialUrls.map((url) => <link rel="me" href={url} />)}
     <meta property="og:type" content={ogType} />
+    {ogType === 'profile' && (
+      <>
+        <meta property="profile:first_name" content="Enrico" />
+        <meta property="profile:last_name" content="Toso" />
+        <meta property="profile:username" content="enricopaolotoso" />
+      </>
+    )}
     <meta property="og:locale" content="it_IT" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />

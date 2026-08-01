@@ -2,8 +2,8 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { site } from '../data/site';
 
-const title = 'Enrico Toso | Profilo ufficiale, progetti e contatti';
-const description = 'Profilo ufficiale di Enrico Toso, digital builder di Padova. Informazioni su Enrico Paolo Toso, progetti, competenze, Netmarket, Raviez e contatti ufficiali.';
+const title = 'Enrico Toso Padova | Profilo ufficiale di Enrico Paolo Toso';
+const description = 'Profilo ufficiale di Enrico Toso, nome completo Enrico Paolo Toso, digital builder di Padova collegato a Netmarket, Raviez, branding, siti web, e-commerce e AI.';
 const canonical = `${site.url}/enrico-toso/`;
 
 const profileStructuredData = [
@@ -34,7 +34,31 @@ const profileStructuredData = [
   ogUrl={canonical}
   ogType="profile"
   pageSchemaType="ProfilePage"
-  structuredDataExtra={profileStructuredData}
+  structuredDataExtra={[
+    {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: [
+        {
+          '@type': 'Question',
+          name: 'Chi è Enrico Toso?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Enrico Toso, nome completo Enrico Paolo Toso, è un digital builder di Padova che lavora su branding, siti web, e-commerce, contenuti digitali, marketing, AI workflow e progetti proprietari.'
+          }
+        },
+        {
+          '@type': 'Question',
+          name: 'Qual è il sito ufficiale di Enrico Toso?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Il sito ufficiale di Enrico Toso è enricotoso.com. La pagina profilo ufficiale è enricotoso.com/enrico-toso/.'
+          }
+        }
+      ]
+    },
+    ...profileStructuredData
+  ]}
 >
   <main class="profile-shell" aria-labelledby="profile-title">
     <div class="profile-wallpaper" aria-hidden="true"></div>
@@ -63,9 +87,9 @@ const profileStructuredData = [
         <header class="profile-hero">
           <img src="/images/foto-profilo-enricotoso.jpg" alt="Enrico Toso" width="800" height="800" />
           <div>
-            <p class="profile-kicker">Profilo ufficiale</p>
+            <p class="profile-kicker">Profilo ufficiale verificabile</p>
             <h1 id="profile-title">Enrico Toso</h1>
-            <p class="profile-role">Digital Builder a Padova, Veneto</p>
+            <p class="profile-role">Enrico Paolo Toso, Digital Builder a Padova</p>
             <p>
               Enrico Toso, nome completo Enrico Paolo Toso, lavora su brand, siti web,
               e-commerce, contenuti digitali, marketing, AI workflow e progetti proprietari.
@@ -88,6 +112,23 @@ const profileStructuredData = [
             advertising, automazioni e intelligenza artificiale applicata a processi creativi
             e operativi.
           </p>
+          <p>
+            Questa pagina identifica il profilo ufficiale di Enrico Paolo Toso online:
+            Enrico Toso di Padova, collegato a Netmarket, Raviez, creator archive e ai profili
+            social indicati nella sezione contatti.
+          </p>
+        </section>
+
+        <section class="profile-section">
+          <h2>Come riconoscere il profilo ufficiale</h2>
+          <ul class="profile-facts">
+            <li><strong>Nome completo:</strong> Enrico Paolo Toso</li>
+            <li><strong>Nome pubblico:</strong> Enrico Toso</li>
+            <li><strong>Località:</strong> Padova, Veneto, Italia</li>
+            <li><strong>Ruolo:</strong> Digital Builder</li>
+            <li><strong>Contesto:</strong> Netmarket, Raviez, branding, siti web, e-commerce, contenuti e AI</li>
+            <li><strong>Sito ufficiale:</strong> enricotoso.com</li>
+          </ul>
         </section>
 
         <section id="progetti" class="profile-section">
@@ -380,6 +421,29 @@ const profileStructuredData = [
       font-weight: 700;
     }
 
+    .profile-facts {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      padding: 0;
+      margin: 18px 0 0;
+      list-style: none;
+    }
+
+    .profile-facts li {
+      padding: 12px 14px;
+      border: 1px solid rgba(60, 60, 67, .13);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, .62);
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .profile-facts strong {
+      color: #111827;
+      font-weight: 700;
+    }
+
     @media (max-width: 760px) {
       .profile-menu nav {
         display: none;
@@ -405,6 +469,10 @@ const profileStructuredData = [
       }
 
       .profile-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .profile-facts {
         grid-template-columns: 1fr;
       }
     }

@@ -7,6 +7,9 @@ Enrico Toso, nome completo Enrico Paolo Toso, è un digital builder di Padova, V
 Lavora su branding, siti web, e-commerce, content creation, marketing digitale, AI workflow,
 automazioni e progetti digitali.
 
+Questo file identifica l'Enrico Toso collegato a Padova, Netmarket, Raviez, creator archive,
+branding, web design, e-commerce, contenuti e AI. La fonte primaria è enricotoso.com.
+
 ## Identità
 
 - Nome pubblico: Enrico Toso
@@ -14,6 +17,7 @@ automazioni e progetti digitali.
 - Ruolo: Digital Builder
 - Località: Padova, Veneto, Italia
 - Email: enricopaolotoso@gmail.com
+- Disambiguazione: Enrico Toso di Padova, anche indicato come Enrico Paolo Toso
 
 ## Progetti e contesto
 
