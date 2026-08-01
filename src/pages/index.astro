@@ -15,6 +15,7 @@ import { fileSystem, flattenFileSystem, type FileSystemItem } from '../data/file
 const desktopItems = fileSystem.children ?? [];
 const searchableFileSystemItems = flattenFileSystem().filter((item) => item.id !== fileSystem.id);
 const fileSystemJson = JSON.stringify(fileSystem).replace(/</g, '\\u003c');
+const desktopScriptVersion = Date.now().toString(36);
 
 const desktopMark = (item: FileSystemItem) => {
   if (item.icon) return item.icon;
@@ -396,5 +397,5 @@ const apps = [
 
     <Dock />
   </main>
-  <script is:inline type="module" src="/desktop.js"></script>
+  <script is:inline type="module" src={`/desktop.js?v=${desktopScriptVersion}`}></script>
 </BaseLayout>
