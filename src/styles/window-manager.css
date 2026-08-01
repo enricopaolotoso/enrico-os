@@ -12,6 +12,10 @@
 
 .mac-window {
   position: absolute;
+  left: var(--left, 72px);
+  top: var(--top, 54px);
+  width: min(var(--w, 920px), calc(100vw - 32px));
+  height: min(var(--h, 600px), calc(100dvh - 128px));
   z-index: 10;
   display: none;
   flex-direction: column;
@@ -75,10 +79,11 @@
 
 .window-header,
 .window-titlebar,
+.window-chrome,
 .mac-window-header {
   position: relative;
-  min-height: 42px;
-  height: 42px;
+  min-height: 52px;
+  height: 52px;
   display: flex;
   align-items: center;
   gap: 12px;
@@ -99,6 +104,7 @@
 
 .mac-window.is-focused .window-header,
 .mac-window.is-focused .window-titlebar,
+.mac-window.is-focused .window-chrome,
 .mac-window.is-focused .mac-window-header {
   background:
     linear-gradient(
@@ -110,8 +116,60 @@
 
 .window-header:active,
 .window-titlebar:active,
+.window-chrome:active,
 .mac-window-header:active {
   cursor: grabbing;
+}
+
+.window-chrome {
+  justify-content: center;
+}
+
+.window-chrome.dark {
+  color: #fff;
+  background: linear-gradient(180deg, rgba(34, 34, 36, 0.92), rgba(26, 26, 28, 0.86));
+  border-bottom-color: rgba(255, 255, 255, 0.12);
+}
+
+.window-chrome .traffic {
+  position: absolute;
+  left: 16px;
+}
+
+.window-chrome strong {
+  min-width: 0;
+  max-width: calc(100% - 180px);
+  overflow: hidden;
+  color: inherit;
+  font-size: 13.5px;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.info-btn,
+.send-mini {
+  position: absolute;
+  right: 14px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.055);
+  font-weight: 600;
+}
+
+.send-mini {
+  color: #fff;
+  background: var(--blue);
+}
+
+.info-btn:hover {
+  background: rgba(0, 0, 0, 0.085);
+}
+
+.send-mini:hover {
+  background: #006ee6;
 }
 
 .traffic,
@@ -397,10 +455,44 @@
 
   .window-header,
   .window-titlebar,
+  .window-chrome,
   .mac-window-header {
-    min-height: 46px;
-    height: 46px;
+    min-height: 52px;
+    height: 52px;
     padding: 0 12px;
+  }
+
+  .traffic,
+  .window-controls,
+  .mac-window-controls {
+    gap: 10px;
+  }
+
+  .window-chrome .traffic {
+    left: 14px;
+  }
+
+  .traffic button,
+  .window-controls button,
+  .mac-window-controls button,
+  [data-close],
+  [data-minimize],
+  [data-maximize] {
+    width: 18px;
+    height: 18px;
+  }
+
+  [data-close]::before,
+  [data-close]::after,
+  [data-minimize]::before {
+    width: 9px;
+    height: 1.25px;
+  }
+
+  [data-maximize]::before,
+  [data-maximize]::after {
+    width: 6px;
+    height: 6px;
   }
 
   .mac-window.is-maximized {

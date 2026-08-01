@@ -357,8 +357,8 @@
 
   .window-chrome,
   .finder-titlebar {
-    height: 50px;
-    min-height: 50px;
+    height: 52px;
+    min-height: 52px;
   }
 
   .finder-toolbar {

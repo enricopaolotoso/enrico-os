@@ -107,7 +107,7 @@
   function itemMark(item) {
     if (item.icon) return item.icon;
     return {
-      folder: '📁',
+      folder: '▣',
       image: 'IMG',
       video: '▶',
       document: 'DOC',
@@ -819,16 +819,22 @@
         if (item.dataset.dragging === 'true') return;
         $$('.desktop-item').forEach((entry) => entry.classList.remove('is-selected'));
         item.classList.add('is-selected');
-        if (item.dataset.externalUrl) {
-          window.open(item.dataset.externalUrl, '_blank', 'noopener,noreferrer');
-        } else if (isMobile()) {
+        if (isMobile()) {
+          if (item.dataset.externalUrl) {
+            window.open(item.dataset.externalUrl, '_blank', 'noopener,noreferrer');
+            return;
+          }
           openItem(item.dataset.itemId);
         }
       });
 
       item.addEventListener('dblclick', (event) => {
-        if (isMobile() || item.dataset.dragging === 'true' || item.dataset.externalUrl) return;
+        if (isMobile() || item.dataset.dragging === 'true') return;
         event.stopPropagation();
+        if (item.dataset.externalUrl) {
+          window.open(item.dataset.externalUrl, '_blank', 'noopener,noreferrer');
+          return;
+        }
         openItem(item.dataset.itemId);
       });
     });
@@ -1104,43 +1110,169 @@
   function bindTerminal() {
     const input = $('[data-terminal-input]');
     const output = $('[data-terminal-output]');
-    if (!input || !output) return;
+    const prompt = input?.closest('.terminal-prompt');
+    if (!input || !output || !prompt) return;
 
-    const commands = {
-      help: 'Comandi: about, skills, projects, raviez, netmarket, contact, clear',
-      about: 'Enrico Paolo Toso è un digital builder di Padova. Unisce brand, contenuto, web, marketing e AI.',
-      skills: 'Brand strategy, web ed e-commerce, content creation, digital marketing, AI workflow e problem solving.',
-      projects: 'Progetti principali: Raviez, Netmarket, JoyLife e Creator Archive.',
-      raviez: 'Raviez è un brand DTC costruito come laboratorio reale su identità, community, contenuto e vendita online.',
-      netmarket: 'Netmarket è l’ambiente operativo dedicato a branding, siti, e-commerce, contenuti e strategie digitali.',
-      contact: 'I recapiti pubblici sono in aggiornamento. Apri Mail per controllarne la disponibilità.'
+    const history = [];
+    let historyIndex = 0;
+    const commandNames = [
+      'help',
+      'about',
+      'skills',
+      'projects',
+      'raviez',
+      'netmarket',
+      'contact',
+      'open',
+      'ls',
+      'pwd',
+      'whoami',
+      'date',
+      'clear',
+      'one-more-thing',
+      'sudo',
+      'matrix'
+    ];
+
+    const print = (text, className = 'terminal-response') => {
+      const line = document.createElement('p');
+      line.className = `terminal-line ${className}`;
+      line.textContent = text;
+      prompt.before(line);
+      output.scrollTop = output.scrollHeight;
+      return line;
     };
 
-    input.addEventListener('keydown', (event) => {
-      if (event.key !== 'Enter') return;
-      event.preventDefault();
-      const value = input.value.trim().toLowerCase();
-      if (!value) return;
+    const commandHandlers = {
+      help: () => [
+        'Comandi disponibili:',
+        'about, skills, projects, raviez, netmarket, contact',
+        'open finder|mail|notes|photos|spotify|projects',
+        'ls, pwd, whoami, date, clear',
+        '',
+        'Easter egg: one-more-thing, sudo make me famous, matrix'
+      ].join('\n'),
+      about: () => 'Enrico Paolo Toso è un digital builder di Padova. Unisce brand, contenuto, web, marketing e AI.',
+      skills: () => [
+        'Core stack:',
+        '- brand strategy',
+        '- web design ed e-commerce',
+        '- content creation',
+        '- performance marketing',
+        '- AI workflow e automazioni'
+      ].join('\n'),
+      projects: () => {
+        openWindow('projects');
+        return 'Apro Progetti.app...';
+      },
+      raviez: () => 'Raviez è un brand DTC costruito come laboratorio reale su identità, community, contenuto e vendita online.',
+      netmarket: () => 'Netmarket è l’ambiente operativo dedicato a branding, siti, e-commerce, contenuti e strategie digitali.',
+      contact: () => {
+        openWindow('mail');
+        return 'Apro Mail... Puoi scrivere a Enrico direttamente da lì.';
+      },
+      ls: () => 'README.md  Raviez/  Netmarket/  youtube2016.mp4  intervista podcast  joylife.jpg  filtri-mm.jpg',
+      pwd: () => '/Users/enrico/portfolio',
+      whoami: () => 'enrico-paolo-toso',
+      date: () => new Intl.DateTimeFormat('it-IT', {
+        dateStyle: 'full',
+        timeStyle: 'short'
+      }).format(new Date()),
+      'one-more-thing': () => 'Stay hungry. Stay building.',
+      matrix: () => [
+        '01100101 01101110 01110010 01101001 01100011 01101111',
+        'Wake up, builder.',
+        'Il portfolio ha caricato il livello segreto.'
+      ].join('\n')
+    };
 
-      if (value === 'clear') {
+    function runOpen(target) {
+      const aliases = {
+        app: 'launchpad',
+        apps: 'launchpad',
+        finder: 'finder',
+        mail: 'mail',
+        notes: 'notes',
+        note: 'notes',
+        photos: 'photos',
+        foto: 'photos',
+        spotify: 'spotify',
+        projects: 'projects',
+        progetti: 'projects',
+        terminal: 'terminal'
+      };
+      const app = aliases[target];
+      if (!app) return 'Uso: open finder|mail|notes|photos|spotify|projects';
+      openWindow(app);
+      return `Apro ${appNames[app] || app}...`;
+    }
+
+    function runCommand(rawValue) {
+      const [command, ...args] = rawValue.trim().toLowerCase().split(/\s+/);
+      if (!command) return;
+
+      print(`enrico@portfolio ~ % ${rawValue}`, 'terminal-command');
+
+      if (command === 'clear') {
         $$('.terminal-line', output).forEach((line) => line.remove());
-        input.value = '';
         return;
       }
 
-      const command = document.createElement('p');
-      command.className = 'terminal-line terminal-command';
-      command.textContent = `enrico@portfolio ~ % ${value}`;
-      input.closest('label').before(command);
+      if (command === 'open') {
+        print(runOpen(args[0]));
+        return;
+      }
 
-      const response = document.createElement('p');
-      response.className = 'terminal-line terminal-response';
-      response.textContent = commands[value] || `Comando non trovato: ${value}. Digita "help".`;
-      input.closest('label').before(response);
+      if (command === 'sudo') {
+        const request = args.join(' ');
+        print(request === 'make me famous'
+          ? 'Permission granted. Output: costruisci qualcosa che merita attenzione.'
+          : 'Enrico is not in the sudoers file. This incident will be added al backlog.'
+        );
+        return;
+      }
 
-      if (value === 'projects') openWindow('projects');
+      const handler = commandHandlers[command];
+      print(handler ? handler(args) : `Comando non trovato: ${command}. Digita "help".`);
+    }
+
+    output.addEventListener('pointerdown', () => input.focus());
+
+    input.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowUp') {
+        event.preventDefault();
+        if (!history.length) return;
+        historyIndex = Math.max(0, historyIndex - 1);
+        input.value = history[historyIndex];
+        return;
+      }
+
+      if (event.key === 'ArrowDown') {
+        event.preventDefault();
+        if (!history.length) return;
+        historyIndex = Math.min(history.length, historyIndex + 1);
+        input.value = history[historyIndex] || '';
+        return;
+      }
+
+      if (event.key === 'Tab') {
+        const value = input.value.trim().toLowerCase();
+        const match = commandNames.find((command) => command.startsWith(value));
+        if (value && match) {
+          event.preventDefault();
+          input.value = match;
+        }
+        return;
+      }
+
+      if (event.key !== 'Enter') return;
+      event.preventDefault();
+      const value = input.value.trim();
+      if (!value) return;
+      history.push(value);
+      historyIndex = history.length;
+      runCommand(value);
       input.value = '';
-      output.scrollTop = output.scrollHeight;
     });
   }
 
@@ -1150,13 +1282,12 @@
     const notes = $$('[data-note]', windowElement);
     const title = $('#noteTitle', windowElement);
     const body = $('#noteBody', windowElement);
-    const search = $('[data-notes-search]', windowElement);
     const libraryScreen = $('[data-notes-screen="library"]', windowElement);
     const readerScreen = $('[data-notes-screen="reader"]', windowElement);
     const count = $('[data-notes-count]', windowElement);
     const windowTitle = $('[data-notes-window-title]', windowElement);
 
-    if (!title || !body || !search || !libraryScreen || !readerScreen || !count || !windowTitle) {
+    if (!title || !body || !libraryScreen || !readerScreen || !count || !windowTitle) {
       return;
     }
 
@@ -1177,18 +1308,6 @@
       readerScreen.scrollTop = 0;
     }
 
-    function filterNotes() {
-      const query = search.value.trim().toLowerCase();
-      let visible = 0;
-      notes.forEach((note) => {
-        const matchesQuery = `${note.dataset.noteTitle} ${note.dataset.noteBody}`.toLowerCase().includes(query);
-        note.hidden = !matchesQuery;
-        if (!note.hidden) visible += 1;
-      });
-      $('.notes-empty', windowElement).hidden = visible > 0;
-      count.textContent = String(visible);
-    }
-
     notes.forEach((note) => {
       note.addEventListener('pointerdown', (event) => event.stopPropagation());
       note.addEventListener('click', (event) => {
@@ -1198,15 +1317,7 @@
       });
     });
 
-    search.addEventListener('input', filterNotes);
-    const searchButton = $('[data-focus-note-search]', windowElement);
-    searchButton?.addEventListener('pointerdown', (event) => event.stopPropagation());
-    searchButton?.addEventListener('click', (event) => {
-      event.preventDefault();
-      event.stopPropagation();
-      showLibrary();
-      window.setTimeout(() => search.focus(), 0);
-    });
+    count.textContent = String(notes.length);
     const backButton = $('[data-note-back]', windowElement);
     backButton?.addEventListener('pointerdown', (event) => event.stopPropagation());
     backButton?.addEventListener('click', (event) => {
@@ -1216,7 +1327,6 @@
     });
     windowElement.addEventListener('notes:show-library', showLibrary);
     showLibrary();
-    filterNotes();
   }
 
   function bindFinder() {
@@ -1407,7 +1517,7 @@
     function resetPreview(locationItem, label, description, count = 0) {
       const previewIcon = $('#finderPreviewIcon', finder);
       previewIcon.replaceChildren();
-      previewIcon.textContent = locationItem ? itemMark(locationItem) : label === 'Recenti' ? '🕘' : '🚀';
+      previewIcon.textContent = locationItem ? itemMark(locationItem) : label === 'Recenti' ? '◷' : '▦';
       $('#finderPreviewTitle', finder).textContent = label;
       $('#finderPreviewKind', finder).textContent = locationItem ? itemTypeLabel(locationItem.type) : 'Sezione Finder';
       $('#finderPreviewDescription', finder).textContent = description;

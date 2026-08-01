@@ -197,9 +197,63 @@
 
 .finder-sidebar button span {
   width: 20px;
+  height: 20px;
   display: inline-grid;
   place-items: center;
+  position: relative;
+  flex: 0 0 auto;
+  color: #0a84ff;
   font-size: 15px;
+}
+
+.finder-sidebar-symbol::before,
+.finder-sidebar-symbol::after {
+  content: "";
+  position: absolute;
+}
+
+.finder-sidebar-symbol--recent::before {
+  width: 14px;
+  height: 14px;
+  border: 1.7px solid currentColor;
+  border-radius: 50%;
+}
+
+.finder-sidebar-symbol--recent::after {
+  width: 5px;
+  height: 5px;
+  left: 9px;
+  top: 5px;
+  border-left: 1.7px solid currentColor;
+  border-bottom: 1.7px solid currentColor;
+  transform: translate(-50%, -8%) rotate(0deg);
+}
+
+.finder-sidebar-symbol--desktop::before {
+  width: 15px;
+  height: 11px;
+  top: 3px;
+  border: 1.7px solid currentColor;
+  border-radius: 3px;
+}
+
+.finder-sidebar-symbol--desktop::after {
+  width: 10px;
+  height: 2px;
+  bottom: 2px;
+  border-radius: 999px;
+  background: currentColor;
+}
+
+.finder-sidebar-symbol--apps::before {
+  width: 15px;
+  height: 15px;
+  border-radius: 4px;
+  background:
+    linear-gradient(currentColor 0 0) 2px 2px / 4px 4px no-repeat,
+    linear-gradient(currentColor 0 0) 9px 2px / 4px 4px no-repeat,
+    linear-gradient(currentColor 0 0) 2px 9px / 4px 4px no-repeat,
+    linear-gradient(currentColor 0 0) 9px 9px / 4px 4px no-repeat;
 }
 
 .finder-main {

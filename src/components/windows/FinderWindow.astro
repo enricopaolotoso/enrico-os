@@ -16,7 +16,7 @@ const kindLabels: Record<FileSystemItem['type'], string> = {
 
 const itemMark = (item: FileSystemItem) => {
   if (item.icon) return item.icon;
-  if (item.type === 'folder') return '📁';
+  if (item.type === 'folder') return '▣';
   if (item.type === 'image') return 'IMG';
   if (item.type === 'video') return '▶';
   if (item.type === 'pdf') return 'PDF';
@@ -92,9 +92,9 @@ const finderIconClass = (item: FileSystemItem) =>
     <aside class="finder-sidebar" aria-label="Sidebar Finder">
       <div class="finder-sidebar-section">
         <p>Preferiti</p>
-        <button type="button" data-finder-location="recent"><span>🕘</span>Recenti</button>
-        <button type="button" class="is-active" data-finder-location="/Desktop"><span>🖥️</span>Desktop</button>
-        <button type="button" data-finder-location="applications"><span>🚀</span>Applicazioni</button>
+        <button type="button" data-finder-location="recent"><span class="finder-sidebar-symbol finder-sidebar-symbol--recent" aria-hidden="true"></span>Recenti</button>
+        <button type="button" class="is-active" data-finder-location="/Desktop"><span class="finder-sidebar-symbol finder-sidebar-symbol--desktop" aria-hidden="true"></span>Desktop</button>
+        <button type="button" data-finder-location="applications"><span class="finder-sidebar-symbol finder-sidebar-symbol--apps" aria-hidden="true"></span>Applicazioni</button>
       </div>
     </aside>
 
@@ -131,7 +131,7 @@ const finderIconClass = (item: FileSystemItem) =>
 
         <aside class="finder-preview" aria-label="Anteprima">
           <div class="finder-preview-card">
-            <div class="finder-preview-icon" id="finderPreviewIcon">🖥️</div>
+            <div class="finder-preview-icon" id="finderPreviewIcon">▣</div>
             <h3 id="finderPreviewTitle">{fileSystem.name}</h3>
             <p class="finder-preview-kind" id="finderPreviewKind">Cartella</p>
             <p id="finderPreviewDescription">{fileSystem.description}</p>

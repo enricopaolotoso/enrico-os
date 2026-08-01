@@ -48,16 +48,16 @@ const desktopItemClass = (item: FileSystemItem) => [
 ].filter(Boolean).join(' ');
 
 const apps = [
-  { id: 'finder', label: 'Finder', icon: 'finder.png', fallback: '🗂️' },
+  { id: 'finder', label: 'Finder', icon: 'finder.png', fallback: 'F' },
   { id: 'projects', label: 'Progetti', icon: 'folder.png', fallback: 'P' },
-  { id: 'mail', label: 'Mail', icon: 'mail.png', fallback: '✉️' },
-  { id: 'notes', label: 'Note', icon: 'notes.png', fallback: '📝' },
-  { id: 'photos', label: 'Foto', icon: 'photos.png', fallback: '🌈' },
+  { id: 'mail', label: 'Mail', icon: 'mail.png', fallback: 'M' },
+  { id: 'notes', label: 'Note', icon: 'notes.png', fallback: 'N' },
+  { id: 'photos', label: 'Foto', icon: 'photos.png', fallback: 'P' },
   { id: 'terminal', label: 'Terminale', icon: 'terminal.png', fallback: '⌘' },
-  { id: 'settings', label: 'Informazioni', icon: 'settings.webp', fallback: '⚙️' },
+  { id: 'settings', label: 'Informazioni', icon: 'settings.webp', fallback: 'I' },
   { id: 'spotify', label: 'Spotify', icon: 'spotify.svg', fallback: 'S' },
   { id: 'launchpad', label: 'App', icon: 'launchpad.png', fallback: '✳︎' },
-  { id: 'trash', label: 'Cestino', icon: 'trash.webp', fallback: '🗑️' },
+  { id: 'trash', label: 'Cestino', icon: 'trash.webp', fallback: 'C' },
   { id: 'instagram', label: 'Instagram', icon: 'app_instagram.webp', fallback: '◎', url: site.socials.instagram, social: 'instagram' },
   { id: 'tiktok', label: 'TikTok', icon: 'app_tiktok.webp', fallback: '♪', url: site.socials.tiktok, social: 'tiktok' },
   { id: 'linkedin', label: 'LinkedIn', icon: 'app_linkedin.webp', fallback: 'in', url: site.socials.linkedin, social: 'linkedin' },
@@ -205,7 +205,6 @@ const apps = [
         <div class="window-chrome">
           <div class="traffic"><button type="button" data-close aria-label="Chiudi Note"></button><button type="button" data-minimize aria-label="Riduci Note"></button><button type="button" data-maximize aria-label="Ingrandisci Note"></button></div>
           <strong data-notes-window-title>Note</strong>
-          <button class="info-btn" type="button" data-focus-note-search aria-label="Cerca nelle note">⌕</button>
         </div>
 
         <div class="notes-app">
@@ -216,10 +215,6 @@ const apps = [
                   <h2 data-notes-folder-title>Tutte le note</h2>
                   <p><span data-notes-count>{site.notes.length}</span> note</p>
                 </div>
-                <label class="notes-search">
-                  <span class="sr-only">Cerca nelle note</span>
-                  <input type="search" placeholder="Cerca note" data-notes-search />
-                </label>
               </header>
 
               <div class="notes-list" data-notes-list>
@@ -260,7 +255,7 @@ const apps = [
         <div class="window-chrome"><div class="traffic"><button type="button" data-close aria-label="Chiudi Mail"></button><button type="button" data-minimize aria-label="Riduci Mail"></button><button type="button" data-maximize aria-label="Ingrandisci Mail"></button></div><strong>Mail</strong></div>
         <div class="mail-layout">
           <aside>
-            <button type="button" class="active">✉️ Nuovo messaggio</button>
+            <button type="button" class="active">Nuovo messaggio</button>
             <div class="mail-sidebar-note">
               <strong>Contatta Enrico</strong>
               <p>Puoi scrivermi direttamente da qui. Riceverò il messaggio nella mia casella personale.</p>
@@ -309,9 +304,9 @@ const apps = [
       <article class="mac-window terminal-window" data-window="terminal" data-terminal data-app-title="Terminale" style="--left: 25vw; --top: 19vh; --w: 760px; --h: 480px;" role="dialog" aria-label="Terminale" aria-modal="false">
         <div class="window-chrome dark"><div class="traffic"><button type="button" data-close aria-label="Chiudi Terminale"></button><button type="button" data-minimize aria-label="Riduci Terminale"></button><button type="button" data-maximize aria-label="Ingrandisci Terminale"></button></div><strong>Terminale</strong></div>
         <div class="terminal-body" id="terminalOutput" data-terminal-output aria-live="polite">
-          <p>Last login: oggi su portfolio</p>
-          <p>Digita <code>help</code>, <code>about</code>, <code>skills</code>, <code>projects</code>, <code>contact</code> o <code>clear</code>.</p>
-          <label><span>enrico@portfolio ~ %</span><input id="terminalInput" data-terminal-input autocomplete="off" aria-label="Comando terminale" spellcheck="false" /></label>
+          <p class="terminal-line terminal-muted">Last login: oggi su portfolio</p>
+          <p class="terminal-line terminal-response">Digita <code>help</code> per vedere i comandi disponibili.</p>
+          <label class="terminal-prompt"><span>enrico@portfolio ~ %</span><input id="terminalInput" data-terminal-input autocomplete="off" autocapitalize="none" aria-label="Comando terminale" spellcheck="false" /></label>
         </div>
       </article>
 
