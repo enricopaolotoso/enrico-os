@@ -4,6 +4,7 @@ import { site } from '../data/site';
 type MenuEntry = {
   label: string;
   action?: string;
+  item?: string;
   command?: string;
   disabled?: boolean;
 };
@@ -18,7 +19,7 @@ const menuItems: Menu[] = [
     label: 'File',
     items: [
       { label: 'Apri Finder', action: 'finder' },
-      { label: 'Apri README.md', action: 'readme' },
+      { label: 'Apri README.md', item: 'readme' },
       { label: 'Chiudi finestra attiva', command: 'close-active' }
     ]
   },
@@ -39,7 +40,7 @@ const menuItems: Menu[] = [
   {
     label: 'Vai',
     items: [
-      { label: 'Progetti', action: 'finder' },
+      { label: 'Progetti', action: 'projects' },
       { label: 'Note', action: 'notes' },
       { label: 'Contatti', action: 'mail' }
     ]
@@ -56,7 +57,7 @@ const menuItems: Menu[] = [
     label: 'Aiuto',
     items: [
       { label: 'Guida rapida', command: 'open-tour' },
-      { label: 'README.md', action: 'readme' }
+      { label: 'README.md', item: 'readme' }
     ]
   }
 ];
@@ -73,7 +74,7 @@ const menuItems: Menu[] = [
         <button type="button" data-open="settings" role="menuitem">
           Informazioni su Enrico
         </button>
-        <button type="button" data-open="readme" role="menuitem">
+        <button type="button" data-item="readme" role="menuitem">
           README.md
         </button>
         <hr />
@@ -99,6 +100,10 @@ const menuItems: Menu[] = [
             {menu.items.map((item) => (
               item.action ? (
                 <button type="button" data-open={item.action} role="menuitem">
+                  {item.label}
+                </button>
+              ) : item.item ? (
+                <button type="button" data-item={item.item} role="menuitem">
                   {item.label}
                 </button>
               ) : (

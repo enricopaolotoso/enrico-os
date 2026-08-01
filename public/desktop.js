@@ -756,13 +756,61 @@
         return;
       }
 
+      const itemTrigger = event.target.closest('[data-item]');
+      if (itemTrigger) {
+        event.stopPropagation();
+        closeMenuBarMenus();
+        openItem(itemTrigger.dataset.item);
+        return;
+      }
+
       const trigger = event.target.closest('[data-open]');
       if (!trigger) return;
       if (trigger.classList.contains('desktop-item') || trigger.classList.contains('finder-file')) return;
       event.stopPropagation();
       const id = trigger.dataset.open;
       if (trigger.closest('.launchpad')) closeLaunchpad(false);
+      closeMenuBarMenus();
       openWindow(id);
+    });
+  }
+
+  function closeMenuBarMenus(except = null) {
+    $$('.menu-group.is-open').forEach((group) => {
+      if (group === except) return;
+      group.classList.remove('is-open');
+      $('.menu-trigger', group)?.setAttribute('aria-expanded', 'false');
+    });
+  }
+
+  function bindMenuBar() {
+    $$('.menu-group > .menu-trigger').forEach((trigger) => {
+      trigger.setAttribute('aria-haspopup', 'true');
+      trigger.setAttribute('aria-expanded', 'false');
+
+      trigger.addEventListener('click', (event) => {
+        const group = trigger.closest('.menu-group');
+        if (!group) return;
+        const willOpen = !group.classList.contains('is-open');
+        event.stopPropagation();
+        closeMenuBarMenus(group);
+        group.classList.toggle('is-open', willOpen);
+        trigger.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+      });
+    });
+
+    document.addEventListener('pointerdown', (event) => {
+      if (event.target.closest('.menu-bar')) return;
+      closeMenuBarMenus();
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key !== 'Escape') return;
+      closeMenuBarMenus();
+    });
+
+    $$('.menu-dropdown [role="menuitem"]').forEach((item) => {
+      item.addEventListener('click', () => closeMenuBarMenus());
     });
   }
 
@@ -809,6 +857,7 @@
         const value = $('[data-copy]')?.dataset.copy;
         if (value) await copyText(value, button);
       }
+      closeMenuBarMenus();
     });
   }
 
@@ -1979,6 +2028,7 @@
     window.setInterval(updateClock, 15000);
     window.setInterval(updateMobileLockClock, 15000);
     initMobileLockScreen();
+    bindMenuBar();
     bindOpenActions();
     bindWindowControls();
     bindMenuCommands();
