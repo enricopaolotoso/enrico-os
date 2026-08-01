@@ -5,8 +5,20 @@ import { site } from '../data/site';
 const title = `404 | ${site.name}`;
 const description = 'Pagina non trovata nel portfolio desktop di Enrico Toso.';
 
-const errorWindows = Array.from({ length: 24 }, (_, index) => ({
+const popupPositions = [
+  [-430, -220], [-260, -260], [-80, -230], [160, -250], [360, -210],
+  [-520, -80], [-330, -90], [-120, -80], [180, -90], [420, -70],
+  [-470, 70], [-260, 55], [-60, 70], [170, 65], [390, 85],
+  [-420, 210], [-230, 220], [-20, 210], [210, 220], [430, 205],
+  [-320, 330], [-110, 330], [120, 330], [330, 320]
+];
+
+const errorWindows = popupPositions.map(([dx, dy], index) => ({
   id: index + 1,
+  dx,
+  dy,
+  mobileDx: Math.round(dx * 0.28),
+  mobileDy: Math.round(dy * 0.36),
   title: index % 3 === 0 ? 'System Error' : index % 3 === 1 ? 'Finder Error' : '404 Alert',
   message: index % 4 === 0
     ? 'Il file richiesto non esiste in questa directory.'
@@ -43,7 +55,7 @@ const errorWindows = Array.from({ length: 24 }, (_, index) => ({
       {errorWindows.map((item, index) => (
         <article
           class="error-popup"
-          style={`--i:${index}; --x:${(index * 47) % 74}vw; --y:${36 + ((index * 29) % 52)}vh; --r:${(index % 7) - 3}deg; --z:${10 + index};`}
+          style={`--i:${index}; --dx:${item.dx}px; --dy:${item.dy}px; --mx:${item.mobileDx}px; --my:${item.mobileDy}px; --r:${(index % 7) - 3}deg; --z:${10 + index};`}
         >
           <div class="error-popup-chrome">
             <div class="not-found-traffic" aria-hidden="true">
@@ -114,7 +126,7 @@ const errorWindows = Array.from({ length: 24 }, (_, index) => ({
       inset: 0;
       background:
         radial-gradient(circle at 50% 45%, rgba(255, 255, 255, .06), transparent 24rem),
-        linear-gradient(180deg, rgba(4, 7, 15, .18), rgba(4, 7, 15, .46));
+        linear-gradient(180deg, rgba(4, 7, 15, .12), rgba(4, 7, 15, .36));
     }
 
     .not-found-menu {
@@ -159,8 +171,8 @@ const errorWindows = Array.from({ length: 24 }, (_, index) => ({
       border-radius: 14px;
       background: rgba(248, 248, 250, .92);
       box-shadow:
-        0 42px 110px rgba(0, 0, 0, .42),
-        0 14px 40px rgba(0, 0, 0, .22),
+        0 22px 58px rgba(0, 0, 0, .16),
+        0 6px 18px rgba(0, 0, 0, .10),
         inset 0 1px 0 rgba(255, 255, 255, .7);
       backdrop-filter: blur(42px) saturate(1.9);
       -webkit-backdrop-filter: blur(42px) saturate(1.9);
@@ -177,17 +189,17 @@ const errorWindows = Array.from({ length: 24 }, (_, index) => ({
 
     .error-popup {
       position: absolute;
-      left: clamp(8px, var(--x), calc(100vw - 330px));
-      top: clamp(44px, var(--y), calc(100dvh - 172px));
+      left: clamp(160px, calc(50vw + var(--dx)), calc(100vw - 160px));
+      top: clamp(116px, calc(50dvh + var(--dy)), calc(100dvh - 92px));
       z-index: var(--z);
-      width: min(316px, calc(100vw - 24px));
+      width: min(304px, calc(100vw - 24px));
       overflow: hidden;
       border: 1px solid rgba(255, 255, 255, .62);
       border-radius: 13px;
       background: rgba(246, 246, 248, .88);
       box-shadow:
-        0 22px 58px rgba(0, 0, 0, .34),
-        0 8px 20px rgba(0, 0, 0, .18),
+        0 12px 30px rgba(0, 0, 0, .14),
+        0 3px 10px rgba(0, 0, 0, .08),
         inset 0 1px 0 rgba(255, 255, 255, .74);
       backdrop-filter: blur(28px) saturate(1.8);
       -webkit-backdrop-filter: blur(28px) saturate(1.8);
@@ -248,7 +260,7 @@ const errorWindows = Array.from({ length: 24 }, (_, index) => ({
       border-radius: 12px;
       color: #fff;
       background: linear-gradient(180deg, #ff453a, #d70015);
-      box-shadow: 0 8px 18px rgba(215, 0, 21, .28);
+      box-shadow: 0 5px 12px rgba(215, 0, 21, .16);
       font-size: 24px;
       font-weight: 700;
     }
@@ -323,7 +335,7 @@ const errorWindows = Array.from({ length: 24 }, (_, index) => ({
       margin-bottom: 18px;
       border-radius: 23px;
       background: linear-gradient(145deg, #fff, #d7dbe6);
-      box-shadow: 0 12px 30px rgba(0, 0, 0, .18);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, .10);
       color: #0a84ff;
       font-size: 48px;
       font-weight: 800;
@@ -433,16 +445,17 @@ const errorWindows = Array.from({ length: 24 }, (_, index) => ({
       }
 
       .not-found-window {
-        top: calc(var(--menu-height) + 18px);
+        top: 50%;
         z-index: 90;
-        transform: translateX(-50%);
+        transform: translate(-50%, -50%);
         width: calc(100vw - 20px);
+        max-height: calc(100dvh - var(--menu-height) - 28px);
         animation-name: mainWindowPanicMobile;
       }
 
       .error-popup {
-        left: clamp(74px, var(--x), calc(100vw - 34px));
-        top: clamp(214px, var(--y), calc(100dvh - 112px));
+        left: clamp(72px, calc(50vw + var(--mx)), calc(100vw - 72px));
+        top: clamp(210px, calc(56dvh + var(--my)), calc(100dvh - 88px));
         width: min(260px, calc(100vw - 28px));
         border-radius: 11px;
       }
@@ -488,11 +501,11 @@ const errorWindows = Array.from({ length: 24 }, (_, index) => ({
     @keyframes mainWindowPanicMobile {
       from {
         opacity: 0;
-        transform: translateX(-50%) translateY(-10px) scale(.96);
+        transform: translate(-50%, calc(-50% - 10px)) scale(.96);
       }
       to {
         opacity: 1;
-        transform: translateX(-50%) translateY(0) scale(1);
+        transform: translate(-50%, -50%) scale(1);
       }
     }
 
