@@ -1,0 +1,3 @@
+Contact: mailto:enricopaolotoso@gmail.com
+Preferred-Languages: it, en
+Canonical: https://enricotoso.com/.well-known/security.txt

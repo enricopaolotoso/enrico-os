@@ -14,7 +14,10 @@ const {
   description = site.description,
   robots = 'index, follow',
   canonical = `${site.url}/`,
-  ogUrl = canonical
+  ogUrl = canonical,
+  ogType = 'website',
+  pageSchemaType = 'ProfilePage',
+  structuredDataExtra = []
 } = Astro.props;
 
 const socialUrls = Object.values(site.socials).filter(
@@ -24,11 +27,15 @@ const socialUrls = Object.values(site.socials).filter(
 const personSchema = {
   '@context': 'https://schema.org',
   '@type': 'Person',
+  '@id': `${site.url}/#person`,
   name: site.name,
+  givenName: 'Enrico',
+  familyName: 'Toso',
   alternateName: [site.alternateName],
   jobTitle: site.role,
   description: site.description,
   email: site.email,
+  image: `${site.url}/images/foto-profilo-enricotoso.jpg`,
   address: {
     '@type': 'PostalAddress',
     addressLocality: 'Padova',
@@ -36,6 +43,7 @@ const personSchema = {
     addressCountry: 'IT'
   },
   url: site.url,
+  mainEntityOfPage: `${site.url}/enrico-toso/`,
   knowsAbout: site.knowsAbout,
   affiliation: site.affiliations.map((affiliation) => ({
     '@type': 'Organization',
@@ -48,29 +56,40 @@ const personSchema = {
 const websiteSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
+  '@id': `${site.url}/#website`,
   name: site.name,
   alternateName: `Portfolio di ${site.name}`,
   url: `${site.url}/`,
   description: site.description,
-  inLanguage: 'it-IT'
-};
-
-const profilePageSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'ProfilePage',
-  name: site.title,
-  url: `${site.url}/`,
-  description: site.description,
   inLanguage: 'it-IT',
-  mainEntity: {
-    '@type': 'Person',
-    name: site.name,
-    alternateName: [site.alternateName],
-    url: site.url
+  publisher: {
+    '@id': `${site.url}/#person`
   }
 };
 
-const structuredData = [personSchema, websiteSchema, profilePageSchema];
+const webPageSchema = {
+  '@context': 'https://schema.org',
+  '@type': pageSchemaType,
+  '@id': `${canonical}#webpage`,
+  name: title,
+  url: canonical,
+  description,
+  inLanguage: 'it-IT',
+  isPartOf: {
+    '@id': `${site.url}/#website`
+  },
+  primaryImageOfPage: {
+    '@type': 'ImageObject',
+    url: `${site.url}/social-card.png`,
+    width: 2048,
+    height: 1152
+  },
+  mainEntity: {
+    '@id': `${site.url}/#person`
+  }
+};
+
+const structuredData = [personSchema, websiteSchema, webPageSchema, ...structuredDataExtra];
 ---
 <!doctype html>
 <html lang="it">
@@ -80,11 +99,17 @@ const structuredData = [personSchema, websiteSchema, profilePageSchema];
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="robots" content={robots} />
+    <meta name="author" content={site.name} />
+    <meta name="publisher" content={site.name} />
+    <meta name="image" content={`${site.url}/social-card.png`} />
     <link rel="canonical" href={canonical} />
     <link rel="icon" href="/favicon.png" type="image/png" sizes="300x300" />
     <link rel="shortcut icon" href="/favicon.png" type="image/png" />
     <link rel="apple-touch-icon" href="/favicon.png" />
-    <meta property="og:type" content="website" />
+    <link rel="alternate" type="text/plain" href="/llms.txt" title="LLMS profile summary" />
+    {socialUrls.map((url) => <link rel="me" href={url} />)}
+    <meta property="og:type" content={ogType} />
+    <meta property="og:locale" content="it_IT" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={ogUrl} />

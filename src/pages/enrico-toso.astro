@@ -1,0 +1,412 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../data/site';
+
+const title = 'Enrico Toso | Profilo ufficiale, progetti e contatti';
+const description = 'Profilo ufficiale di Enrico Toso, digital builder di Padova. Informazioni su Enrico Paolo Toso, progetti, competenze, Netmarket, Raviez e contatti ufficiali.';
+const canonical = `${site.url}/enrico-toso/`;
+
+const profileStructuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: `${site.url}/`
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Enrico Toso',
+        item: canonical
+      }
+    ]
+  }
+];
+---
+<BaseLayout
+  title={title}
+  description={description}
+  canonical={canonical}
+  ogUrl={canonical}
+  ogType="profile"
+  pageSchemaType="ProfilePage"
+  structuredDataExtra={profileStructuredData}
+>
+  <main class="profile-shell" aria-labelledby="profile-title">
+    <div class="profile-wallpaper" aria-hidden="true"></div>
+
+    <header class="profile-menu" aria-label="Barra menu profilo">
+      <a href="/" aria-label="Torna al desktop di Enrico Toso"></a>
+      <strong>Profilo</strong>
+      <nav aria-label="Navigazione profilo">
+        <a href="#chi-e">Chi è</a>
+        <a href="#progetti">Progetti</a>
+        <a href="#contatti">Contatti</a>
+      </nav>
+    </header>
+
+    <article class="profile-window">
+      <div class="profile-chrome">
+        <div class="profile-traffic" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <strong>Enrico Toso</strong>
+      </div>
+
+      <div class="profile-content">
+        <header class="profile-hero">
+          <img src="/images/foto-profilo-enricotoso.jpg" alt="Enrico Toso" width="800" height="800" />
+          <div>
+            <p class="profile-kicker">Profilo ufficiale</p>
+            <h1 id="profile-title">Enrico Toso</h1>
+            <p class="profile-role">Digital Builder a Padova, Veneto</p>
+            <p>
+              Enrico Toso, nome completo Enrico Paolo Toso, lavora su brand, siti web,
+              e-commerce, contenuti digitali, marketing, AI workflow e progetti proprietari.
+            </p>
+            <div class="profile-actions">
+              <a class="profile-primary" href="/">Apri il Desktop</a>
+              <a href={`mailto:${site.email}`}>Contatta Enrico</a>
+            </div>
+          </div>
+        </header>
+
+        <section id="chi-e" class="profile-section">
+          <h2>Chi è Enrico Toso</h2>
+          <p>
+            Enrico Toso è un digital builder di Padova. Costruisce progetti digitali unendo
+            identità, prodotto, comunicazione, contenuto, tecnologia e distribuzione.
+          </p>
+          <p>
+            Il suo lavoro attraversa web design, branding, e-commerce, content creation,
+            advertising, automazioni e intelligenza artificiale applicata a processi creativi
+            e operativi.
+          </p>
+        </section>
+
+        <section id="progetti" class="profile-section">
+          <h2>Progetti e contesto professionale</h2>
+          <div class="profile-grid">
+            <article>
+              <h3>Netmarket</h3>
+              <p>
+                In Netmarket lavora su siti web, branding, WooCommerce, SEO, contenuti,
+                advertising e strategie digitali per aziende e attività.
+              </p>
+              <a href="https://www.netmarket.it" rel="noopener noreferrer" target="_blank">netmarket.it</a>
+            </article>
+            <article>
+              <h3>Raviez</h3>
+              <p>
+                Raviez è un progetto direct-to-consumer nato come laboratorio reale su
+                identità, community, prodotto, contenuti e vendita online.
+              </p>
+            </article>
+            <article>
+              <h3>Creator Archive</h3>
+              <p>
+                L’archivio creator raccoglie una parte del percorso di Enrico tra YouTube,
+                TikTok, Instagram, formati video e sperimentazioni social.
+              </p>
+            </article>
+          </div>
+        </section>
+
+        <section class="profile-section">
+          <h2>Competenze principali</h2>
+          <ul class="profile-tags">
+            {site.knowsAbout.map((skill) => <li>{skill}</li>)}
+          </ul>
+        </section>
+
+        <section id="contatti" class="profile-section profile-contact">
+          <h2>Contatti ufficiali</h2>
+          <p>
+            I riferimenti ufficiali di Enrico Toso sono il sito enricotoso.com, l’indirizzo email
+            {site.email ? ` ${site.email}` : ''} e i profili social collegati qui sotto.
+          </p>
+          <nav aria-label="Profili ufficiali di Enrico Toso">
+            <a href={site.socials.instagram} rel="me noopener noreferrer" target="_blank">Instagram</a>
+            <a href={site.socials.tiktok} rel="me noopener noreferrer" target="_blank">TikTok</a>
+            <a href={site.socials.linkedin} rel="me noopener noreferrer" target="_blank">LinkedIn</a>
+            <a href={site.socials.youtube} rel="me noopener noreferrer" target="_blank">YouTube</a>
+            <a href={site.socials.spotify} rel="me noopener noreferrer" target="_blank">Spotify</a>
+          </nav>
+        </section>
+      </div>
+    </article>
+  </main>
+
+  <style>
+    :global(html),
+    :global(body) {
+      overflow: auto;
+    }
+
+    .profile-shell {
+      position: relative;
+      min-height: 100dvh;
+      color: #1d1d1f;
+      background: #050b16;
+      isolation: isolate;
+    }
+
+    .profile-wallpaper {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background: #444 url("/images/sfondo-desktop.png") center/cover no-repeat;
+    }
+
+    .profile-menu {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      height: var(--menu-height);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 0 12px;
+      color: rgba(255, 255, 255, .96);
+      background: rgba(255, 255, 255, .28);
+      border-bottom: 1px solid rgba(255, 255, 255, .12);
+      backdrop-filter: blur(28px) saturate(1.65);
+      -webkit-backdrop-filter: blur(28px) saturate(1.65);
+      text-shadow: 0 1px 1px rgba(0, 0, 0, .2);
+      font-size: 13px;
+    }
+
+    .profile-menu a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .profile-menu nav {
+      display: flex;
+      gap: 14px;
+      margin-left: auto;
+    }
+
+    .profile-window {
+      width: min(1040px, calc(100vw - 28px));
+      margin: clamp(18px, 5vw, 54px) auto 48px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, .58);
+      border-radius: 14px;
+      background: rgba(248, 248, 250, .86);
+      box-shadow:
+        0 42px 110px rgba(0, 0, 0, .42),
+        0 14px 40px rgba(0, 0, 0, .22),
+        inset 0 1px 0 rgba(255, 255, 255, .7);
+      backdrop-filter: blur(34px) saturate(1.85);
+      -webkit-backdrop-filter: blur(34px) saturate(1.85);
+    }
+
+    .profile-chrome {
+      position: relative;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 1px solid rgba(60, 60, 67, .12);
+      background: linear-gradient(180deg, rgba(255, 255, 255, .72), rgba(242, 242, 247, .46));
+      user-select: none;
+    }
+
+    .profile-chrome strong {
+      max-width: calc(100% - 160px);
+      overflow: hidden;
+      font-size: 13.5px;
+      font-weight: 650;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .profile-traffic {
+      position: absolute;
+      left: 16px;
+      display: flex;
+      gap: 8px;
+    }
+
+    .profile-traffic span {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      box-shadow: inset 0 0 0 .5px rgba(0, 0, 0, .2);
+    }
+
+    .profile-traffic span:nth-child(1) { background: var(--red); }
+    .profile-traffic span:nth-child(2) { background: var(--yellow); }
+    .profile-traffic span:nth-child(3) { background: var(--green); }
+
+    .profile-content {
+      padding: clamp(24px, 5vw, 54px);
+      background: rgba(255, 255, 255, .72);
+    }
+
+    .profile-hero {
+      display: grid;
+      grid-template-columns: 180px minmax(0, 1fr);
+      gap: 28px;
+      align-items: center;
+      padding-bottom: 32px;
+      border-bottom: 1px solid rgba(60, 60, 67, .14);
+    }
+
+    .profile-hero img {
+      width: 180px;
+      aspect-ratio: 1;
+      object-fit: cover;
+      border-radius: 28px;
+      box-shadow: 0 16px 38px rgba(0, 0, 0, .18);
+    }
+
+    .profile-kicker {
+      margin: 0 0 8px;
+      color: var(--blue);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .profile-hero h1 {
+      margin: 0;
+      font-size: clamp(44px, 7vw, 76px);
+      line-height: .95;
+      letter-spacing: 0;
+    }
+
+    .profile-role {
+      margin: 10px 0 0;
+      color: #51515a;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .profile-hero p:not(.profile-kicker):not(.profile-role),
+    .profile-section p {
+      max-width: 720px;
+      color: #3a3a3c;
+      font-size: 17px;
+      line-height: 1.65;
+    }
+
+    .profile-actions,
+    .profile-contact nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .profile-actions a,
+    .profile-contact a,
+    .profile-grid a {
+      min-height: 40px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 9px 14px;
+      border-radius: 10px;
+      color: #1d1d1f;
+      background: rgba(118, 118, 128, .13);
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .profile-actions .profile-primary {
+      color: #fff;
+      background: var(--blue);
+    }
+
+    .profile-section {
+      padding: 34px 0 0;
+    }
+
+    .profile-section h2 {
+      margin: 0 0 12px;
+      font-size: clamp(26px, 4vw, 38px);
+      line-height: 1.05;
+      letter-spacing: 0;
+    }
+
+    .profile-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .profile-grid article {
+      padding: 18px;
+      border: 1px solid rgba(60, 60, 67, .12);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, .78);
+    }
+
+    .profile-grid h3 {
+      margin: 0 0 8px;
+      font-size: 20px;
+    }
+
+    .profile-grid p {
+      margin: 0 0 14px;
+      color: #51515a;
+      line-height: 1.55;
+    }
+
+    .profile-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 0;
+      margin: 18px 0 0;
+      list-style: none;
+    }
+
+    .profile-tags li {
+      padding: 8px 11px;
+      border-radius: 999px;
+      background: rgba(10, 132, 255, .11);
+      color: #095eb5;
+      font-weight: 700;
+    }
+
+    @media (max-width: 760px) {
+      .profile-menu nav {
+        display: none;
+      }
+
+      .profile-window {
+        width: calc(100vw - 16px);
+        margin-top: 10px;
+      }
+
+      .profile-traffic span {
+        width: 18px;
+        height: 18px;
+      }
+
+      .profile-hero {
+        grid-template-columns: 1fr;
+      }
+
+      .profile-hero img {
+        width: 132px;
+        border-radius: 24px;
+      }
+
+      .profile-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</BaseLayout>
