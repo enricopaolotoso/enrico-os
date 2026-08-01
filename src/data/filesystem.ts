@@ -345,6 +345,20 @@ Se vuoi andare dritto al punto, apri Mail.`
       description: 'Uno dei primi video YouTube pubblicati da Enrico nel 2016.'
     },
     {
+      id: 'intervista-podcast',
+      name: 'intervista podcast',
+      type: 'video',
+      path: '/Desktop/intervista podcast',
+      thumbnail: '/images/intervista%20youtube%20podcast%20enrico%20toso%20enrico%20paolo%20toso.jpg',
+      aspectRatio: 'wide',
+      width: 320,
+      height: 180,
+      mimeType: 'video/mp4',
+      url: 'https://www.youtube.com/watch?v=GGhU2WUxayk',
+      external: true,
+      description: 'Intervista podcast con Enrico Toso.'
+    },
+    {
       id: 'joylife',
       name: 'joylife.jpg',
       type: 'image',
@@ -370,7 +384,7 @@ Se vuoi andare dritto al punto, apri Mail.`
       mimeType: 'image/jpeg',
       url: '/images/filtri-mm.jpg',
       description:
-        'Nel 2020 ho iniziato a sviluppare filtri instagram personali.\`\`\` In seguito ho iniziato a proporlo come servizio commerciale ad eventi, discoteche, brand e influender, raggiungendo un totale di +50M impressions.'
+        'Nel 2020 ho iniziato a sviluppare filtri Instagram personali. In seguito ho iniziato a proporli come servizio commerciale a eventi, discoteche, brand e influencer, raggiungendo un totale di +50M impression.'
     },
     {
       id: 'cir-come-nella-vita',
