@@ -1,7 +1,27 @@
 {
   "name": "enrico-os",
+  "description": "Official macOS-inspired portfolio website for Enrico Toso.",
   "type": "module",
   "version": "0.0.1",
+  "private": true,
+  "homepage": "https://enricotoso.com",
+  "author": "Enrico Paolo Toso <enricopaolotoso@gmail.com>",
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/enricopaolotoso/enrico-os.git"
+  },
+  "bugs": {
+    "url": "https://github.com/enricopaolotoso/enrico-os/issues"
+  },
+  "keywords": [
+    "astro",
+    "portfolio",
+    "personal-website",
+    "macos",
+    "seo",
+    "enrico-toso"
+  ],
   "engines": {
     "node": ">=22.12.0"
   },
