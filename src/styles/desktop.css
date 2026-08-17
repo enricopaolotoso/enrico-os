@@ -33,8 +33,17 @@
 }
 
 .desktop-item__link-card > img {
-  width: 64%;
-  height: 64%;
-  object-fit: contain;
-  border-radius: 6px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+}
+
+.desktop-item__sheet span,
+.desktop-item__fallback {
+  max-width: calc(100% - 14px);
+  overflow: hidden;
+  font-size: 22px;
+  line-height: 1;
+  letter-spacing: 0;
 }

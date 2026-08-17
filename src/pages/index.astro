@@ -278,7 +278,9 @@ const apps = [
 
           <article class="note-reader-screen" data-notes-screen="reader">
             <header class="note-reader-header">
-              <button type="button" class="note-back-button" data-note-back aria-label="Torna all’elenco delle note">‹</button>
+              <button type="button" class="note-back-button" data-note-back aria-label="Torna all’elenco delle note">
+                <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M12.5 4.5 7 10l5.5 5.5" /></svg>
+              </button>
               <div>
                 <h2 id="noteTitle">{site.notes[0].title}</h2>
                 <p>Nota</p>

@@ -1404,6 +1404,7 @@
     const search = $('[data-finder-search]', finder);
     const openButton = $('.finder-open-button', finder);
     const title = $('[data-finder-title]', finder);
+    const currentIcon = $('[data-finder-current-icon]', finder);
     const breadcrumb = $('[data-finder-breadcrumb]', finder);
     const grid = $('[data-finder-grid]', finder);
     const back = $('[data-finder-back]', finder);
@@ -1590,6 +1591,12 @@
       });
     }
 
+    function finderLocationIcon(location) {
+      if (location === 'applications') return '/apple-icons/launchpad.png';
+      if (location === 'recent') return '/apple-icons/finder.png';
+      return '/apple-icons/folder.png';
+    }
+
     function resetPreview(locationItem, label, description, count = 0) {
       const previewIcon = $('#finderPreviewIcon', finder);
       previewIcon.replaceChildren();
@@ -1629,6 +1636,10 @@
       openButton.textContent = 'Seleziona un elemento';
       search.value = '';
       title.textContent = label;
+      if (currentIcon) {
+        currentIcon.src = finderLocationIcon(location);
+        currentIcon.alt = '';
+      }
       finder.dataset.currentPath = location;
       renderBreadcrumb(location);
       grid.replaceChildren();

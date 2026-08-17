@@ -157,3 +157,20 @@
   .note-reader-content{padding:22px 20px 46px}.note-reader-content time{margin-bottom:22px;font-size:12px}.note-reader-content p{font-size:15.5px}
   .terminal-body{padding:13px;font-size:12.5px}
 }
+
+.note-back-button {
+  padding: 0;
+  font-size: 0;
+  line-height: 0;
+}
+
+.note-back-button svg {
+  width: 28px;
+  height: 28px;
+  display: block;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
