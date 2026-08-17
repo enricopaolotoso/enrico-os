@@ -25,6 +25,7 @@ export type FileSystemItem = {
   path: string;
   icon?: string;
   thumbnail?: string;
+  favicon?: string;
   aspectRatio?: FileSystemItemAspectRatio;
   width?: number;
   height?: number;
@@ -34,6 +35,7 @@ export type FileSystemItem = {
   link?: string;
   external?: boolean;
   app?: string;
+  noteId?: string;
   children?: FileSystemItem[];
   content?: string;
 };
@@ -274,6 +276,7 @@ Se vuoi andare dritto al punto, apri Mail.`
           path: '/Desktop/Raviez/Risultati.note',
           aspectRatio: 'portrait',
           mimeType: 'text/plain',
+          noteId: 'raviez-results',
           description:
             'Circa 1.600 magliette vendute e una community Instagram cresciuta fino a circa 7.000 follower.'
         },
@@ -282,10 +285,10 @@ Se vuoi andare dritto al punto, apri Mail.`
           name: 'Raviez online',
           type: 'link',
           path: '/Desktop/Raviez/Raviez online',
-          icon: '↗',
           aspectRatio: 'horizontal',
-          description: 'Collegamento al progetto Raviez. Il sito pubblico è in aggiornamento.',
-          url: 'https://instagram.com/raviez'
+          favicon: '/images/favicon-raviez.png',
+          description: 'Sito ufficiale del progetto Raviez.',
+          url: 'https://raviez.com'
         }
       ]
     },
@@ -326,6 +329,7 @@ Se vuoi andare dritto al punto, apri Mail.`
           icon: '↗',
           aspectRatio: 'horizontal',
           url: 'https://www.netmarket.it',
+          favicon: 'https://www.google.com/s2/favicons?domain=www.netmarket.it&sz=128',
           description: 'Sito ufficiale di Netmarket.'
         }
       ]

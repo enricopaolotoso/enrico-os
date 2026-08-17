@@ -185,8 +185,14 @@ const apps = [
               </span>
             ) : item.type === 'link' ? (
               <span class="desktop-item__link-card">
-                <strong>{desktopMark(item)}</strong>
-                <small>URL</small>
+                {item.favicon ? (
+                  <img src={item.favicon} alt="" loading="eager" />
+                ) : (
+                  <>
+                    <strong>{desktopMark(item)}</strong>
+                    <small>URL</small>
+                  </>
+                )}
               </span>
             ) : item.type === 'audio' || item.type === 'playlist' ? (
               <span class="desktop-item__audio-card">
@@ -431,7 +437,7 @@ const apps = [
 
       <article class="mac-window trash-window" data-window="trash" data-app-title="Cestino" style="--left: 36vw; --top: 28vh; --w: 430px; --h: 270px;" role="dialog" aria-label="Cestino" aria-modal="false">
         <div class="window-chrome"><div class="traffic"><button type="button" data-close aria-label="Chiudi Cestino"></button><button type="button" data-minimize aria-label="Riduci Cestino"></button><button type="button" data-maximize aria-label="Ingrandisci Cestino"></button></div><strong>Cestino</strong></div>
-        <div class="trash-body"><h2>Cestino vuoto</h2><p>Mediocrità, scuse e idee medie sono già state eliminate.</p></div>
+        <div class="trash-body"><h2>Cestino vuoto</h2><p>Per il momento ho svuotato tutto.</p></div>
       </article>
     </div>
 

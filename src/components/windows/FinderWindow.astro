@@ -33,7 +33,7 @@ const isMarkdownItem = (item: FileSystemItem) =>
   (item.mimeType === 'text/markdown' || item.name.toLowerCase().endsWith('.md'));
 
 const finderIconClass = (item: FileSystemItem) =>
-  `finder-file-icon finder-type-${item.type}${isMarkdownItem(item) ? ' finder-type-markdown' : ''}`;
+  `finder-file-icon finder-type-${item.type}${isMarkdownItem(item) ? ' finder-type-markdown' : ''}${item.favicon && item.type === 'link' ? ' finder-type-favicon' : ''}`;
 ---
 
 <section
@@ -116,7 +116,9 @@ const finderIconClass = (item: FileSystemItem) =>
                 data-preview-description={item.description ?? ''}
               >
                 <span class={finderIconClass(item)} aria-hidden="true">
-                  {item.thumbnail
+                  {item.favicon && item.type === 'link'
+                    ? <img src={item.favicon} alt="" loading="eager" />
+                    : item.thumbnail
                     ? <img src={item.thumbnail} alt="" loading="eager" />
                     : item.type === 'folder'
                       ? <img src="/apple-icons/folder.png" alt="" />

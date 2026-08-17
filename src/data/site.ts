@@ -92,6 +92,12 @@ export const site = {
       folder: 'Profilo',
       title: 'Principi',
       body: `Libertà.\nCostruzione.\nCrescita.\n\nIl denaro è una leva, non il fine.\nLa creatività conta solo se diventa sistema.\nLa velocità conta solo se produce direzione.`
+    },
+    {
+      id: 'raviez-results',
+      folder: 'Raviez',
+      title: 'Risultati Raviez',
+      body: `Circa 1.600 magliette vendute.\n\nCommunity Instagram cresciuta fino a circa 7.000 follower.\n\nRaviez è stato un laboratorio reale su prodotto, identità, contenuto, community e vendita online.`
     }
   ],
   modules: [

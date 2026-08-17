@@ -342,7 +342,9 @@
 
     if (item.type === 'folder') {
       openFinder(item.path);
-    } else if (item.type === 'image' || item.type === 'pdf' || item.type === 'document' || item.type === 'note') {
+    } else if (item.type === 'note') {
+      openNoteItem(item);
+    } else if (item.type === 'image' || item.type === 'pdf' || item.type === 'document') {
       openPreview(item);
     } else if (item.type === 'video') {
       if (item.external && item.url) {
@@ -1357,6 +1359,11 @@
       readerScreen.scrollTop = 0;
     }
 
+    function showNoteById(id) {
+      const note = notes.find((entry) => entry.dataset.note === id);
+      if (note) showNote(note);
+    }
+
     notes.forEach((note) => {
       note.addEventListener('pointerdown', (event) => event.stopPropagation());
       note.addEventListener('click', (event) => {
@@ -1375,7 +1382,20 @@
       showLibrary();
     });
     windowElement.addEventListener('notes:show-library', showLibrary);
+    windowElement.addEventListener('notes:show-note', (event) => {
+      showNoteById(event.detail?.noteId);
+    });
     showLibrary();
+  }
+
+  function openNoteItem(item) {
+    const noteId = item.noteId || item.id;
+    openWindow('notes', false);
+    window.setTimeout(() => {
+      getWindow('notes')?.dispatchEvent(new CustomEvent('notes:show-note', {
+        detail: { noteId }
+      }));
+    }, 0);
   }
 
   function bindFinder() {
@@ -1485,7 +1505,14 @@
       const icon = document.createElement('span');
       icon.className = `finder-file-icon finder-type-${item.type}${isMarkdownItem(item) ? ' finder-type-markdown' : ''}`;
       icon.setAttribute('aria-hidden', 'true');
-      if (item.thumbnail || item.type === 'folder') {
+      if (item.favicon && item.type === 'link') {
+        const image = document.createElement('img');
+        image.src = item.favicon;
+        image.alt = '';
+        image.loading = 'eager';
+        icon.classList.add('finder-type-favicon');
+        icon.appendChild(image);
+      } else if (item.thumbnail || item.type === 'folder') {
         const image = document.createElement('img');
         image.src = item.thumbnail || '/apple-icons/folder.png';
         image.alt = '';

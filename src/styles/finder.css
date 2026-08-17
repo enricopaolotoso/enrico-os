@@ -374,7 +374,7 @@
   height: 62px;
   display: grid;
   place-items: center;
-  border-radius: 17px;
+  border-radius: 12px;
   font-size: 34px;
   background: transparent;
   box-shadow: none;
@@ -451,6 +451,19 @@
 .finder-type-link { background:linear-gradient(145deg,#0a84ff,#5e5ce6);font-size:27px; }
 .finder-type-app { background:linear-gradient(145deg,#242429,#0a84ff); }
 
+.finder-type-favicon {
+  overflow: hidden;
+  background: linear-gradient(180deg, #fff, #eef2f8);
+  box-shadow: 0 8px 18px rgba(0,0,0,.10);
+}
+
+.finder-type-favicon img {
+  width: 62%;
+  height: 62%;
+  object-fit: contain;
+  border-radius: 6px;
+}
+
 .finder-app-icon {
   padding: 0;
   overflow: visible;
@@ -507,7 +520,7 @@
 .finder-grid.is-list .finder-file-icon {
   width: 42px;
   height: 42px;
-  border-radius: 11px;
+  border-radius: 9px;
   font-size: 24px;
 }
 
@@ -724,7 +737,7 @@
   .finder-file-icon {
     width: 56px;
     height: 56px;
-    border-radius: 15px;
+    border-radius: 11px;
     font-size: 30px;
   }
 }
