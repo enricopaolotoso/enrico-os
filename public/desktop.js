@@ -1201,7 +1201,7 @@
         '',
         'Easter egg: one-more-thing, sudo make me famous, matrix'
       ].join('\n'),
-      about: () => 'Enrico Paolo Toso è un digital builder di Padova. Unisce brand, contenuto, web, marketing e AI.',
+      about: () => 'Sono Enrico Paolo Toso, digital builder a Milano e Padova. Unisco brand, contenuto, web, marketing e AI.',
       skills: () => [
         'Core stack:',
         '- brand strategy',

@@ -2,14 +2,14 @@
 
 Owner: Enrico Toso
 Role: Digital Builder
-Location: Padova, Veneto, Italia
+Location: Milano / Padova, Italia
 Contact: enricopaolotoso@gmail.com
 Website: https://enricotoso.com/
 
 /* SITE */
 
 Name: Enrico Toso
-Description: Portfolio personale di Enrico Toso, digital builder di Padova.
+Description: Portfolio personale di Enrico Toso, digital builder a Milano e Padova.
 Language: Italiano
 Canonical URL: https://enricotoso.com/
 Profile URL: https://enricotoso.com/enrico-toso/

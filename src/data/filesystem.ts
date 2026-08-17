@@ -57,7 +57,7 @@ export const fileSystem: FileSystemItem = {
     'Guida al portfolio: app, cartelle, progetti e scorciatoie per esplorare il desktop personale di Enrico Toso.',
   content: `# Enrico Toso
 
-Ciao, sono **Enrico Toso**, digital builder di Padova.
+Ciao, sono **Enrico Toso**, digital builder a Milano e Padova.
 
 Costruisco brand, siti web, e-commerce, contenuti e progetti digitali combinando identità, comunicazione, tecnologia, marketing e AI.
 
@@ -225,7 +225,7 @@ Un sito, un brand o un contenuto funzionano quando forma, messaggio, struttura e
 
 ## In breve
 
-Sono **Enrico Toso**, digital builder di Padova.
+Sono **Enrico Toso**, digital builder a Milano e Padova.
 
 Costruisco progetti digitali tra brand, web, e-commerce, contenuti, marketing e AI.
 
@@ -306,7 +306,7 @@ Se vuoi andare dritto al punto, apri Mail.`
           aspectRatio: 'portrait',
           mimeType: 'text/markdown',
           description:
-            'In Netmarket Enrico lavora su web design, WooCommerce, SEO, branding, contenuti e marketing digitale.'
+            'In Netmarket lavoro su web design, WooCommerce, SEO, branding, contenuti e marketing digitale.'
         },
         {
           id: 'netmarket-app',

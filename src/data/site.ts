@@ -2,13 +2,13 @@ export const site = {
   name: 'Enrico Toso',
   fullName: 'Enrico Paolo Toso',
   alternateName: 'Enrico Paolo Toso',
-  disambiguatingDescription: 'Enrico Paolo Toso, digital builder di Padova collegato a Netmarket, Raviez e progetti digitali proprietari.',
+  disambiguatingDescription: 'Enrico Paolo Toso, digital builder a Milano e Padova collegato a Netmarket, Raviez e progetti digitali proprietari.',
   shortName: 'Enrico',
-  title: 'Enrico Toso | Digital Builder a Padova',
-  description: 'Sito ufficiale di Enrico Toso, nome completo Enrico Paolo Toso, digital builder di Padova. Branding, siti web, e-commerce, contenuti, AI e progetti digitali tra Netmarket, Raviez e nuove sperimentazioni.',
+  title: 'Enrico Toso | Digital Builder a Milano/Padova',
+  description: 'Sito ufficiale di Enrico Toso, nome completo Enrico Paolo Toso, digital builder a Milano e Padova. Branding, siti web, e-commerce, contenuti, AI e progetti digitali tra Netmarket, Raviez e nuove sperimentazioni.',
   url: 'https://enricotoso.com',
   email: 'enricopaolotoso@gmail.com' as string | null,
-  location: 'Padova, Veneto',
+  location: 'Milano / Padova, Italia',
   role: 'Digital Builder',
   socials: {
     instagram: 'https://instagram.com/enricotosoo',
@@ -73,7 +73,7 @@ export const site = {
       id: 'about',
       folder: 'Profilo',
       title: 'Chi è Enrico',
-      body: `Enrico Toso è un digital builder di Padova. Il suo nome completo è Enrico Paolo Toso.\n\nCostruisce brand, siti web, e-commerce, contenuti e progetti digitali combinando comunicazione, marketing, tecnologia e AI.\n\nQuesto portfolio raccoglie una parte del suo percorso tra Netmarket, Raviez e nuove sperimentazioni digitali, con un approccio che unisce identità, prodotto, comunicazione e distribuzione.`
+      body: `Sono Enrico Toso, digital builder a Milano e Padova. Il mio nome completo è Enrico Paolo Toso.\n\nCostruisco brand, siti web, e-commerce, contenuti e progetti digitali combinando comunicazione, marketing, tecnologia e AI.\n\nQuesto portfolio raccoglie una parte del mio percorso tra Netmarket, Raviez e nuove sperimentazioni digitali, con un approccio che unisce identità, prodotto, comunicazione e distribuzione.`
     },
     {
       id: 'manifesto',

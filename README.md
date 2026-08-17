@@ -2,7 +2,7 @@
 
 ![Enrico OS social preview](public/social-card.png)
 
-**Enrico OS** is the source code for [enricotoso.com](https://enricotoso.com/), the official personal portfolio of **Enrico Toso** / **Enrico Paolo Toso**, a digital builder based in Padova, Italy.
+**Enrico OS** is the source code for [enricotoso.com](https://enricotoso.com/), the official personal portfolio of **Enrico Toso** / **Enrico Paolo Toso**, a digital builder based in Milano and Padova, Italy.
 
 The site turns a portfolio into a small macOS-inspired desktop: windows, Finder, Dock, Notes, Photos, Spotify, Terminal, project folders, SEO landing pages and a cinematic 404 experience.
 
@@ -164,7 +164,7 @@ The site is built to make the official Enrico Toso entity clear to search engine
 - dedicated identity page: `/enrico-toso/`;
 - structured profile data in `BaseLayout.astro` and `src/data/site.ts`;
 - `robots.txt`, `sitemap.xml`, `humans.txt` and `llms.txt`;
-- consistent references to Enrico Paolo Toso, Padova, Netmarket, Raviez and digital builder;
+- consistent references to Enrico Paolo Toso, Milano, Padova, Netmarket, Raviez and digital builder;
 - optimized favicon and social card assets.
 
 ## Deployment
@@ -185,4 +185,3 @@ The Astro config also writes a production `.htaccess` file so unknown routes cor
 This is a public personal portfolio repository. The source is visible for transparency and reference, but the design, content, images, brand assets and implementation are not released as an open-source template.
 
 See [LICENSE.md](LICENSE.md) for usage terms and [SECURITY.md](SECURITY.md) for responsible disclosure/contact details.
-

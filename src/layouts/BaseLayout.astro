@@ -32,7 +32,7 @@ const personSchema = {
   givenName: 'Enrico',
   additionalName: 'Paolo',
   familyName: 'Toso',
-  alternateName: [site.fullName, site.alternateName, `${site.name} Padova`, `${site.name} Netmarket`],
+  alternateName: [site.fullName, site.alternateName, `${site.name} Milano`, `${site.name} Padova`, `${site.name} Netmarket`],
   jobTitle: site.role,
   disambiguatingDescription: site.disambiguatingDescription,
   description: site.description,
@@ -40,10 +40,20 @@ const personSchema = {
   image: `${site.url}/images/foto-profilo-enricotoso.jpg`,
   address: {
     '@type': 'PostalAddress',
-    addressLocality: 'Padova',
-    addressRegion: 'Veneto',
+    addressLocality: 'Milano',
+    addressRegion: 'Lombardia',
     addressCountry: 'IT'
   },
+  workLocation: [
+    {
+      '@type': 'Place',
+      name: 'Milano, Lombardia, Italia'
+    },
+    {
+      '@type': 'Place',
+      name: 'Padova, Veneto, Italia'
+    }
+  ],
   url: site.url,
   mainEntityOfPage: `${site.url}/enrico-toso/`,
   knowsAbout: site.knowsAbout,
@@ -52,13 +62,13 @@ const personSchema = {
     name: site.role,
     occupationLocation: {
       '@type': 'City',
-      name: 'Padova'
+      name: 'Milano'
     },
     skills: site.knowsAbout
   },
   homeLocation: {
     '@type': 'Place',
-    name: 'Padova, Veneto, Italia'
+    name: 'Milano / Padova, Italia'
   },
   affiliation: site.affiliations.map((affiliation) => ({
     '@type': 'Organization',
@@ -139,7 +149,7 @@ const structuredData = [personSchema, websiteSchema, webPageSchema, ...structure
     <meta property="og:image" content={`${site.url}/social-card.png`} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Enrico Toso — Digital Builder a Padova" />
+    <meta property="og:image:alt" content="Enrico Toso — Digital Builder a Milano/Padova" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
