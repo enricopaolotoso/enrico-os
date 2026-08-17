@@ -268,15 +268,7 @@
 }
 
 .dock-inner::before {
-  content: "";
-  position: absolute;
-  top: 6px;
-  left: 18px;
-  right: 18px;
-  height: 1px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.54);
-  pointer-events: none;
+  display: none;
 }
 
 .dock-item {
@@ -310,6 +302,13 @@
   width: 100%;
   height: 100%;
   object-fit: contain;
+}
+
+.dock-item-settings .dock-icon img {
+  width: 116%;
+  height: 116%;
+  max-width: none;
+  transform: translateY(-1px);
 }
 
 .dock-icon b {

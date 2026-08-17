@@ -61,7 +61,7 @@ const apps = [
   <div class="dock-inner">
     {apps.slice(0, 7).map((app) => (
       <button
-        class="dock-item"
+        class={`dock-item ${app.id === 'settings' ? 'dock-item-settings' : ''}`}
         data-open={app.id}
         data-tour-target={app.id === 'finder' || app.id === 'spotify' || app.id === 'mail' ? app.id : undefined}
         title={app.label}
