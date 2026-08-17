@@ -1,4 +1,6 @@
 ---
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { site } from '../data/site';
 import MenuBar from '../components/MenuBar.astro';
@@ -16,6 +18,13 @@ const desktopItems = fileSystem.children ?? [];
 const searchableFileSystemItems = flattenFileSystem().filter((item) => item.id !== fileSystem.id);
 const fileSystemJson = JSON.stringify(fileSystem).replace(/</g, '\\u003c');
 const desktopScriptVersion = Date.now().toString(36);
+const linkedinData = JSON.parse(
+  readFileSync(join(process.cwd(), 'public', 'data', 'linkedin.json'), 'utf8')
+);
+const latestLinkedInPost = linkedinData.post;
+const latestLinkedInDate = latestLinkedInPost?.publishedAt
+  ? new Intl.DateTimeFormat('it-IT', { day: '2-digit', month: 'short', year: 'numeric' }).format(new Date(latestLinkedInPost.publishedAt))
+  : null;
 
 const desktopMark = (item: FileSystemItem) => {
   if (item.icon) return item.icon;
@@ -88,6 +97,12 @@ const apps = [
         Profilo ufficiale e informazioni verificabili su Enrico Toso:
         <a href="/enrico-toso/">enricotoso.com/enrico-toso/</a>.
       </p>
+      {latestLinkedInPost && (
+        <p>
+          Ultimo post LinkedIn di Enrico Toso:
+          {latestLinkedInPost.excerpt || latestLinkedInPost.text}
+        </p>
+      )}
       <h2>Archivio del portfolio</h2>
       <ul>
         {searchableFileSystemItems.map((item) => (
@@ -188,6 +203,33 @@ const apps = [
         </button>
       ))}
     </section>
+
+    <aside class="linkedin-widget" aria-labelledby="linkedin-widget-title">
+      <header>
+        <span aria-hidden="true">in</span>
+        <div>
+          <p>LinkedIn</p>
+          <h2 id="linkedin-widget-title">Ultimo post</h2>
+        </div>
+      </header>
+      {latestLinkedInPost ? (
+        <>
+          <p class="linkedin-widget-copy">{latestLinkedInPost.excerpt || latestLinkedInPost.text}</p>
+          <footer>
+            {latestLinkedInDate && <time datetime={latestLinkedInPost.publishedAt}>{latestLinkedInDate}</time>}
+            <a href={latestLinkedInPost.url || linkedinData.profileUrl || site.socials.linkedin} target="_blank" rel="me noopener noreferrer">Apri post</a>
+          </footer>
+        </>
+      ) : (
+        <>
+          <p class="linkedin-widget-copy">Sto preparando il collegamento automatico ai miei aggiornamenti LinkedIn.</p>
+          <footer>
+            <span>Profilo ufficiale</span>
+            <a href={linkedinData.profileUrl || site.socials.linkedin} target="_blank" rel="me noopener noreferrer">Apri LinkedIn</a>
+          </footer>
+        </>
+      )}
+    </aside>
 
     <section id="tour" class="tour" role="dialog" aria-modal="true" aria-labelledby="tourTitle" aria-describedby="tourText" aria-hidden="true">
       <div class="tour-overlay" data-tour-overlay></div>
@@ -405,5 +447,108 @@ const apps = [
 
     <Dock />
   </main>
+  <style>
+    .linkedin-widget {
+      position: absolute;
+      right: max(18px, env(safe-area-inset-right));
+      bottom: calc(var(--dock-height) + 34px);
+      z-index: 6;
+      width: min(340px, calc(100vw - 36px));
+      padding: 14px;
+      color: rgba(255, 255, 255, .94);
+      background: rgba(18, 23, 32, .58);
+      border: 1px solid rgba(255, 255, 255, .18);
+      border-radius: 18px;
+      box-shadow: 0 18px 44px rgba(0, 0, 0, .28);
+      backdrop-filter: blur(24px) saturate(1.28);
+      -webkit-backdrop-filter: blur(24px) saturate(1.28);
+    }
+
+    .linkedin-widget header,
+    .linkedin-widget footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .linkedin-widget header {
+      justify-content: flex-start;
+    }
+
+    .linkedin-widget header > span {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      border-radius: 9px;
+      color: #fff;
+      background: #0a66c2;
+      font-weight: 850;
+      font-size: 18px;
+      font-family: Arial, sans-serif;
+    }
+
+    .linkedin-widget p,
+    .linkedin-widget h2 {
+      margin: 0;
+    }
+
+    .linkedin-widget header p,
+    .linkedin-widget footer,
+    .linkedin-widget time,
+    .linkedin-widget footer span {
+      color: rgba(255, 255, 255, .68);
+      font-size: 12px;
+      font-weight: 650;
+    }
+
+    .linkedin-widget h2 {
+      font-size: 15px;
+      line-height: 1.12;
+      letter-spacing: 0;
+    }
+
+    .linkedin-widget-copy {
+      display: -webkit-box;
+      margin: 12px 0 14px;
+      overflow: hidden;
+      color: rgba(255, 255, 255, .9);
+      font-size: 13px;
+      line-height: 1.42;
+      -webkit-line-clamp: 5;
+      -webkit-box-orient: vertical;
+    }
+
+    .linkedin-widget a {
+      flex: 0 0 auto;
+      padding: 7px 10px;
+      color: #fff;
+      background: rgba(10, 102, 194, .92);
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 750;
+    }
+
+    .linkedin-widget a:hover {
+      text-decoration: none;
+      background: #0a66c2;
+    }
+
+    @media (max-width: 760px) {
+      .linkedin-widget {
+        left: 14px;
+        right: 14px;
+        bottom: calc(var(--dock-height) + 18px);
+        width: auto;
+        padding: 12px;
+      }
+
+      .linkedin-widget-copy {
+        -webkit-line-clamp: 3;
+      }
+    }
+  </style>
   <script is:inline type="module" src={`/desktop.js?v=${desktopScriptVersion}`}></script>
 </BaseLayout>

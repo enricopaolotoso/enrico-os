@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - main
+  schedule:
+    - cron: "10 5 * * *"
+  workflow_dispatch:
 
 jobs:
   build-and-deploy:
@@ -30,6 +33,14 @@ jobs:
           SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}
           SPOTIFY_REFRESH_TOKEN: ${{ secrets.SPOTIFY_REFRESH_TOKEN }}
           SPOTIFY_USER_ID: ${{ secrets.SPOTIFY_USER_ID }}
+
+      - name: Generate LinkedIn data
+        run: npm run linkedin:fetch
+        env:
+          LINKEDIN_ACCESS_TOKEN: ${{ secrets.LINKEDIN_ACCESS_TOKEN }}
+          LINKEDIN_AUTHOR_URN: ${{ secrets.LINKEDIN_AUTHOR_URN }}
+          LINKEDIN_PROFILE_URL: ${{ secrets.LINKEDIN_PROFILE_URL }}
+          LINKEDIN_VERSION: ${{ secrets.LINKEDIN_VERSION }}
 
       - name: Build Astro site
         run: npm run build

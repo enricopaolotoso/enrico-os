@@ -25,7 +25,7 @@ The portfolio includes:
 - Finder-style navigation for projects, media, notes and links;
 - a dedicated SEO/entity page for Enrico Toso;
 - structured data, sitemap, robots, favicon and social preview assets;
-- a Spotify app powered by prebuilt public JSON data;
+- Spotify and LinkedIn modules powered by prebuilt public JSON data;
 - a cinematic 404 page with sequential system-error windows;
 - responsive mobile behavior inspired by iOS/macOS interaction patterns.
 
@@ -45,6 +45,7 @@ The portfolio includes:
 ├── .github/workflows/deploy.yml      # Build and SiteGround deploy workflow
 ├── public/
 │   ├── apple-icons/                  # Dock and app icons
+│   ├── data/linkedin.json            # Static LinkedIn latest-post data
 │   ├── data/spotify.json             # Static Spotify data used by the Spotify app
 │   ├── documents/                    # Finder documents
 │   ├── images/                       # Hero, profile, video and SEO images
@@ -57,6 +58,7 @@ The portfolio includes:
 │   ├── sitemap.xml
 │   └── social-card.png
 ├── scripts/
+│   ├── fetch-linkedin.mjs
 │   ├── fetch-spotify.mjs
 │   └── get-spotify-refresh-token.mjs
 ├── src/
@@ -156,6 +158,28 @@ For GitHub Actions, configure these repository secrets:
 
 If Spotify data cannot be fetched, the script writes a safe fallback JSON file so the site can still build.
 
+## LinkedIn Data
+
+The homepage reads the latest LinkedIn post from `public/data/linkedin.json`. The JSON is generated at build time through LinkedIn's official Posts API; tokens are never shipped to the browser.
+
+Refresh LinkedIn data locally:
+
+```sh
+LINKEDIN_ACCESS_TOKEN=... \
+LINKEDIN_AUTHOR_URN=urn:li:person:... \
+LINKEDIN_PROFILE_URL=https://linkedin.com/in/enricopaolotoso \
+npm run linkedin:fetch
+```
+
+For GitHub Actions, configure these repository secrets:
+
+- `LINKEDIN_ACCESS_TOKEN`
+- `LINKEDIN_AUTHOR_URN`
+- `LINKEDIN_PROFILE_URL` optional
+- `LINKEDIN_VERSION` optional, defaults to `202601`
+
+The LinkedIn integration requires API access that can retrieve member posts, usually the restricted `r_member_social` permission for personal profiles. If LinkedIn data cannot be fetched, the script keeps the last valid JSON when possible so the site can still build and deploy.
+
 ## SEO And Discoverability
 
 The site is built to make the official Enrico Toso entity clear to search engines and AI retrieval systems:
@@ -169,14 +193,16 @@ The site is built to make the official Enrico Toso entity clear to search engine
 
 ## Deployment
 
-Every push to `main` runs the GitHub Actions workflow:
+Every push to `main`, every manual workflow dispatch, and the daily 05:10 UTC schedule runs the GitHub Actions workflow:
 
 1. checkout repository;
 2. install dependencies with `npm ci`;
 3. generate Spotify data;
-4. build the Astro site;
-5. verify `dist/`;
-6. deploy `dist/*` to SiteGround via SCP.
+4. generate LinkedIn data;
+5. build the Astro site;
+6. verify `dist/`;
+7. deploy `dist/*` to SiteGround via SCP;
+8. purge SiteGround Dynamic Cache.
 
 The Astro config also writes a production `.htaccess` file so unknown routes correctly render the custom `404.html`.
 

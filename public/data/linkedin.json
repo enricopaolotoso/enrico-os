@@ -1,0 +1,6 @@
+{
+  "updatedAt": "2026-08-17T00:00:00.000Z",
+  "profileUrl": "https://linkedin.com/in/enricopaolotoso",
+  "post": null,
+  "error": "Credenziali LinkedIn non configurate. Aggiungi LINKEDIN_ACCESS_TOKEN e LINKEDIN_AUTHOR_URN nei GitHub secrets."
+}

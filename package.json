@@ -31,6 +31,7 @@
     "check": "astro check",
     "spotify:auth": "node scripts/get-spotify-refresh-token.mjs",
     "spotify:fetch": "node scripts/fetch-spotify.mjs",
+    "linkedin:fetch": "node scripts/fetch-linkedin.mjs",
     "preview": "astro preview",
     "astro": "astro"
   },
