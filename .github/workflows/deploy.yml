@@ -50,3 +50,15 @@ jobs:
           target: ${{ secrets.SFTP_REMOTE_PATH }}
           strip_components: 1
           overwrite: true
+
+      - name: Purge SiteGround Dynamic Cache
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.SFTP_HOST }}
+          username: ${{ secrets.SFTP_USERNAME }}
+          port: ${{ secrets.SFTP_PORT }}
+          key: ${{ secrets.SFTP_PRIVATE_KEY }}
+          script: |
+            response="$(curl -sS -X PURGE 'http://127.0.0.1/*' -H 'Host: enricotoso.com')"
+            echo "$response"
+            echo "$response" | grep -qi 'Successful purge'
