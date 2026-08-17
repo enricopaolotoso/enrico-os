@@ -32,7 +32,7 @@
       target: '[data-tour-target="readme"]',
       placement: 'right',
       title: 'README.md',
-      text: 'Da qui puoi leggere una panoramica rapida su Enrico Toso, cosa fa e come è organizzato il sito.'
+      text: 'Da qui puoi leggere una panoramica rapida su chi sono, cosa faccio e come ho organizzato il sito.'
     },
     {
       id: 'finder',
@@ -311,7 +311,7 @@
 
     $('[data-quicktime-window-title]', quicktime).textContent = item.name;
     $('[data-quicktime-description]', quicktime).textContent =
-      item.description || 'Video dall’archivio di Enrico Toso.';
+      item.description || 'Video dal mio archivio.';
     openLink.hidden = !videoLink;
     if (videoLink) openLink.href = videoLink;
     openWindow('quicktime', false);
@@ -1240,7 +1240,7 @@
       netmarket: () => 'Netmarket è l’ambiente operativo dedicato a branding, siti, e-commerce, contenuti e strategie digitali.',
       contact: () => {
         openWindow('mail');
-        return 'Apro Mail... Puoi scrivere a Enrico direttamente da lì.';
+        return 'Apro Mail... Puoi scrivermi direttamente da lì.';
       },
       ls: () => 'README.md  Raviez/  Netmarket/  youtube2016.mp4  intervista podcast  joylife.jpg  filtri-mm.jpg',
       pwd: () => '/Users/enrico/portfolio',
@@ -1298,7 +1298,7 @@
         const request = args.join(' ');
         print(request === 'make me famous'
           ? 'Permission granted. Output: costruisci qualcosa che merita attenzione.'
-          : 'Enrico is not in the sudoers file. This incident will be added al backlog.'
+          : 'Non sono nel file sudoers. Aggiungo l’incidente al backlog.'
         );
         return;
       }
@@ -1436,13 +1436,13 @@
       { id: 'photos', name: 'Foto', icon: '/apple-icons/photos.png', description: 'Libreria fotografica personale.' },
       { id: 'mail', name: 'Mail', icon: '/apple-icons/mail.png', description: 'Form di contatto diretto.' },
       { id: 'terminal', name: 'Terminale', icon: '/apple-icons/terminal.png', description: 'Comandi rapidi del portfolio.' },
-      { id: 'settings', name: 'Informazioni', icon: '/apple-icons/settings.webp', description: 'Biografia e profili di Enrico.' },
+      { id: 'settings', name: 'Informazioni', icon: '/apple-icons/settings.webp', description: 'La mia biografia e i miei profili.' },
       { id: 'spotify', name: 'Spotify', icon: '/apple-icons/spotify.svg', description: 'Playlist, artisti e tracce.' },
       { id: 'launchpad', name: 'App', icon: '/apple-icons/launchpad.png', description: 'Tutte le applicazioni disponibili nel sito.' },
-      { id: 'instagram', name: 'Instagram', icon: '/apple-icons/app_instagram.webp', social: 'instagram', fallback: '◎', url: 'https://instagram.com/enricotosoo', description: 'Profilo Instagram di Enrico Toso.' },
-      { id: 'tiktok', name: 'TikTok', icon: '/apple-icons/app_tiktok.webp', social: 'tiktok', fallback: '♪', url: 'https://tiktok.com/@enricotosoo', description: 'Profilo TikTok di Enrico Toso.' },
-      { id: 'linkedin', name: 'LinkedIn', icon: '/apple-icons/app_linkedin.webp', social: 'linkedin', fallback: 'in', url: 'https://linkedin.com/in/enricopaolotoso', description: 'Profilo LinkedIn di Enrico Toso.' },
-      { id: 'youtube', name: 'YouTube', icon: '/apple-icons/app_youtube.webp', social: 'youtube', fallback: '▶', url: 'https://youtube.com/@enricopaolotoso', description: 'Canale YouTube di Enrico Toso.' }
+      { id: 'instagram', name: 'Instagram', icon: '/apple-icons/app_instagram.webp', social: 'instagram', fallback: '◎', url: 'https://instagram.com/enricotosoo', description: 'Il mio profilo Instagram.' },
+      { id: 'tiktok', name: 'TikTok', icon: '/apple-icons/app_tiktok.webp', social: 'tiktok', fallback: '♪', url: 'https://tiktok.com/@enricotosoo', description: 'Il mio profilo TikTok.' },
+      { id: 'linkedin', name: 'LinkedIn', icon: '/apple-icons/app_linkedin.webp', social: 'linkedin', fallback: 'in', url: 'https://linkedin.com/in/enricopaolotoso', description: 'Il mio profilo LinkedIn.' },
+      { id: 'youtube', name: 'YouTube', icon: '/apple-icons/app_youtube.webp', social: 'youtube', fallback: '▶', url: 'https://youtube.com/@enricopaolotoso', description: 'Il mio canale YouTube.' }
     ];
     let currentLocation = '/Desktop';
     let selectedFile = null;
@@ -1640,7 +1640,7 @@
         items = readRecentIds().map(getItemById).filter(Boolean);
       } else if (location === 'applications') {
         label = 'Applicazioni';
-        description = 'Le applicazioni disponibili in Enrico OS.';
+        description = 'Le applicazioni disponibili nel mio desktop.';
       } else {
         locationItem = getItemByPath(location) || fileSystem;
         if (locationItem.type !== 'folder') locationItem = fileSystem;

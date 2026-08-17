@@ -2,10 +2,10 @@ export const site = {
   name: 'Enrico Toso',
   fullName: 'Enrico Paolo Toso',
   alternateName: 'Enrico Paolo Toso',
-  disambiguatingDescription: 'Enrico Paolo Toso, digital builder a Milano e Padova collegato a Netmarket, Raviez e progetti digitali proprietari.',
+  disambiguatingDescription: 'Sono Enrico Paolo Toso, digital builder a Milano e Padova collegato a Netmarket, Raviez e progetti digitali proprietari.',
   shortName: 'Enrico',
   title: 'Enrico Toso | Digital Builder a Milano/Padova',
-  description: 'Sito ufficiale di Enrico Toso, nome completo Enrico Paolo Toso, digital builder a Milano e Padova. Branding, siti web, e-commerce, contenuti, AI e progetti digitali tra Netmarket, Raviez e nuove sperimentazioni.',
+  description: 'Sono Enrico Toso, nome completo Enrico Paolo Toso: digital builder a Milano e Padova. Lavoro su branding, siti web, e-commerce, contenuti, AI e progetti digitali tra Netmarket, Raviez e nuove sperimentazioni.',
   url: 'https://enricotoso.com',
   email: 'enricopaolotoso@gmail.com' as string | null,
   location: 'Milano / Padova, Italia',
@@ -72,7 +72,7 @@ export const site = {
     {
       id: 'about',
       folder: 'Profilo',
-      title: 'Chi è Enrico',
+      title: 'Chi sono',
       body: `Sono Enrico Toso, digital builder a Milano e Padova. Il mio nome completo è Enrico Paolo Toso.\n\nCostruisco brand, siti web, e-commerce, contenuti e progetti digitali combinando comunicazione, marketing, tecnologia e AI.\n\nQuesto portfolio raccoglie una parte del mio percorso tra Netmarket, Raviez e nuove sperimentazioni digitali, con un approccio che unisce identità, prodotto, comunicazione e distribuzione.`
     },
     {

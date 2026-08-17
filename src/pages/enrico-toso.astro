@@ -2,8 +2,8 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { site } from '../data/site';
 
-const title = 'Enrico Toso Milano/Padova | Profilo ufficiale di Enrico Paolo Toso';
-const description = 'Profilo ufficiale di Enrico Toso, nome completo Enrico Paolo Toso, digital builder a Milano e Padova collegato a Netmarket, Raviez, branding, siti web, e-commerce e AI.';
+const title = 'Sono Enrico Toso | Digital Builder a Milano/Padova';
+const description = 'Sono Enrico Toso, nome completo Enrico Paolo Toso: digital builder a Milano e Padova. Lavoro su Netmarket, Raviez, branding, siti web, e-commerce e AI.';
 const canonical = `${site.url}/enrico-toso/`;
 
 const profileStructuredData = [
@@ -41,7 +41,7 @@ const profileStructuredData = [
       mainEntity: [
         {
           '@type': 'Question',
-          name: 'Chi è Enrico Toso?',
+          name: 'Chi sono?',
           acceptedAnswer: {
             '@type': 'Answer',
             text: 'Sono Enrico Toso, nome completo Enrico Paolo Toso: un digital builder a Milano e Padova. Lavoro su branding, siti web, e-commerce, contenuti digitali, marketing, AI workflow e progetti proprietari.'
@@ -49,7 +49,7 @@ const profileStructuredData = [
         },
         {
           '@type': 'Question',
-          name: 'Qual è il sito ufficiale di Enrico Toso?',
+          name: 'Qual è il mio sito ufficiale?',
           acceptedAnswer: {
             '@type': 'Answer',
             text: 'Il mio sito ufficiale è enricotoso.com. La mia pagina profilo ufficiale è enricotoso.com/enrico-toso/.'
@@ -62,7 +62,7 @@ const profileStructuredData = [
 >
   <main class="profile-shell" aria-labelledby="profile-title">
     <header class="profile-menu" aria-label="Barra menu profilo">
-      <a class="profile-home" href="/" aria-label="Torna al desktop di Enrico Toso"></a>
+      <a class="profile-home" href="/" aria-label="Torna al mio desktop"></a>
       <strong>Enrico Toso</strong>
       <nav aria-label="Navigazione profilo">
         <a href="#chi-e">Profilo</a>
@@ -74,7 +74,7 @@ const profileStructuredData = [
 
     <section class="profile-hero">
       <div class="profile-hero-copy">
-        <p class="profile-kicker">Profilo ufficiale</p>
+        <p class="profile-kicker">Il mio profilo ufficiale</p>
         <h1 id="profile-title">Enrico Toso</h1>
         <p class="profile-role">
           <span>Enrico Paolo Toso, </span>
@@ -91,7 +91,7 @@ const profileStructuredData = [
       </div>
 
       <figure class="profile-portrait">
-        <img src="/images/foto-profilo-enricotoso.jpg" alt="Enrico Toso, digital builder a Milano e Padova" width="800" height="800" />
+        <img src="/images/foto-profilo-enricotoso.jpg" alt="Il mio ritratto come digital builder a Milano e Padova" width="800" height="800" />
         <figcaption>
           <strong>Milano / Padova, Italia</strong>
           <span>Netmarket, Raviez, creator archive</span>
@@ -107,7 +107,7 @@ const profileStructuredData = [
             <span></span>
             <span></span>
           </div>
-          <strong>Profilo ufficiale verificabile</strong>
+          <strong>Il mio profilo ufficiale verificabile</strong>
         </div>
 
         <div class="profile-window-body">
@@ -125,8 +125,8 @@ const profileStructuredData = [
               e operativi.
             </p>
             <p>
-              Questa pagina identifica il profilo ufficiale di Enrico Paolo Toso online:
-              Enrico Toso a Milano e Padova, collegato a Netmarket, Raviez, creator archive e ai profili
+              Uso questa pagina per identificare il mio profilo ufficiale online:
+              sono Enrico Paolo Toso, digital builder a Milano e Padova, collegato a Netmarket, Raviez, creator archive e ai profili
               social indicati nella sezione contatti.
             </p>
           </div>
@@ -135,7 +135,7 @@ const profileStructuredData = [
     </section>
 
     <section class="profile-section profile-facts-section" aria-labelledby="facts-title">
-      <h2 id="facts-title">Riferimenti chiari per distinguere il profilo ufficiale.</h2>
+      <h2 id="facts-title">Riferimenti chiari per distinguere il mio profilo ufficiale.</h2>
       <ul class="profile-facts">
         <li><span>Nome completo</span><strong>Enrico Paolo Toso</strong></li>
         <li><span>Nome pubblico</span><strong>Enrico Toso</strong></li>
@@ -147,7 +147,7 @@ const profileStructuredData = [
     </section>
 
     <section id="progetti" class="profile-section profile-projects" aria-labelledby="projects-title">
-      <h2 id="projects-title">Progetti e contesto professionale.</h2>
+      <h2 id="projects-title">I miei progetti e il mio contesto professionale.</h2>
       <div class="profile-grid">
         <article class="project-card project-card-main">
           <small>Agenzia digitale</small>
@@ -190,13 +190,13 @@ const profileStructuredData = [
 
     <section id="contatti" class="profile-section profile-contact" aria-labelledby="contact-title">
       <div>
-        <h2 id="contact-title">Contatti ufficiali.</h2>
+        <h2 id="contact-title">I miei contatti ufficiali.</h2>
         <p>
           I miei riferimenti ufficiali sono il sito enricotoso.com, l’indirizzo email
           {site.email ? ` ${site.email}` : ''} e i profili social collegati qui sotto.
         </p>
       </div>
-      <nav aria-label="Profili ufficiali di Enrico Toso">
+      <nav aria-label="I miei profili ufficiali">
         <a href={site.socials.instagram} rel="me noopener noreferrer" target="_blank">Instagram</a>
         <a href={site.socials.tiktok} rel="me noopener noreferrer" target="_blank">TikTok</a>
         <a href={site.socials.linkedin} rel="me noopener noreferrer" target="_blank">LinkedIn</a>

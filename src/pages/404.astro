@@ -3,7 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { site } from '../data/site';
 
 const title = `404 | ${site.name}`;
-const description = 'Pagina non trovata nel portfolio desktop di Enrico Toso.';
+const description = 'Pagina non trovata nel mio portfolio desktop.';
 
 const popupPositions = [
   [-430, -220], [-260, -260], [-80, -230], [160, -250], [360, -210],
@@ -98,7 +98,7 @@ const errorWindows = popupPositions.map(([dx, dy], index) => ({
         </p>
         <nav class="not-found-actions" aria-label="Azioni pagina 404">
           <a class="not-found-primary" href="/">Torna al Desktop</a>
-          <a href={`mailto:${site.email}`}>Scrivi a Enrico</a>
+          <a href={`mailto:${site.email}`}>Scrivimi</a>
         </nav>
       </div>
     </section>

@@ -45,7 +45,7 @@ export const fileSystem: FileSystemItem = {
   name: 'Desktop',
   type: 'folder',
   path: '/Desktop',
-  description: 'Il desktop del portfolio di Enrico Toso.',
+  description: 'Il desktop del mio portfolio.',
   children: [
     {
   id: 'readme',
@@ -56,7 +56,7 @@ export const fileSystem: FileSystemItem = {
   aspectRatio: 'portrait',
   mimeType: 'text/markdown',
   description:
-    'Guida al portfolio: app, cartelle, progetti e scorciatoie per esplorare il desktop personale di Enrico Toso.',
+    'Guida al portfolio: app, cartelle, progetti e scorciatoie per esplorare il mio desktop personale.',
   content: `# Enrico Toso
 
 Ciao, sono **Enrico Toso**, digital builder a Milano e Padova.
@@ -561,7 +561,7 @@ Link utili:
       mimeType: 'video/mp4',
       url: 'https://youtu.be/hTxmt7l1pao',
       external: true,
-      description: 'Uno dei primi video YouTube pubblicati da Enrico nel 2016.'
+      description: 'Uno dei miei primi video YouTube, pubblicato nel 2016.'
     },
     {
       id: 'intervista-podcast',
@@ -575,7 +575,7 @@ Link utili:
       mimeType: 'video/mp4',
       url: 'https://www.youtube.com/watch?v=GGhU2WUxayk',
       external: true,
-      description: 'Intervista podcast con Enrico Toso.'
+      description: 'Una mia intervista podcast.'
     },
     {
       id: 'joylife',

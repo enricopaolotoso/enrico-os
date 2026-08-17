@@ -9,7 +9,7 @@ Website: https://enricotoso.com/
 /* SITE */
 
 Name: Enrico Toso
-Description: Portfolio personale di Enrico Toso, digital builder a Milano e Padova.
+Description: Il mio portfolio personale come digital builder a Milano e Padova.
 Language: Italiano
 Canonical URL: https://enricotoso.com/
 Profile URL: https://enricotoso.com/enrico-toso/
