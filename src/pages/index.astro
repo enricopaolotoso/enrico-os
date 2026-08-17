@@ -204,32 +204,22 @@ const apps = [
       ))}
     </section>
 
-    <aside class="linkedin-widget" aria-labelledby="linkedin-widget-title">
-      <header>
-        <span aria-hidden="true">in</span>
-        <div>
-          <p>LinkedIn</p>
-          <h2 id="linkedin-widget-title">Ultimo post</h2>
-        </div>
-      </header>
-      {latestLinkedInPost ? (
-        <>
-          <p class="linkedin-widget-copy">{latestLinkedInPost.excerpt || latestLinkedInPost.text}</p>
-          <footer>
-            {latestLinkedInDate && <time datetime={latestLinkedInPost.publishedAt}>{latestLinkedInDate}</time>}
-            <a href={latestLinkedInPost.url || linkedinData.profileUrl || site.socials.linkedin} target="_blank" rel="me noopener noreferrer">Apri post</a>
-          </footer>
-        </>
-      ) : (
-        <>
-          <p class="linkedin-widget-copy">Sto preparando il collegamento automatico ai miei aggiornamenti LinkedIn.</p>
-          <footer>
-            <span>Profilo ufficiale</span>
-            <a href={linkedinData.profileUrl || site.socials.linkedin} target="_blank" rel="me noopener noreferrer">Apri LinkedIn</a>
-          </footer>
-        </>
-      )}
-    </aside>
+    {latestLinkedInPost && (
+      <aside class="linkedin-widget" aria-labelledby="linkedin-widget-title">
+        <header>
+          <span aria-hidden="true">in</span>
+          <div>
+            <p>LinkedIn</p>
+            <h2 id="linkedin-widget-title">Ultimo post</h2>
+          </div>
+        </header>
+        <p class="linkedin-widget-copy">{latestLinkedInPost.excerpt || latestLinkedInPost.text}</p>
+        <footer>
+          {latestLinkedInDate && <time datetime={latestLinkedInPost.publishedAt}>{latestLinkedInDate}</time>}
+          <a href={latestLinkedInPost.url || linkedinData.profileUrl || site.socials.linkedin} target="_blank" rel="me noopener noreferrer">Apri post</a>
+        </footer>
+      </aside>
+    )}
 
     <section id="tour" class="tour" role="dialog" aria-modal="true" aria-labelledby="tourTitle" aria-describedby="tourText" aria-hidden="true">
       <div class="tour-overlay" data-tour-overlay></div>
