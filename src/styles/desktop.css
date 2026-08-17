@@ -47,3 +47,12 @@
   line-height: 1;
   letter-spacing: 0;
 }
+
+.desktop-item {
+  cursor: grab;
+}
+
+.desktop-item.is-dragging {
+  cursor: grabbing;
+  filter: saturate(1.04);
+}

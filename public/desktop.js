@@ -998,16 +998,45 @@
     $$('.desktop-item').forEach((item) => {
       item.addEventListener('pointerdown', (event) => {
         if (event.pointerType === 'mouse' && event.button !== 0) return;
+        if (item.dataset.dragging === 'true') return;
 
         const rect = item.getBoundingClientRect();
         const desktop = $('.desktop-items');
+        if (!desktop) return;
         const desktopRect = desktop.getBoundingClientRect();
         const start = { x: event.clientX, y: event.clientY };
         const offset = {
           x: event.clientX - rect.left,
           y: event.clientY - rect.top
         };
+        const baseLeft = rect.left - desktopRect.left;
+        const baseTop = rect.top - desktopRect.top;
+        const maxLeft = Math.max(0, desktopRect.width - rect.width);
+        const maxTop = Math.max(0, desktopRect.height - rect.height);
+        let nextLeft = clamp(baseLeft, 0, maxLeft);
+        let nextTop = clamp(baseTop, 0, maxTop);
+        let frame = 0;
         let moved = false;
+
+        const paint = () => {
+          frame = 0;
+          item.style.transform = `translate3d(${nextLeft - baseLeft}px, ${nextTop - baseTop}px, 0)`;
+        };
+
+        const schedulePaint = () => {
+          if (!frame) frame = window.requestAnimationFrame(paint);
+        };
+
+        const startDragging = () => {
+          if (moved) return;
+          moved = true;
+          item.dataset.dragging = 'true';
+          item.classList.add('is-dragging');
+          item.style.willChange = 'transform';
+          item.style.right = 'auto';
+          $$('.desktop-item').forEach((entry) => entry.classList.remove('is-selected'));
+          item.classList.add('is-selected');
+        };
 
         item.setPointerCapture(event.pointerId);
 
@@ -1019,26 +1048,10 @@
           );
           if (!moved && distance < 6) return;
 
-          moved = true;
-          item.dataset.dragging = 'true';
-          item.classList.add('is-dragging');
-          item.style.right = 'auto';
-          const left = Math.max(
-            0,
-            Math.min(
-              moveEvent.clientX - desktopRect.left - offset.x,
-              desktopRect.width - item.offsetWidth
-            )
-          );
-          const top = Math.max(
-            0,
-            Math.min(
-              moveEvent.clientY - desktopRect.top - offset.y,
-              desktopRect.height - item.offsetHeight
-            )
-          );
-          item.style.left = `${left}px`;
-          item.style.top = `${top}px`;
+          startDragging();
+          nextLeft = clamp(moveEvent.clientX - desktopRect.left - offset.x, 0, maxLeft);
+          nextTop = clamp(moveEvent.clientY - desktopRect.top - offset.y, 0, maxTop);
+          schedulePaint();
           moveEvent.preventDefault();
         };
 
@@ -1047,14 +1060,25 @@
           item.removeEventListener('pointermove', onMove);
           item.removeEventListener('pointerup', endDrag);
           item.removeEventListener('pointercancel', endDrag);
-          item.classList.remove('is-dragging');
+          if (frame) {
+            window.cancelAnimationFrame(frame);
+            frame = 0;
+          }
           try {
             item.releasePointerCapture(event.pointerId);
           } catch {
             // Pointer capture may already have been released.
           }
           if (moved) {
-            window.setTimeout(() => delete item.dataset.dragging, 80);
+            item.style.left = `${nextLeft}px`;
+            item.style.top = `${nextTop}px`;
+            item.style.transform = '';
+            item.style.willChange = '';
+            void item.offsetWidth;
+            item.classList.remove('is-dragging');
+            window.setTimeout(() => delete item.dataset.dragging, 160);
+          } else {
+            item.classList.remove('is-dragging');
           }
         };
 
