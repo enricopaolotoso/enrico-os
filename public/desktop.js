@@ -353,11 +353,7 @@
         openQuickTime(item);
       }
     } else if (item.type === 'link') {
-      if (item.external && item.url) {
-        window.open(item.url, '_blank', 'noopener,noreferrer');
-      } else {
-        openSafari(item);
-      }
+      if (item.url) window.open(item.url, '_blank', 'noopener,noreferrer');
     } else if (item.type === 'audio' || item.type === 'playlist') {
       if (item.url) openSafari(item);
       else openPreview(item);

@@ -243,7 +243,7 @@ Se vuoi andare dritto al punto, apri Mail.`
       type: 'folder',
       path: '/Desktop/Raviez',
       description:
-        'Brand DTC costruito come laboratorio reale su identità, community, contenuto e vendita online.',
+        'Brand DTC di statement apparel costruito come laboratorio reale su prodotto, identità, community e vendita online.',
       children: [
         {
           id: 'raviez-overview',
@@ -254,20 +254,82 @@ Se vuoi andare dritto al punto, apri Mail.`
           aspectRatio: 'portrait',
           mimeType: 'text/markdown',
           description:
-            'Raviez è uno statement apparel brand nato nel 2023. Il progetto unisce prodotto, identità, community, contenuti e vendita online.'
+            'Raviez è il mio brand di statement apparel: clothing freedom of speech, e-commerce, contenuti, community e prodotto fisico.',
+          content: `# Raviez
+
+Raviez è il mio brand di statement apparel.
+
+Il posizionamento è diretto: **clothing freedom of speech**. Non voglio costruire un brand che sembri una mission aziendale. Voglio costruire capi che parlano prima ancora che una persona debba spiegarsi.
+
+Il tono è volutamente ironico, un po' sfacciato e molto poco istituzionale. Raviez prende frasi, mood, piccoli cortocircuiti culturali e li porta su tessuto: tee, baby tee, hoodie e capsule pensate per essere indossate come dichiarazioni.
+
+---
+
+## Cosa vende
+
+Il catalogo ruota intorno a:
+
+- tee;
+- baby tee;
+- hoodie;
+- capsule e drop tematici;
+- best seller con grafiche e frasi riconoscibili.
+
+Sul sito il brand lavora anche con leve e-commerce semplici ma concrete: spedizione gratuita in Italia sopra gli 80 euro, newsletter con sconto di benvenuto, account cliente, FAQ, tracciamento ordine, spedizioni e resi.
+
+---
+
+## Cosa sto costruendo davvero
+
+Raviez per me non è solo un negozio online.
+
+È un laboratorio operativo dove testo:
+
+- identità e tono di voce;
+- prodotto fisico;
+- e-commerce e marginalità;
+- contenuti organici;
+- community Instagram e TikTok;
+- drop, campagne, newsletter e customer journey;
+- relazione tra estetica, ironia e vendita.
+
+La parte interessante è tenere insieme tutto: idea, prodotto, contenuto, piattaforme, customer experience e numeri.
+
+---
+
+## Direzione
+
+Voglio che Raviez resti riconoscibile: meno moda generica, più attitudine.
+
+Non mi interessa sembrare un brand perfetto e distante. Mi interessa costruire un progetto che abbia voce, community, prodotti desiderabili e una distribuzione sempre più solida.
+
+Link utili:
+
+- raviez.com;
+- instagram.com/raviez.co;
+- tiktok.com/@raviez.co.`
         },
         {
-          id: 'raviez-photo',
-          name: 'raviez ok.jpg',
-          type: 'image',
-          path: '/Desktop/Raviez/raviez ok.jpg',
-          thumbnail: '/photos/raviez%20ok.jpg',
-          aspectRatio: 'vertical',
-          width: 1000,
-          height: 1250,
-          mimeType: 'image/jpeg',
-          url: '/photos/raviez%20ok.jpg',
-          description: 'Immagine dall’archivio visuale di Raviez.'
+          id: 'raviez-photos',
+          name: 'Foto',
+          type: 'folder',
+          path: '/Desktop/Raviez/Foto',
+          description: 'Cartella dedicata alle immagini e agli scatti del progetto Raviez.',
+          children: [
+            {
+              id: 'raviez-photo',
+              name: 'raviez ok.jpg',
+              type: 'image',
+              path: '/Desktop/Raviez/Foto/raviez ok.jpg',
+              thumbnail: '/photos/raviez%20ok.jpg',
+              aspectRatio: 'vertical',
+              width: 1000,
+              height: 1250,
+              mimeType: 'image/jpeg',
+              url: '/photos/raviez%20ok.jpg',
+              description: 'Immagine dall’archivio visuale di Raviez.'
+            }
+          ]
         },
         {
           id: 'raviez-results',
@@ -278,17 +340,40 @@ Se vuoi andare dritto al punto, apri Mail.`
           mimeType: 'text/plain',
           noteId: 'raviez-results',
           description:
-            'Circa 1.600 magliette vendute e una community Instagram cresciuta fino a circa 7.000 follower.'
+            'Risultati e apprendimenti principali del progetto Raviez.'
         },
         {
           id: 'raviez-shop',
-          name: 'Raviez online',
+          name: 'raviez.com',
           type: 'link',
-          path: '/Desktop/Raviez/Raviez online',
+          path: '/Desktop/Raviez/raviez.com',
           aspectRatio: 'horizontal',
           favicon: '/images/favicon-raviez.png',
-          description: 'Sito ufficiale del progetto Raviez.',
-          url: 'https://raviez.com'
+          description: 'Sito ufficiale di Raviez.',
+          url: 'https://raviez.com',
+          external: true
+        },
+        {
+          id: 'raviez-instagram',
+          name: 'Instagram',
+          type: 'link',
+          path: '/Desktop/Raviez/Instagram',
+          aspectRatio: 'square',
+          favicon: '/apple-icons/app_instagram.webp',
+          description: 'Profilo Instagram ufficiale di Raviez.',
+          url: 'https://www.instagram.com/raviez.co/',
+          external: true
+        },
+        {
+          id: 'raviez-tiktok',
+          name: 'TikTok',
+          type: 'link',
+          path: '/Desktop/Raviez/TikTok',
+          aspectRatio: 'square',
+          favicon: '/apple-icons/app_tiktok.webp',
+          description: 'Profilo TikTok ufficiale di Raviez.',
+          url: 'https://www.tiktok.com/@raviez.co',
+          external: true
         }
       ]
     },

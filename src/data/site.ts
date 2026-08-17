@@ -43,8 +43,8 @@ export const site = {
       name: 'Raviez',
       kind: 'Brand DTC',
       date: '2023 — oggi',
-      description: 'Statement apparel brand nato come laboratorio reale su branding, community, contenuto e vendita online.',
-      stats: ['~1.600 magliette vendute', '~7.000 follower Instagram', 'Focus: produzione, marginalità, community']
+      description: 'Statement apparel brand costruito come laboratorio reale su prodotto, identità, tono di voce, community, contenuti e vendita online.',
+      stats: ['~1.600 magliette vendute', '~7.000 follower Instagram', 'Tee, baby tee, hoodie e drop tematici']
     },
     {
       name: 'Netmarket',
@@ -97,7 +97,7 @@ export const site = {
       id: 'raviez-results',
       folder: 'Raviez',
       title: 'Risultati Raviez',
-      body: `Circa 1.600 magliette vendute.\n\nCommunity Instagram cresciuta fino a circa 7.000 follower.\n\nRaviez è stato un laboratorio reale su prodotto, identità, contenuto, community e vendita online.`
+      body: `Circa 1.600 magliette vendute.\n\nCommunity Instagram cresciuta fino a circa 7.000 follower.\n\nRaviez è diventato un laboratorio reale su prodotto fisico, e-commerce, identità, tono di voce, contenuti, community e customer journey.\n\nIl brand lavora su un posizionamento chiaro: clothing freedom of speech. Tee, baby tee, hoodie e drop non sono trattati solo come capi, ma come frasi e atteggiamenti da indossare.\n\nDal sito emergono leve operative concrete: spedizione gratuita in Italia sopra gli 80 euro, newsletter con sconto di benvenuto, tracciamento ordine, FAQ, account cliente, spedizioni e resi.\n\nI prossimi obiettivi sono rendere più solida la distribuzione, aumentare la frequenza dei contenuti, migliorare la marginalità dei drop e far crescere Instagram e TikTok senza perdere il tono diretto del brand.`
     }
   ],
   modules: [
