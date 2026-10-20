@@ -199,10 +199,32 @@ Every push to `main`, every manual workflow dispatch, and the daily 05:10 UTC sc
 2. install dependencies with `npm ci`;
 3. generate Spotify data;
 4. generate LinkedIn data;
-5. build the Astro site;
-6. verify `dist/`;
-7. deploy `dist/*` to SiteGround via SCP;
-8. purge SiteGround Dynamic Cache.
+5. run Astro checks and deployment regression tests, then build the site;
+6. verify `dist/` and upload the cache helper outside the public document root;
+7. deploy the entire `dist/` directory, including dotfiles, to SiteGround via SCP;
+8. purge the site's cache through the local Site Tools socket;
+9. verify that the ordinary public URLs match the build on desktop and mobile.
+
+Production runs are serialized so one deployment cannot overwrite another during
+upload or cache invalidation. The CLI-only helper in
+`scripts/purge-siteground-cache.php` is uploaded to `~/.enrico-os-deploy/`, outside
+`public_html`. It uses `/chroot/tmp/site-tools.sock`, the same local protocol used
+by SiteGround's official Speed Optimizer plugin, scoped to `enricotoso.com`.
+It requires a positive full-purge acknowledgment; an unavailable socket or a
+rejected request fails the workflow. There is no public purge endpoint or extra
+credential to rotate.
+
+`scripts/verify-deployment.mjs` compares SHA-256 hashes of the homepage, profile,
+referenced JS/CSS and public integration data against the build, and verifies the
+custom HTTP 404. It tests desktop and mobile user agents without adding cache
+bypass parameters or headers. The existing asset-version URLs are preserved.
+Verification retries briefly for propagation, then fails if old content remains.
+
+Run the deployment regression tests locally with Node.js and PHP CLI installed:
+
+```sh
+node --test tests/deployment.test.mjs
+```
 
 The Astro config also writes a production `.htaccess` file so unknown routes correctly render the custom `404.html`.
 

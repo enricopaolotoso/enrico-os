@@ -8,6 +8,10 @@ on:
     - cron: "10 5 * * *"
   workflow_dispatch:
 
+concurrency:
+  group: enrico-os-production
+  cancel-in-progress: false
+
 jobs:
   build-and-deploy:
     name: Build Astro and deploy to SiteGround
@@ -46,12 +50,26 @@ jobs:
         run: |
           npm run check
           node --check public/desktop.js
+          php -l scripts/purge-siteground-cache.php
+          node --test tests/deployment.test.mjs
           npm run build
 
       - name: Check build output
         run: |
           test -d dist || (echo "dist folder missing" && exit 1)
           ls -la dist
+
+      - name: Upload private cache purge helper
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SFTP_HOST }}
+          username: ${{ secrets.SFTP_USERNAME }}
+          port: ${{ secrets.SFTP_PORT }}
+          key: ${{ secrets.SFTP_PRIVATE_KEY }}
+          source: "scripts/purge-siteground-cache.php"
+          target: "/home/customer/.enrico-os-deploy"
+          strip_components: 1
+          overwrite: true
 
       - name: Deploy dist to SiteGround via SCP
         uses: appleboy/scp-action@v0.1.7
@@ -60,7 +78,7 @@ jobs:
           username: ${{ secrets.SFTP_USERNAME }}
           port: ${{ secrets.SFTP_PORT }}
           key: ${{ secrets.SFTP_PRIVATE_KEY }}
-          source: "dist/*"
+          source: "dist"
           target: ${{ secrets.SFTP_REMOTE_PATH }}
           strip_components: 1
           overwrite: true
@@ -73,6 +91,7 @@ jobs:
           port: ${{ secrets.SFTP_PORT }}
           key: ${{ secrets.SFTP_PRIVATE_KEY }}
           script: |
-            response="$(curl --fail --connect-timeout 10 --max-time 30 -sS -X PURGE 'https://enricotoso.com/*')"
-            echo "$response"
-            echo "$response" | grep -qi 'Successful purge'
+            php "$HOME/.enrico-os-deploy/purge-siteground-cache.php"
+
+      - name: Verify public deployment without bypassing cache
+        run: node scripts/verify-deployment.mjs
