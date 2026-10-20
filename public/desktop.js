@@ -63,6 +63,8 @@
   let focusBeforeModal = null;
   let renderFinderRecent = () => {};
   let navigateFinder = () => {};
+  const windowTransitions = new WeakMap();
+  const windowTriggers = new WeakMap();
 
   const fileSystem = (() => {
     try {
@@ -178,8 +180,7 @@
       const win = getWindow(item.dataset.open);
       const active = Boolean(
         win &&
-        win.classList.contains('is-open') &&
-        !win.classList.contains('is-minimized')
+        win.classList.contains('is-open')
       );
       item.classList.toggle('is-active', active);
       item.setAttribute('aria-pressed', active ? 'true' : 'false');
@@ -194,7 +195,41 @@
     windows.forEach((win, index) => {
       win.style.setProperty('--mobile-stack-x', `${Math.min(index, 4) * 5}px`);
       win.style.setProperty('--mobile-stack-y', `${Math.min(index, 4) * 14}px`);
+      constrainWindow(win);
     });
+  }
+
+  function constrainWindow(win) {
+    if (!win || !win.classList.contains('is-open') || win.classList.contains('is-maximized')) return;
+    const layer = $('#windowLayer');
+    if (!layer) return;
+    const margin = isMobile() ? 4 : 8;
+    const left = Math.max(margin, Math.min(win.offsetLeft, layer.clientWidth - win.offsetWidth - margin));
+    const top = Math.max(margin, Math.min(win.offsetTop, layer.clientHeight - win.offsetHeight - margin));
+    if (isMobile()) {
+      const x = parseFloat(win.style.getPropertyValue('--mobile-drag-x')) || 0;
+      const y = parseFloat(win.style.getPropertyValue('--mobile-drag-y')) || 0;
+      win.style.setProperty('--mobile-drag-x', `${x + left - win.offsetLeft}px`);
+      win.style.setProperty('--mobile-drag-y', `${y + top - win.offsetTop}px`);
+    } else {
+      win.style.left = `${left}px`;
+      win.style.top = `${top}px`;
+    }
+  }
+
+  function cancelWindowTransition(win) {
+    window.clearTimeout(windowTransitions.get(win));
+    windowTransitions.delete(win);
+  }
+
+  function restoreWindowFocus(win) {
+    if (!win.contains(document.activeElement)) return;
+    const next = topWindow();
+    const trigger = windowTriggers.get(win);
+    const target = next || (trigger?.isConnected && trigger.getClientRects().length
+      && getComputedStyle(trigger).visibility !== 'hidden' ? trigger : null)
+      || $(`.dock-item[data-open="${getAppId(win)}"]`);
+    target?.focus({ preventScroll: true });
   }
 
   function focusWindow(win) {
@@ -206,6 +241,7 @@
     setActiveApp(getAppId(win));
     updateDockState();
     if (isMobile()) layoutMobileWindows();
+    else constrainWindow(win);
   }
 
   function ensurePhotoImagesLoaded(win) {
@@ -374,6 +410,10 @@
     const win = getWindow(id);
     if (!win) return;
     const wasOpen = win.classList.contains('is-open');
+    if (!wasOpen || win.classList.contains('is-minimized')) {
+      windowTriggers.set(win, document.activeElement);
+    }
+    cancelWindowTransition(win);
 
     if (id !== 'launchpad') closeLaunchpad(false);
     win.classList.remove('is-closing', 'is-minimized', 'is-minimizing');
@@ -381,6 +421,8 @@
     win.setAttribute('aria-hidden', 'false');
 
     focusWindow(win);
+    win.tabIndex = -1;
+    win.focus({ preventScroll: true });
     if (trackRecent && id !== 'finder') recordRecent(`app-${id}`);
 
     if (id === 'photos') {
@@ -402,13 +444,15 @@
 
   function closeWindow(win) {
     if (!win || !win.classList.contains('is-open')) return;
+    cancelWindowTransition(win);
     if (getAppId(win) === 'quicktime') {
       $('[data-quicktime-video]', win)?.pause();
     }
     win.classList.remove('is-focused');
     win.classList.add('is-closing');
 
-    window.setTimeout(() => {
+    windowTransitions.set(win, window.setTimeout(() => {
+      windowTransitions.delete(win);
       win.classList.remove('is-open', 'is-closing', 'is-minimized', 'is-maximized');
       win.style.zIndex = '';
       win.setAttribute('aria-hidden', 'true');
@@ -417,11 +461,13 @@
       else setActiveApp('desktop');
       updateDockState();
       if (isMobile()) layoutMobileWindows();
-    }, 150);
+      restoreWindowFocus(win);
+    }, 150));
   }
 
   function minimizeWindow(win) {
     if (!win) return;
+    cancelWindowTransition(win);
     win.classList.remove('is-focused');
     win.classList.add('is-minimizing');
     win.setAttribute('aria-hidden', 'true');
@@ -430,13 +476,15 @@
     else setActiveApp('desktop');
     updateDockState();
     if (isMobile()) layoutMobileWindows();
+    restoreWindowFocus(win);
 
-    window.setTimeout(() => {
+    windowTransitions.set(win, window.setTimeout(() => {
+      windowTransitions.delete(win);
       win.classList.remove('is-minimizing');
       win.classList.add('is-minimized');
       updateDockState();
       if (isMobile()) layoutMobileWindows();
-    }, 170);
+    }, 170));
   }
 
   function maximizeWindow(win) {
@@ -782,6 +830,10 @@
   }
 
   function bindMenuBar() {
+    function menuEntries(group) {
+      return $$('[role="menuitem"]:not([disabled])', group);
+    }
+
     $$('.menu-group > .menu-trigger').forEach((trigger) => {
       trigger.setAttribute('aria-haspopup', 'true');
       trigger.setAttribute('aria-expanded', 'false');
@@ -794,6 +846,43 @@
         closeMenuBarMenus(group);
         group.classList.toggle('is-open', willOpen);
         trigger.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+      });
+
+      trigger.addEventListener('keydown', (event) => {
+        if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp') return;
+        event.preventDefault();
+        const group = trigger.closest('.menu-group');
+        closeMenuBarMenus(group);
+        group.classList.add('is-open');
+        trigger.setAttribute('aria-expanded', 'true');
+        const entries = menuEntries(group);
+        const entry = event.key === 'ArrowDown' ? entries[0] : entries.at(-1);
+        // Resolve visibility before moving focus into the animated dropdown.
+        $('.menu-dropdown', group).getBoundingClientRect();
+        entry?.focus();
+      });
+    });
+
+    $$('.menu-dropdown').forEach((menu) => {
+      menu.addEventListener('keydown', (event) => {
+        const group = menu.closest('.menu-group');
+        const entries = menuEntries(group);
+        const index = entries.indexOf(document.activeElement);
+        let next;
+        if (event.key === 'ArrowDown') next = entries[(index + 1) % entries.length];
+        if (event.key === 'ArrowUp') next = entries[(index - 1 + entries.length) % entries.length];
+        if (event.key === 'Home') next = entries[0];
+        if (event.key === 'End') next = entries.at(-1);
+        if (event.key === 'Escape') {
+          event.stopPropagation();
+          closeMenuBarMenus();
+          next = $('.menu-trigger', group);
+        }
+        if (next) {
+          event.preventDefault();
+          next.focus();
+        }
+        if (event.key === 'Tab') closeMenuBarMenus();
       });
     });
 
@@ -841,15 +930,11 @@
       if (command === 'close-active') closeTopLayer();
       if (command === 'open-tour') openTour();
       if (command === 'show-desktop') {
-        getOpenWindows().forEach((win) => closeWindow(win));
+        getOpenWindows().forEach((win) => minimizeWindow(win));
         closeLaunchpad(false);
       }
       if (command === 'select-desktop') {
         $$('.desktop-item').forEach((item) => item.classList.add('is-selected'));
-        window.setTimeout(
-          () => $$('.desktop-item').forEach((item) => item.classList.remove('is-selected')),
-          900
-        );
       }
       if (command === 'copy-email') {
         const value = $('[data-copy]')?.dataset.copy;
@@ -861,6 +946,11 @@
 
   function bindDesktopItems() {
     $$('.desktop-item').forEach((item) => {
+      item.addEventListener('keydown', (event) => {
+        if (event.key !== 'Enter' && event.key !== ' ') return;
+        event.preventDefault();
+        openItem(item.dataset.itemId);
+      });
       item.addEventListener('click', (event) => {
         event.stopPropagation();
         if (item.dataset.dragging === 'true') return;
@@ -887,7 +977,7 @@
     });
 
     document.addEventListener('click', (event) => {
-      if (!event.target.closest('.desktop-item')) {
+      if (!event.target.closest('.desktop-item, [data-command="select-desktop"]')) {
         $$('.desktop-item').forEach((item) => item.classList.remove('is-selected'));
       }
     });
@@ -1500,6 +1590,7 @@
         );
 
         finder.style.setProperty('--finder-auto-height', `${desiredHeight}px`);
+        constrainWindow(finder);
       });
     }
 
@@ -1753,6 +1844,14 @@
       openFinderFile(file);
     });
 
+    finder.addEventListener('keydown', (event) => {
+      const file = event.target.closest('.finder-file');
+      if (!file || (event.key !== 'Enter' && event.key !== ' ')) return;
+      event.preventDefault();
+      selectFile(file);
+      openFinderFile(file);
+    });
+
     openButton.addEventListener('click', (event) => {
       event.stopPropagation();
       openFinderFile(selectedFile);
@@ -1764,6 +1863,19 @@
         const haystack = `${file.dataset.previewTitle} ${file.dataset.previewKind} ${file.dataset.previewDescription}`.toLowerCase();
         file.hidden = !haystack.includes(query);
       });
+      if (selectedFile?.hidden) {
+        selectedFile.classList.remove('is-selected');
+        selectedFile = null;
+        openButton.disabled = true;
+        openButton.textContent = 'Seleziona un elemento';
+      }
+      let empty = $('.finder-search-empty', grid);
+      if (!empty) {
+        empty = createPlaceholder('Nessun risultato', 'Prova un altro termine di ricerca.');
+        empty.classList.add('finder-search-empty');
+        grid.appendChild(empty);
+      }
+      empty.hidden = !query || $$('.finder-file', grid).some((file) => !file.hidden);
       resizeFinderToContent();
     });
 
@@ -1858,7 +1970,10 @@
     const cards = $$('[data-project-category]', projects);
     $$('[data-project-filter]', projects).forEach((button) => {
       button.addEventListener('click', () => {
-        $$('[data-project-filter]', projects).forEach((entry) => entry.classList.remove('active'));
+        $$('[data-project-filter]', projects).forEach((entry) => {
+          entry.classList.remove('active');
+          entry.setAttribute('aria-pressed', String(entry === button));
+        });
         button.classList.add('active');
         const filter = button.dataset.projectFilter;
         let visible = 0;
@@ -1867,6 +1982,7 @@
           if (!card.hidden) visible += 1;
         });
         $('.projects-empty', projects).hidden = visible > 0;
+        $('.window-count', projects).textContent = `${visible} ${visible === 1 ? 'elemento' : 'elementi'}`;
       });
     });
   }
@@ -2081,6 +2197,7 @@
   }
 
   function init() {
+    initWindowState();
     updateClock();
     updateMobileLockClock();
     window.setInterval(updateClock, 15000);
@@ -2106,10 +2223,10 @@
     bindSettings();
     initTour();
     initLoader();
-    initWindowState();
     updateDockState();
     window.addEventListener('resize', () => {
       if (isMobile()) layoutMobileWindows();
+      else getOpenWindows().forEach(constrainWindow);
     });
   }
 

@@ -141,6 +141,7 @@
 .menu-group.is-open > .menu-dropdown {
   opacity: 1;
   visibility: visible;
+  transition-property: opacity, transform;
   transform: translateY(0) scale(1);
 }
 

@@ -42,8 +42,11 @@ jobs:
           LINKEDIN_PROFILE_URL: ${{ secrets.LINKEDIN_PROFILE_URL }}
           LINKEDIN_VERSION: ${{ secrets.LINKEDIN_VERSION }}
 
-      - name: Build Astro site
-        run: npm run build
+      - name: Check and build Astro site
+        run: |
+          npm run check
+          node --check public/desktop.js
+          npm run build
 
       - name: Check build output
         run: |

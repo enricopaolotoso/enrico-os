@@ -4,8 +4,8 @@
     --mobile-dock-width: 70px;
   }
 
-  .battery-icon,
-  .control-center {
+  .menu-right .battery-icon,
+  .menu-right .control-center {
     display: none;
   }
 
@@ -249,7 +249,7 @@
     bottom: auto;
     width: var(--mobile-dock-width);
     height: auto;
-    max-height: none;
+    max-height: calc(100dvh - var(--menu-height) - 16px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
     transform: translateY(-50%);
   }
 
@@ -259,7 +259,10 @@
     flex-direction: column;
     gap: 7px;
     padding: 9px 7px;
-    overflow: visible;
+    max-height: inherit;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
   }
 
   .dock-inner::before {
@@ -313,8 +316,7 @@
 
   .notes-window:not(.is-maximized) {
     left: calc(8px + var(--mobile-drag-x, 0px)) !important;
-    width: calc(100vw - 16px) !important;
-    max-width: none !important;
+    width: calc(100% - 16px) !important;
   }
 
   .mac-window.is-dragging,
@@ -407,6 +409,10 @@
     --mobile-dock-width: 60px;
   }
 
+  .menu-right .status-icon {
+    display: none;
+  }
+
   .menu-app {
     max-width: 78px;
     overflow: hidden;
@@ -434,7 +440,8 @@
     height: auto;
     padding: 8px 6px;
     gap: 6px;
-    overflow: visible;
+    overflow-x: hidden;
+    overflow-y: auto;
   }
 
   .dock-item {
@@ -492,7 +499,7 @@
 
   .notes-window:not(.is-maximized) {
     left: calc(6px + var(--mobile-drag-x, 0px)) !important;
-    width: calc(100vw - 12px) !important;
+    width: calc(100% - 12px) !important;
   }
 
   .mail-compose,
