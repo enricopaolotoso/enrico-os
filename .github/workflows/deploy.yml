@@ -73,6 +73,6 @@ jobs:
           port: ${{ secrets.SFTP_PORT }}
           key: ${{ secrets.SFTP_PRIVATE_KEY }}
           script: |
-            response="$(curl -sS -X PURGE 'http://127.0.0.1/*' -H 'Host: enricotoso.com')"
+            response="$(curl --fail --connect-timeout 10 --max-time 30 -sS -X PURGE 'https://enricotoso.com/*')"
             echo "$response"
             echo "$response" | grep -qi 'Successful purge'
