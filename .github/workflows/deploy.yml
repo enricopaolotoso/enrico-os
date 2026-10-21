@@ -53,6 +53,7 @@ jobs:
           php -l scripts/purge-siteground-cache.php
           node --test tests/deployment.test.mjs
           npm run build
+          node scripts/verify-seo.mjs
 
       - name: Check build output
         run: |
@@ -94,4 +95,6 @@ jobs:
             php "$HOME/.enrico-os-deploy/purge-siteground-cache.php"
 
       - name: Verify public deployment without bypassing cache
-        run: node scripts/verify-deployment.mjs
+        run: |
+          node scripts/verify-deployment.mjs
+          node scripts/verify-seo.mjs --live

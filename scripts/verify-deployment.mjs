@@ -16,7 +16,7 @@ function digest(bytes) {
 export async function deploymentResources(distDir) {
   const html = await readFile(resolve(distDir, 'index.html'), 'utf8');
   const paths = new Set([
-    '/', '/enrico-toso/', '/data/spotify.json', '/data/linkedin.json',
+    '/', '/enrico-toso/', '/sitemap.xml', '/robots.txt', '/social-card.jpg', '/data/spotify.json', '/data/linkedin.json',
     '/deployment-verification-missing-page',
   ]);
   for (const match of html.matchAll(/(?:src|href)=["'](\/(?:_astro\/|desktop\.js)[^"']*)["']/g)) {

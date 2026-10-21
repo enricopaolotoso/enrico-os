@@ -2,8 +2,8 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { site } from '../data/site';
 
-const title = 'Sono Enrico Toso | Digital Builder a Milano/Padova';
-const description = 'Sono Enrico Toso, nome completo Enrico Paolo Toso: digital builder a Milano e Padova. Lavoro su Netmarket, Raviez, branding, siti web, e-commerce e AI.';
+const title = 'Enrico Paolo Toso | Profilo, progetti e competenze';
+const description = 'Conosci Enrico Paolo Toso: Digital Builder tra Milano e Padova. Profilo, progetti, competenze in branding, siti web, e-commerce e AI, e contatti.';
 const canonical = `${site.url}/enrico-toso/`;
 
 const profileStructuredData = [
@@ -34,31 +34,7 @@ const profileStructuredData = [
   ogUrl={canonical}
   ogType="profile"
   pageSchemaType="ProfilePage"
-  structuredDataExtra={[
-    {
-      '@context': 'https://schema.org',
-      '@type': 'FAQPage',
-      mainEntity: [
-        {
-          '@type': 'Question',
-          name: 'Chi sono?',
-          acceptedAnswer: {
-            '@type': 'Answer',
-            text: 'Sono Enrico Toso, nome completo Enrico Paolo Toso: un digital builder a Milano e Padova. Lavoro su branding, siti web, e-commerce, contenuti digitali, marketing, AI workflow e progetti proprietari.'
-          }
-        },
-        {
-          '@type': 'Question',
-          name: 'Qual è il mio sito ufficiale?',
-          acceptedAnswer: {
-            '@type': 'Answer',
-            text: 'Il mio sito ufficiale è enricotoso.com. La mia pagina profilo ufficiale è enricotoso.com/enrico-toso/.'
-          }
-        }
-      ]
-    },
-    ...profileStructuredData
-  ]}
+  structuredDataExtra={profileStructuredData}
 >
   <main class="profile-shell" aria-labelledby="profile-title">
     <header class="profile-menu" aria-label="Barra menu profilo">

@@ -16,13 +16,20 @@ const {
   canonical = `${site.url}/`,
   ogUrl = canonical,
   ogType = 'website',
-  pageSchemaType = 'ProfilePage',
+  pageSchemaType = 'WebPage',
   structuredDataExtra = []
 } = Astro.props;
 
 const socialUrls = Object.values(site.socials).filter(
   (value): value is string => value !== null
 );
+
+const socialImage = {
+  url: `${site.url}/social-card.jpg`,
+  width: 2048,
+  height: 1152,
+  alt: 'Il portfolio di Enrico Paolo Toso, Digital Builder a Milano e Padova'
+};
 
 const personSchema = {
   '@context': 'https://schema.org',
@@ -32,7 +39,7 @@ const personSchema = {
   givenName: 'Enrico',
   additionalName: 'Paolo',
   familyName: 'Toso',
-  alternateName: [site.fullName, site.alternateName, `${site.name} Milano`, `${site.name} Padova`, `${site.name} Netmarket`],
+  alternateName: [...new Set([site.fullName, site.alternateName])],
   jobTitle: site.role,
   disambiguatingDescription: site.disambiguatingDescription,
   description: site.description,
@@ -55,7 +62,7 @@ const personSchema = {
     }
   ],
   url: site.url,
-  mainEntityOfPage: `${site.url}/enrico-toso/`,
+  mainEntityOfPage: { '@id': `${site.url}/enrico-toso/#webpage` },
   knowsAbout: site.knowsAbout,
   hasOccupation: {
     '@type': 'Occupation',
@@ -105,16 +112,18 @@ const webPageSchema = {
   },
   primaryImageOfPage: {
     '@type': 'ImageObject',
-    url: `${site.url}/social-card.png`,
-    width: 2048,
-    height: 1152
+    url: socialImage.url,
+    width: socialImage.width,
+    height: socialImage.height,
+    caption: socialImage.alt
   },
   mainEntity: {
     '@id': `${site.url}/#person`
   }
 };
 
-const structuredData = [personSchema, websiteSchema, webPageSchema, ...structuredDataExtra];
+const structuredData = robots.includes('noindex') ? []
+  : [personSchema, websiteSchema, webPageSchema, ...structuredDataExtra];
 ---
 <!doctype html>
 <html lang="it">
@@ -126,7 +135,7 @@ const structuredData = [personSchema, websiteSchema, webPageSchema, ...structure
     <meta name="robots" content={robots} />
     <meta name="author" content={site.name} />
     <meta name="publisher" content={site.name} />
-    <meta name="image" content={`${site.url}/social-card.png`} />
+    <meta name="image" content={socialImage.url} />
     <link rel="canonical" href={canonical} />
     <link rel="icon" href="/favicon.png" type="image/png" sizes="300x300" />
     <link rel="shortcut icon" href="/favicon.png" type="image/png" />
@@ -146,16 +155,18 @@ const structuredData = [personSchema, websiteSchema, webPageSchema, ...structure
     <meta property="og:description" content={description} />
     <meta property="og:url" content={ogUrl} />
     <meta property="og:site_name" content={site.name} />
-    <meta property="og:image" content={`${site.url}/social-card.png`} />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Il mio portfolio da Digital Builder a Milano/Padova" />
+    <meta property="og:image" content={socialImage.url} />
+    <meta property="og:image:width" content={String(socialImage.width)} />
+    <meta property="og:image:height" content={String(socialImage.height)} />
+    <meta property="og:image:alt" content={socialImage.alt} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={`${site.url}/social-card.png`} />
+    <meta name="twitter:image" content={socialImage.url} />
+    <meta name="twitter:image:alt" content={socialImage.alt} />
+    <meta property="og:image:type" content="image/jpeg" />
     <meta name="theme-color" content="#0b1220" />
-    <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+    {structuredData.length > 0 && <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData).replace(/</g, '\\u003c')} />}
     <!-- Google tag (gtag.js) -->
     <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-9ZCGFDD1KW"></script>
     <script is:inline>
