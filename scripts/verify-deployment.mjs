@@ -34,14 +34,17 @@ export async function deploymentResources(distDir) {
 }
 
 export async function verifyDeployment({
-  distDir = resolve('dist'),
+  distDir = resolve(process.env.DEPLOY_DIR || 'dist'),
   origin = 'https://enricotoso.com',
+  manifestPath = process.env.DEPLOY_MANIFEST,
   attempts = 6,
   intervalMs = 5000,
   requestTimeoutMs = 15000,
   log = console.log,
 } = {}) {
-  const resources = await deploymentResources(distDir);
+  const resources = manifestPath
+    ? JSON.parse(await readFile(manifestPath, 'utf8'))
+    : await deploymentResources(distDir);
   const requests = Object.entries(userAgents).flatMap(([profile, userAgent]) =>
     resources.map((resource) => ({ ...resource, profile, userAgent })));
   let failures = [];

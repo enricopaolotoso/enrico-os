@@ -1,14 +1,15 @@
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 
+const dist = process.env.DEPLOY_DIR || 'dist';
 const origin = 'https://enricotoso.com';
 const pages = [['index.html', '/', 'WebPage'], ['enrico-toso/index.html', '/enrico-toso/', 'ProfilePage']];
-const sitemap = await readFile('dist/sitemap.xml', 'utf8');
+const sitemap = await readFile(`${dist}/sitemap.xml`, 'utf8');
 assert.deepEqual([...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map(match => match[1]).sort(), pages.map(([, path]) => origin + path).sort());
-assert.match(await readFile('dist/robots.txt', 'utf8'), /Sitemap: https:\/\/enricotoso\.com\/sitemap\.xml/);
+assert.match(await readFile(`${dist}/robots.txt`, 'utf8'), /Sitemap: https:\/\/enricotoso\.com\/sitemap\.xml/);
 const titles = new Set();
 for (const [file, path, type] of pages) {
-  const html = await readFile(`dist/${file}`, 'utf8');
+  const html = await readFile(`${dist}/${file}`, 'utf8');
   const canonical = html.match(/<link rel="canonical" href="([^"]+)"/g);
   assert.deepEqual(canonical, [`<link rel="canonical" href="${origin}${path}"`]);
   const title = html.match(/<title>(.*?)<\/title>/s)?.[1];
@@ -29,11 +30,11 @@ for (const [file, path, type] of pages) {
   assert.equal(page.mainEntity['@id'], person['@id']);
 }
 assert.equal(titles.size, pages.length);
-const notFound = await readFile('dist/404.html', 'utf8');
+const notFound = await readFile(`${dist}/404.html`, 'utf8');
 assert.match(notFound, /name="robots" content="noindex/);
 assert.ok(!notFound.includes('application/ld+json'));
 // Read JPEG frame dimensions to catch mismatches between the image and metadata.
-const jpeg = await readFile('dist/social-card.jpg');
+const jpeg = await readFile(`${dist}/social-card.jpg`);
 assert.equal(jpeg.readUInt16BE(0), 0xffd8);
 let dimensions;
 for (let offset = 2; offset < jpeg.length;) {

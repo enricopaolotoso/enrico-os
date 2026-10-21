@@ -158,3 +158,13 @@ test('fails when the Site Tools socket cannot be reached', async () => {
     env: { ...process.env, SITEGROUND_SOCKET: '/tmp/enrico-missing-socket.sock' }, timeout: 15000,
   }), (error) => error.code === 1 && /socket unavailable/.test(error.stderr));
 });
+
+ test('uses the original build manifest even if uploaded files and responses are both stale', async (t) => {
+  const { dir, files } = await fixture(t);
+  const manifestPath = join(dir, 'expected.json');
+  await writeFile(manifestPath, JSON.stringify(await deploymentResources(dir)));
+  files['enrico-toso/index.html'] = 'Stale uploaded profile';
+  await writeFile(join(dir, 'enrico-toso/index.html'), files['enrico-toso/index.html']);
+  const server = await website(t, files);
+  await assert.rejects(verifyDeployment({ distDir: dir, manifestPath, origin: server.origin, attempts: 1, log: () => {} }), /content differs/);
+});

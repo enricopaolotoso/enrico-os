@@ -30,3 +30,10 @@ purge, deployment verification compares ordinary desktop/mobile responses,
 including sitemap, robots and social image, against the build. Then
 `node scripts/verify-seo.mjs --live` checks HTTP/HTTPS www redirects for homepage,
 profile with a query string, sitemap and a missing path. Failures fail the deploy.
+
+Public verification runs over SSH on SiteGround using Node 22 because the
+SiteGround anti-bot layer can challenge GitHub-hosted runner IPs with HTTP 202.
+The expected SHA-256 manifest is generated from CI's build and uploaded privately,
+so responses are still checked against the original build, not against themselves.
+Requests use the public domain, ordinary cache and desktop/mobile user agents.
+No bot protection exceptions are installed.

@@ -54,6 +54,7 @@ jobs:
           node --test tests/deployment.test.mjs
           npm run build
           node scripts/verify-seo.mjs
+          node --input-type=module -e "import { deploymentResources } from './scripts/verify-deployment.mjs'; import { writeFile } from 'node:fs/promises'; await writeFile('scripts/deployment-manifest.json', JSON.stringify(await deploymentResources('dist')));"
 
       - name: Check build output
         run: |
@@ -67,7 +68,7 @@ jobs:
           username: ${{ secrets.SFTP_USERNAME }}
           port: ${{ secrets.SFTP_PORT }}
           key: ${{ secrets.SFTP_PRIVATE_KEY }}
-          source: "scripts/purge-siteground-cache.php"
+          source: "scripts/purge-siteground-cache.php,scripts/verify-deployment.mjs,scripts/verify-seo.mjs,scripts/deployment-manifest.json"
           target: "/home/customer/.enrico-os-deploy"
           strip_components: 1
           overwrite: true
@@ -95,6 +96,17 @@ jobs:
             php "$HOME/.enrico-os-deploy/purge-siteground-cache.php"
 
       - name: Verify public deployment without bypassing cache
-        run: |
-          node scripts/verify-deployment.mjs
-          node scripts/verify-seo.mjs --live
+        uses: appleboy/ssh-action@v1.2.0
+        env:
+          DEPLOY_DIR: ${{ secrets.SFTP_REMOTE_PATH }}
+        with:
+          host: ${{ secrets.SFTP_HOST }}
+          username: ${{ secrets.SFTP_USERNAME }}
+          port: ${{ secrets.SFTP_PORT }}
+          key: ${{ secrets.SFTP_PRIVATE_KEY }}
+          envs: DEPLOY_DIR
+          script: |
+            set -e
+            export DEPLOY_MANIFEST="$HOME/.enrico-os-deploy/deployment-manifest.json"
+            node "$HOME/.enrico-os-deploy/verify-deployment.mjs"
+            node "$HOME/.enrico-os-deploy/verify-seo.mjs" --live
