@@ -1,4 +1,5 @@
 import { createHash } from 'node:crypto';
+import { realpathSync } from 'node:fs';
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
@@ -80,7 +81,7 @@ export async function verifyDeployment({
   throw new Error(`Deployment is not current: ${failures.join('; ')}`);
 }
 
-if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {
+if (process.argv[1] && import.meta.url === pathToFileURL(realpathSync(process.argv[1])).href) {
   verifyDeployment().catch((error) => {
     console.error(error.message);
     process.exitCode = 1;
