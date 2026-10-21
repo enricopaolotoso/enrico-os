@@ -17,7 +17,12 @@ correct media type and alt text. The legacy `.png` URL remains available for old
 external links, but is no longer advertised (its original bytes were JPEG).
 
 The build generates `.htaccess` with a permanent www-to-apex redirect, preserving
-path and query string, and the custom 404 handler. SiteGround provides HTTPS.
+path and query string, and the custom 404 handler. SiteGround provides HTTPS;
+HTTP www requests first upgrade to HTTPS www, then redirect to the apex.
+NGINX Direct Delivery is disabled for enricotoso.com in Site Tools > Speed >
+Caching so that static resources also obey the host redirect. Dynamic Cache
+and its automated deployment purge remain enabled. Re-enabling Direct Delivery
+requires an equivalent NGINX-level host redirect; otherwise live SEO checks fail.
 
 Before upload, CI checks built metadata, JSON-LD, sitemap URLs and actual image
 dimensions with `node scripts/verify-seo.mjs`. After upload and automatic cache

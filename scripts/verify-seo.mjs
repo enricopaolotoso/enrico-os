@@ -49,7 +49,12 @@ assert.deepEqual(dimensions, [2048, 1152]);
 if (process.argv.includes('--live')) {
   for (const protocol of ['https:', 'http:']) {
     for (const path of ['/', '/enrico-toso/?source=seo&test=1', '/sitemap.xml', '/missing-seo-page']) {
-      const response = await fetch(`${protocol}//www.enricotoso.com${path}`, { redirect: 'manual', signal: AbortSignal.timeout(15000) });
+      let response = await fetch(`${protocol}//www.enricotoso.com${path}`, { redirect: 'manual', signal: AbortSignal.timeout(15000) });
+      // SiteGround upgrades HTTP to HTTPS before applying Apache host redirects.
+      if (protocol === 'http:' && response.headers.get('location') === `https://www.enricotoso.com${path}`) {
+        assert.equal(response.status, 301);
+        response = await fetch(response.headers.get('location'), { redirect: 'manual', signal: AbortSignal.timeout(15000) });
+      }
       assert.equal(response.status, 301, `${protocol} www ${path}`);
       assert.equal(response.headers.get('location'), origin + path);
     }
