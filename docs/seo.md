@@ -37,3 +37,7 @@ The expected SHA-256 manifest is generated from CI's build and uploaded privatel
 so responses are still checked against the original build, not against themselves.
 Requests use the public domain, ordinary cache and desktop/mobile user agents.
 No bot protection exceptions are installed.
+
+SiteGround inserts `Crawl-delay: 10` into robots.txt responses. The tracked file
+includes that directive so byte verification remains strict and agrees with the
+hosting policy. It does not disallow either canonical page.
